@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Math Modeling Session Configuration",
+  "type": "object",
+  "required": ["schema_version", "rigor_profile", "code_language", "random_seed", "active_questions"],
+  "properties": {
+    "schema_version": {"type": "integer", "minimum": 1},
+    "rigor_profile": {"enum": ["lean", "submission"]},
+    "code_language": {"enum": ["python", "matlab"]},
+    "random_seed": {"type": "integer"},
+    "active_questions": {
+      "type": "array",
+      "items": {"type": "string", "pattern": "^Q[0-9]+(?:_sub[0-9]+)?$"},
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "contest_name": {"type": "string"},
+    "problem_id": {"type": "string"},
+    "deadline": {"type": "string"},
+    "notes": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": true
+}

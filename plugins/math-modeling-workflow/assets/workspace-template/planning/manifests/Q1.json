@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "question_id": "Q1",
+  "rigor_profile": "lean",
+  "current_gate": "G0",
+  "status": "workspace_initialized",
+  "artifacts": {
+    "method_card": null,
+    "decision_ledger": null,
+    "risk_probe": null,
+    "latest_run": null
+  },
+  "allowed": {
+    "code_generation": false,
+    "freeze": false,
+    "paper_writing": false,
+    "final_assembly": false
+  },
+  "blockers": ["problem framing not completed"],
+  "next_action": {
+    "owner": "agent",
+    "skill": "problem-parser",
+    "reason": "problem frame is missing"
+  },
+  "updated_at": null
+}

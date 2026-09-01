@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Per-question Workflow Manifest",
+  "type": "object",
+  "required": ["schema_version", "question_id", "rigor_profile", "current_gate", "status", "artifacts", "allowed", "blockers", "next_action"],
+  "properties": {
+    "schema_version": {"type": "integer", "minimum": 1},
+    "question_id": {"type": "string", "pattern": "^Q[0-9]+(?:_sub[0-9]+)?$"},
+    "rigor_profile": {"enum": ["lean", "submission"]},
+    "current_gate": {"enum": ["G0", "G1", "G2", "G2.5", "G3", "G4", "G5", "G5.5", "G5.6", "G6"]},
+    "status": {"type": "string", "minLength": 1},
+    "artifacts": {"type": "object"},
+    "allowed": {
+      "type": "object",
+      "required": ["code_generation", "freeze", "paper_writing", "final_assembly"],
+      "additionalProperties": {"type": "boolean"}
+    },
+    "blockers": {"type": "array", "items": {"type": "string"}},
+    "next_action": {
+      "type": ["object", "null"],
+      "properties": {
+        "owner": {"enum": ["human", "agent"]},
+        "skill": {"type": "string"},
+        "reason": {"type": "string"}
+      }
+    },
+    "updated_at": {"type": ["string", "null"]}
+  },
+  "additionalProperties": true
+}

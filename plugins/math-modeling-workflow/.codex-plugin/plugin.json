@@ -1,0 +1,27 @@
+{
+  "name": "math-modeling-workflow",
+  "version": "0.1.0",
+  "description": "A gate-driven, evidence-traceable workflow for mathematical modeling contests, from problem framing to final paper audit.",
+  "author": {
+    "name": "xujunjie-coder",
+    "url": "https://github.com/xujunjie-coder"
+  },
+  "homepage": "https://github.com/xujunjie-coder/math-modeling-workflow",
+  "repository": "https://github.com/xujunjie-coder/math-modeling-workflow",
+  "license": "Apache-2.0",
+  "keywords": ["mathematical-modeling", "contest", "paper", "workflow", "visualization"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Math Modeling Workflow",
+    "shortDescription": "Evidence-driven modeling contest workflow",
+    "longDescription": "Orchestrates problem parsing, data audit, method decisions, reproducible experiments, robustness, publication-quality figures, paper assembly, formatting, and final audits.",
+    "developerName": "xujunjie-coder",
+    "category": "Productivity",
+    "capabilities": ["Analyze", "Write"],
+    "defaultPrompt": [
+      "Use $workflow-orchestrator to initialize this modeling project.",
+      "Use $workflow-orchestrator to inspect gates and route the next action.",
+      "Use $figure-table-planner to plan evidence-bearing visuals."
+    ]
+  }
+}

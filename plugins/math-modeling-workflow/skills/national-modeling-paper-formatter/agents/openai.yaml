@@ -1,0 +1,4 @@
+interface:
+  display_name: "National Modeling Paper Formatter"
+  short_description: "Format and render-check a contest paper"
+  default_prompt: "Use $national-modeling-paper-formatter to format and visually verify the approved master paper."

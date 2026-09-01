@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use this workflow in teaching or research, please cite the repository."
+title: "Math Modeling Workflow"
+type: software
+authors:
+  - family-names: "Xu"
+    given-names: "Junjie"
+repository-code: "https://github.com/xujunjie-coder/math-modeling-workflow"
+url: "https://github.com/xujunjie-coder/math-modeling-workflow"
+version: 0.1.0
+date-released: 2026-09-01
+license: Apache-2.0

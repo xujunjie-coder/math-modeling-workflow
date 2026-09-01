@@ -1,0 +1,4 @@
+interface:
+  display_name: "完整数学建模论文装配器"
+  short_description: "将多问建模成果重组为一篇统一、可追溯的完整论文"
+  default_prompt: "Use $full-paper-assembler to assemble all approved question packages into one evidence-traceable submission paper."

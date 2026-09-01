@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "rigor_profile": "lean",
+  "code_language": "python",
+  "random_seed": 2026,
+  "active_questions": ["Q1"],
+  "contest_name": "",
+  "problem_id": "",
+  "deadline": "",
+  "notes": []
+}
