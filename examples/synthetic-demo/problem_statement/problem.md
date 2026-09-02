@@ -1,6 +1,6 @@
 # Synthetic resource-allocation task
 
-A small service system operates at five time periods. Using the supplied synthetic observations, describe demand variation, build a defensible prediction or decision model, compare it with a usable baseline, and recommend a resource level for each period. State uncertainty and the limits of the available sample.
+A small service system is observed across two dozen consecutive periods. Using the supplied synthetic observations (demand, temperature, and a promotion indicator), describe demand variation, build a defensible prediction or decision model, compare it with a usable baseline under one shared error definition, and recommend a resource level for each period. State uncertainty and the limits of the small sample.
 
 Required outputs:
 

@@ -56,7 +56,9 @@ codex plugin add math-modeling-workflow@personal
 python plugins/math-modeling-workflow/scripts/init_workspace.py <项目目录>
 ```
 
-它只会创建通用目录与初始配置，不会覆盖已有文件。
+它只会创建通用目录与初始配置，不会覆盖已有文件。物理目录与各 Skill 规范路径（canonical）一致；教学文档里的 `problem_1/subproblem_x` 叫法、脚手架目录与 canonical 路径的一一对应见 [docs/directory-mapping.zh-CN.md](docs/directory-mapping.zh-CN.md)。从 lean 探索档升级到 submission 参赛档的补件清单见 [docs/lean-to-submission-checklist.zh-CN.md](docs/lean-to-submission-checklist.zh-CN.md)。
+
+不使用 Codex 时（Claude Code、Cursor 或任意网页对话），Skill 是纯 Markdown、脚本只依赖标准库，可按 [docs/agent-agnostic-loading.zh-CN.md](docs/agent-agnostic-loading.zh-CN.md) 手动加载，由人承担路由、用脚本做硬校验。
 
 ## Skill 调用链
 
@@ -92,6 +94,29 @@ workflow-orchestrator
 ## 排版模板说明
 
 仓库不再分发个人保留或许可状态不明确的 DOCX 模板。`national-modeling-paper-formatter` 会优先使用用户自行提供、且有权使用的当届官方模板；没有模板时使用公开记录的 A4、字体、标题、三线表、图题和公式规则生成文档。
+
+## 门控硬检查
+
+门控不仅是 Skill 里的规则，还附带标准库实现的强制执行器，用磁盘证据而不是自报清单来判断进度：
+
+```powershell
+# 查看每个活动问题实际由证据支撑到哪一道门（exit 2 = 清单超前/越权等完整性违规）
+python plugins/math-modeling-workflow/scripts/gate_check.py <项目目录> status
+
+# 动作前硬阻断：未过 G2.5 不允许写模型代码，未过 G3 不允许冻结，以此类推
+python plugins/math-modeling-workflow/scripts/gate_check.py <项目目录> guard --action code_generation --question Q1
+```
+
+`--action` 支持 `code_generation`（需 G2.5）、`freeze`（需 G3）、`paper_writing`（需 G4）和 `final_assembly`（所有活动问题达 G5）。纯机理/无数据题可在该问题 manifest 中声明 `"waivers": ["data_profile"]`，检查会显式标注豁免而不是静默跳过。
+
+论文数字与冻结证据的机械一致性由另一个标准库脚本负责，它会排除章节/图表/公式编号、年份、代码、链接与公式，只核对结果论断数字：
+
+```powershell
+python plugins/math-modeling-workflow/scripts/check_frozen_numbers.py paper/master/full_paper.md `
+  --source results --source paper/master/claim_map.json
+```
+
+精确匹配（千分位、尾零、科学计数法归一）后仍找不到来源的数字判为 UNFROZEN 并以非零码退出；四舍五入近似值给 NEAR 警告；确属编号或设定值的例外写进 sidecar `.frozenignore`（支持字面量与 `regex:`）。
 
 ## 开发与验证
 

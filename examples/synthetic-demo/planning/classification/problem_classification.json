@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "subquestions": [
+    {
+      "id": "Q1",
+      "primary_type": "prediction",
+      "secondary_type": "descriptive",
+      "confidence": "high",
+      "evidence": ["required output is a per-period demand prediction with an error measure", "two exogenous features and a continuous target"],
+      "required_validation": ["leave-one-out error", "coefficient sign stability under perturbation", "comparison with a usable baseline"],
+      "framing_decision_id": null,
+      "risks": ["only 24 observations", "promotion occurs in 6 periods; effect estimate has limited support"]
+    }
+  ]
+}

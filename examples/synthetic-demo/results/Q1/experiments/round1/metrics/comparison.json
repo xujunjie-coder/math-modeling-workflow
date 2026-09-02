@@ -1,0 +1,8 @@
+{
+  "metric": "rmse",
+  "scope": "leave-one-out",
+  "main_rmse": 2.9200822153567176,
+  "baseline_rmse": 9.706286817352883,
+  "relative_rmse_reduction": 0.6991555812943627,
+  "main_wins": true
+}

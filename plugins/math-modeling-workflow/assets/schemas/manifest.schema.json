@@ -16,6 +16,11 @@
       "additionalProperties": {"type": "boolean"}
     },
     "blockers": {"type": "array", "items": {"type": "string"}},
+    "waivers": {
+      "type": "array",
+      "items": {"enum": ["data_profile"]},
+      "description": "Explicit, named evidence waivers (e.g. data_profile for a data-free/mechanism-only question). gate_check.py reports every waiver instead of silently skipping the check."
+    },
     "next_action": {
       "type": ["object", "null"],
       "properties": {

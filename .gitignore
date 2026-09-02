@@ -34,6 +34,13 @@ paper/final/
 *.xls
 
 # Explicitly allow repository-owned synthetic fixtures and documentation assets.
+# The golden example must ship its full canonical evidence trail (G0-G4).
 !examples/**/data_raw/
 !examples/**/data_raw/**
+!examples/**/data_clean/
+!examples/**/data_clean/**
+!examples/**/results/
+!examples/**/results/**
+!examples/**/robustness/
+!examples/**/robustness/**
 !plugins/**/assets/**/*.pdf

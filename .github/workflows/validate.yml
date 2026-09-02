@@ -16,5 +16,11 @@ jobs:
         run: python plugins/math-modeling-workflow/scripts/validate_repo.py .
       - name: Run tests
         run: python -m unittest discover -s tests -v
+      - name: Full-paper validator self-test
+        run: python plugins/math-modeling-workflow/skills/full-paper-assembler/scripts/validate_full_paper.py --self-test
+      - name: CLI smoke for enforcement scripts
+        run: |
+          python plugins/math-modeling-workflow/scripts/gate_check.py --help
+          python plugins/math-modeling-workflow/scripts/check_frozen_numbers.py --help
       - name: Compile Python helpers
-        run: python -m compileall -q plugins/math-modeling-workflow/scripts tests
+        run: python -m compileall -q plugins/math-modeling-workflow tests

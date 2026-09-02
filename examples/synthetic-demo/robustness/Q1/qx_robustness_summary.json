@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "question_id": "Q1",
+  "checks": [
+    {
+      "name": "leave_one_out_validation",
+      "tested_claim": "M1 generalizes beyond the fitted points",
+      "input_source": "workspace/data_clean/observations_clean.csv",
+      "result_source": "results/Q1/experiments/round1/metrics/main_metrics.json",
+      "metric": "loocv_rmse",
+      "observed_value": 2.9200822153567176,
+      "baseline_value": 9.706286817352883,
+      "status": "PASS",
+      "limitation": "LOOCV on n=24 has high variance; do not claim out-of-distribution accuracy"
+    },
+    {
+      "name": "demand_perturbation_sign_and_win_stability",
+      "tested_claim": "feature signs and the M1-over-M0 conclusion are not artifacts of noise",
+      "input_source": "workspace/data_clean/observations_clean.csv",
+      "result_source": "results/Q1/experiments/round1/metrics/perturbation_stability.json",
+      "perturbation": "add N(0,1.5) noise to every demand value, 200 trials, seed 2026",
+      "observed_value": {"temperature_coef_positive_rate": 1.0, "promotion_coef_positive_rate": 1.0, "main_beats_baseline_rate": 1.0},
+      "status": "PASS",
+      "limitation": "perturbation scale (1.5) is smaller than residual RMSE (2.53); larger shocks are untested"
+    }
+  ],
+  "overall": "PASS",
+  "requires_stability_verdict": false
+}

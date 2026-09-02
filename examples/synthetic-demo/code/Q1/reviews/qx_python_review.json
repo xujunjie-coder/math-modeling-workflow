@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "question_id": "Q1",
+  "language": "python",
+  "reviewed_files": [
+    "code/Q1/q1_baseline.py",
+    "code/Q1/q1_main.py",
+    "code/Q1/run_all.py"
+  ],
+  "decision_id": "q1_method_choice",
+  "checks": {
+    "syntax": {"status": "PASS", "evidence": ["all three modules compile and run to completion with python 3.12", "no third-party imports"]},
+    "input_contract": {"status": "PASS", "evidence": ["reads workspace/data_clean/observations_clean.csv", "raw data_raw/ is never written", "columns period/demand/temperature/promotion parsed as declared"]},
+    "method_alignment": {"status": "PASS", "evidence": ["M1 implements the approved OLS model demand=b0+b1*temperature+b2*promotion", "M0 is the approved global-mean usable baseline", "no unapproved candidate or fallback code present"]},
+    "reproducibility": {"status": "PASS", "evidence": ["OLS is deterministic", "perturbation study uses random.Random(2026)", "environment records python version and zero third-party dependencies"]},
+    "output_contract": {"status": "PASS", "evidence": ["run_summary.json lists both methods with status=success", "main and baseline use the identical LOOCV split and RMSE/MAE definition", "declared metrics and figure files exist on disk"]}
+  },
+  "findings": [],
+  "verdict": "PASSED",
+  "reviewed_at": "2026-09-02T09:15:00+08:00"
+}

@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "question_id": "Q1",
+  "generated_at": "2026-09-02T09:00:00+08:00",
+  "data_refs": ["workspace/data/data_profile.json", "workspace/data_clean/observations_clean.csv"],
+  "methods": [
+    {
+      "id": "M0",
+      "role": "usable_baseline",
+      "executability": {"status": "PASS", "evidence": {"runtime_seconds": 0.0, "standard_library_only": true}},
+      "data_coverage": {"status": "PASS", "evidence": {"rows_used": 24, "effective_sample_size": 24, "missing_rate": 0.0}},
+      "assumption_checks": [],
+      "output_degeneracy": {"status": "PASS", "metrics": {"unique_output_count": 1, "note": "constant mean is expected for a naive baseline, not a degeneracy of the main method"}},
+      "perturbation_sensitivity": {"status": "CONDITIONAL", "perturbation": "leave-one-out", "metric": "rmse", "value": 9.7063, "note": "high error is the reference point the main method must beat"},
+      "scale_check": {"status": "PASS", "representative_n": 24, "runtime_seconds": 0.0, "peak_memory_mb": 5},
+      "verdict": "PASS",
+      "conditions": [],
+      "evidence_refs": ["code/Q1/q1_baseline.py"]
+    },
+    {
+      "id": "M1",
+      "role": "main_candidate",
+      "executability": {"status": "PASS", "evidence": {"runtime_seconds": 0.05, "standard_library_only": true, "matrix_full_rank": true}},
+      "data_coverage": {"status": "PASS", "evidence": {"rows_used": 24, "effective_sample_size": 24, "missing_rate": 0.0, "promotion_support": 6}},
+      "assumption_checks": [
+        {"name": "feature_sign_plausibility", "status": "PASS", "metric": "estimated coefficients", "value": {"temperature": 1.78, "promotion": 12.56}, "note": "both positive, matching proposed mechanism"},
+        {"name": "small_sample", "status": "CONDITIONAL", "metric": "n", "value": 24, "threshold": 30, "note": "mitigated with leave-one-out validation and an explicit limitation"}
+      ],
+      "output_degeneracy": {"status": "PASS", "metrics": {"unique_fitted_count": 24, "residual_rmse": 2.5274}},
+      "perturbation_sensitivity": {"status": "PASS", "perturbation": "demand + N(0,1.5) x200 (seed 2026)", "metric": "sign_stability_and_win_rate", "value": {"temperature_coef_positive_rate": 1.0, "promotion_coef_positive_rate": 1.0, "main_beats_baseline_rate": 1.0}},
+      "scale_check": {"status": "PASS", "representative_n": 24, "runtime_seconds": 0.05, "peak_memory_mb": 8},
+      "verdict": "PASS",
+      "conditions": ["report n=24 limitation; use leave-one-out rather than a single random split"],
+      "evidence_refs": ["code/Q1/q1_main.py"]
+    }
+  ]
+}

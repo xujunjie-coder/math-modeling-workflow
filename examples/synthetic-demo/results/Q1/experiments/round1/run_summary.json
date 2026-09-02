@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "question": "Q1",
+  "round": "round1",
+  "implementation_target": "python",
+  "random_seed": 2026,
+  "approved_decision_id": "q1_method_choice",
+  "methods": [
+    {
+      "method_id": "M0",
+      "role": "usable_baseline",
+      "script": "code/Q1/q1_baseline.py",
+      "status": "success",
+      "execution_time_seconds": 0.0,
+      "input_files": [
+        "workspace/data_clean/observations_clean.csv"
+      ],
+      "output_files": [
+        "results/Q1/experiments/round1/metrics/baseline_metrics.json"
+      ],
+      "figure_files": [],
+      "metrics_summary": {
+        "mae": 7.72355072463768,
+        "rmse": 9.706286817352883
+      },
+      "warnings": [],
+      "errors": []
+    },
+    {
+      "method_id": "M1",
+      "role": "main",
+      "script": "code/Q1/q1_main.py",
+      "status": "success",
+      "execution_time_seconds": 0.1674,
+      "input_files": [
+        "workspace/data_clean/observations_clean.csv"
+      ],
+      "output_files": [
+        "results/Q1/experiments/round1/metrics/main_metrics.json",
+        "results/Q1/experiments/round1/metrics/comparison.json",
+        "results/Q1/experiments/round1/metrics/perturbation_stability.json"
+      ],
+      "figure_files": [
+        "results/Q1/experiments/round1/figures/main_vs_baseline.svg"
+      ],
+      "metrics_summary": {
+        "loocv": {
+          "mae": 2.5108105315760545,
+          "rmse": 2.9200822153567176
+        },
+        "relative_rmse_reduction": 0.6991555812943627
+      },
+      "warnings": [],
+      "errors": []
+    }
+  ],
+  "comparison": {
+    "same_split": true,
+    "same_metric": "rmse",
+    "relative_rmse_reduction": 0.6991555812943627,
+    "winner": "M1"
+  },
+  "fallback_trigger": {
+    "fallback_id": null,
+    "condition": null,
+    "observed": false,
+    "evidence": null
+  },
+  "environment": {
+    "python": "3.13.13",
+    "third_party_dependencies": []
+  }
+}

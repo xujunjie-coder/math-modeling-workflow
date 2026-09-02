@@ -1,0 +1,17 @@
+{
+  "method_id": "M1",
+  "model": "OLS demand = b0 + b1*temperature + b2*promotion",
+  "coefficients": {
+    "intercept": 29.93345616426659,
+    "temperature": 1.779984542168246,
+    "promotion": 12.555559849397714
+  },
+  "full_fit": {
+    "mae": 2.1874051889222943,
+    "rmse": 2.527380454013109
+  },
+  "loocv": {
+    "mae": 2.5108105315760545,
+    "rmse": 2.9200822153567176
+  }
+}

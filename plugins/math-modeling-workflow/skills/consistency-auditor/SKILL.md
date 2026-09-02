@@ -20,6 +20,17 @@ Prefer:
 
 Use legacy decision logs or Markdown reviews only during migration.
 
+# Deterministic number check
+
+Before the semantic audit, run the standard-library linter for a mechanical first pass:
+
+```text
+python ../../scripts/check_frozen_numbers.py paper/master/full_paper.md \
+  --source results --source paper/master/claim_map.json [--ignore-file paper/master/full_paper.frozenignore]
+```
+
+It extracts claim numbers (skipping section/figure/equation numbers, years, code, URLs and math), matches them against `frozen_numbers.json`/metrics with exact normalization, reports NEAR rounding warnings and UNFROZEN values, and exits non-zero on any UNFROZEN number. A sidecar `.frozenignore` holds explicit literal or `regex:` exceptions; never widen an ignore to hide a genuinely unsupported claim. The linter catches mechanical drift; the semantic checks below remain required.
+
 # Checks
 
 1. Numerical claims match frozen values and units.

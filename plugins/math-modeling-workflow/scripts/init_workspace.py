@@ -9,13 +9,20 @@ import shutil
 from pathlib import Path
 
 
+# Physical layout mirrors the canonical Skill paths (see docs/directory-mapping.zh-CN.md).
+# Root-level data_raw/data_clean stay as the documented legacy/teaching locations;
+# the canonical data home is workspace/data*.
 DIRECTORIES = (
     "problem_statement",
     "data_raw",
     "data_clean",
+    "planning/parse",
+    "planning/classification",
     "planning/manifests",
     "planning/decisions",
-    "workspace",
+    "workspace/data_raw",
+    "workspace/data_clean",
+    "workspace/data",
     "methods",
     "code",
     "results",
@@ -25,6 +32,7 @@ DIRECTORIES = (
     "paper/figures",
     "paper/master",
     "paper/final",
+    "paper/audits",
     "deliverables",
 )
 

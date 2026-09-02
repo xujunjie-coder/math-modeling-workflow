@@ -1,6 +1,6 @@
 {
   "name": "math-modeling-workflow",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A gate-driven, evidence-traceable workflow for mathematical modeling contests, from problem framing to final paper audit.",
   "author": {
     "name": "xujunjie-coder",

@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "raw_files": ["data_raw/observations.csv"],
+  "attachment_mapping": [{"file": "observations.csv", "mapped_to": "Q1", "role": "shared single table"}],
+  "fields": [
+    {"name": "period", "type": "integer", "role": "index", "range": [1, 24]},
+    {"name": "demand", "type": "float", "role": "target", "mean": 72.93, "min": 55.5, "max": 92.3},
+    {"name": "temperature", "type": "float", "role": "feature", "range": [16.0, 27.0]},
+    {"name": "promotion", "type": "binary", "role": "feature", "positive_count": 6, "negative_count": 18}
+  ],
+  "quality": {"missingness": {}, "duplicates": {"full_row_duplicates": 0}, "impossible_values": {}, "outliers": {}},
+  "coverage": {"rows": 24, "effective_sample_size": 24, "time_range": "period 1-24", "time_gaps": "none, one row per period"},
+  "distribution_risks": {
+    "class_imbalance": "promotion is 6/24 positive; effect estimate has limited but non-degenerate support",
+    "rare_categories": [],
+    "high_cardinality": [],
+    "redundancy_warnings": [],
+    "concentration_metrics": {}
+  },
+  "per_question_readiness": {"Q1": "ready"},
+  "cleaned_files": ["workspace/data_clean/observations_clean.csv"],
+  "cleaning_log": "Validation only: types parse, zero missing cells, zero duplicate rows; no imputation or removal needed. Cleaned copy is identical to raw.",
+  "unresolved_risks": ["small n=24 sample; prefer leave-one-out validation and report the limitation"]
+}

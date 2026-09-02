@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "rigor_profile": "lean",
+  "code_language": "python",
+  "random_seed": 2026,
+  "active_questions": ["Q1"],
+  "contest_name": "synthetic-demo (not a real contest)",
+  "problem_id": "synthetic-resource-allocation",
+  "deadline": "",
+  "notes": [
+    "Synthetic, reproducible example. All numbers are produced by code/Q1/run_all.py; nothing is hand-edited.",
+    "Lean profile: the trail ends at G4 (human result_verdict). See docs/lean-to-submission-checklist.zh-CN.md to upgrade."
+  ]
+}

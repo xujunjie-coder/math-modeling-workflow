@@ -1,0 +1,6 @@
+{
+  "trials": 200,
+  "temperature_coef_positive_rate": 1.0,
+  "promotion_coef_positive_rate": 1.0,
+  "main_beats_baseline_rate": 1.0
+}

@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="420" viewBox="0 0 720 420" font-family="Segoe UI, Arial, sans-serif">
+<rect width="100%" height="100%" fill="white"/>
+<text x="56" y="16" font-size="14" fill="#111">Q1 demand: actual vs OLS fit vs mean baseline</text>
+<line x1="56" y1="376.0" x2="700" y2="376.0" stroke="#e5e7eb"/>
+<text x="48" y="380.0" font-size="10" text-anchor="end" fill="#555">52</text>
+<line x1="56" y1="288.0" x2="700" y2="288.0" stroke="#e5e7eb"/>
+<text x="48" y="292.0" font-size="10" text-anchor="end" fill="#555">63</text>
+<line x1="56" y1="200.0" x2="700" y2="200.0" stroke="#e5e7eb"/>
+<text x="48" y="204.0" font-size="10" text-anchor="end" fill="#555">74</text>
+<line x1="56" y1="112.0" x2="700" y2="112.0" stroke="#e5e7eb"/>
+<text x="48" y="116.0" font-size="10" text-anchor="end" fill="#555">85</text>
+<line x1="56" y1="24.0" x2="700" y2="24.0" stroke="#e5e7eb"/>
+<text x="48" y="28.0" font-size="10" text-anchor="end" fill="#555">95</text>
+<line x1="56" y1="208.0" x2="700" y2="208.0" stroke="#9ca3af" stroke-dasharray="6 4"/>
+<text x="696" y="203.0" font-size="10" text-anchor="end" fill="#6b7280">mean baseline</text>
+<polyline points="56.0,220.5 84.0,197.1 112.0,179.5 140.0,66.0 168.0,166.3 196.0,173.7 224.0,188.3 252.0,107.0 280.0,235.1 308.0,261.5 336.0,287.8 364.0,205.1 392.0,321.5 420.0,327.4 448.0,324.4 476.0,209.5 504.0,293.7 532.0,268.8 560.0,242.5 588.0,112.8 616.0,194.2 644.0,176.6 672.0,167.8 700.0,64.5" fill="none" stroke="#2563eb" stroke-width="2"/>
+<circle cx="56.0" cy="198.4" r="3" fill="#dc2626"/>
+<circle cx="84.0" cy="176.1" r="3" fill="#dc2626"/>
+<circle cx="112.0" cy="215.6" r="3" fill="#dc2626"/>
+<circle cx="140.0" cy="68.4" r="3" fill="#dc2626"/>
+<circle cx="168.0" cy="149.8" r="3" fill="#dc2626"/>
+<circle cx="196.0" cy="159.7" r="3" fill="#dc2626"/>
+<circle cx="224.0" cy="204.9" r="3" fill="#dc2626"/>
+<circle cx="252.0" cy="122.7" r="3" fill="#dc2626"/>
+<circle cx="280.0" cy="225.5" r="3" fill="#dc2626"/>
+<circle cx="308.0" cy="283.1" r="3" fill="#dc2626"/>
+<circle cx="336.0" cy="288.8" r="3" fill="#dc2626"/>
+<circle cx="364.0" cy="241.1" r="3" fill="#dc2626"/>
+<circle cx="392.0" cy="318.4" r="3" fill="#dc2626"/>
+<circle cx="420.0" cy="351.3" r="3" fill="#dc2626"/>
+<circle cx="448.0" cy="319.3" r="3" fill="#dc2626"/>
+<circle cx="476.0" cy="182.7" r="3" fill="#dc2626"/>
+<circle cx="504.0" cy="260.9" r="3" fill="#dc2626"/>
+<circle cx="532.0" cy="240.3" r="3" fill="#dc2626"/>
+<circle cx="560.0" cy="274.0" r="3" fill="#dc2626"/>
+<circle cx="588.0" cy="101.3" r="3" fill="#dc2626"/>
+<circle cx="616.0" cy="201.6" r="3" fill="#dc2626"/>
+<circle cx="644.0" cy="200.0" r="3" fill="#dc2626"/>
+<circle cx="672.0" cy="158.9" r="3" fill="#dc2626"/>
+<circle cx="700.0" cy="48.7" r="3" fill="#dc2626"/>
+<text x="56" y="408" font-size="11" fill="#555">period</text>
+<circle cx="500" cy="16" r="3" fill="#dc2626"/><text x="508" y="20" font-size="11">actual</text>
+<line x1="560" y1="16" x2="582" y2="16" stroke="#2563eb" stroke-width="2"/><text x="586" y="20" font-size="11">OLS fit</text>
+</svg>

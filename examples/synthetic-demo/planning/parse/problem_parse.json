@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "problem_source": ["problem_statement/problem.md", "data_raw/observations.csv"],
+  "global_goal": "Describe demand variation and recommend a defensible per-period resource level with an explicit error measure and robustness evidence.",
+  "objects": ["24 consecutive service periods"],
+  "data_inventory": [
+    {"file": "data_raw/observations.csv", "rows": 24, "columns": ["period", "demand", "temperature", "promotion"], "mapped_to": "Q1"}
+  ],
+  "global_constraints": ["small synthetic sample; state uncertainty and limits", "raw data is read-only"],
+  "subquestions": [
+    {
+      "id": "Q1",
+      "statement": "Using temperature and promotion, model demand, compare a main method against a usable baseline under one shared error definition, and quantify stability.",
+      "goal": "predict/explain demand and justify the chosen model",
+      "inputs": ["temperature", "promotion", "historical demand"],
+      "unknowns_or_decisions": ["which model family", "what counts as a usable baseline"],
+      "constraints": ["standard-library only", "fixed seed 2026 for any stochastic check"],
+      "required_outputs": ["fitted model and coefficients", "main vs baseline error comparison", "one robustness check", "evidence-bearing visual or justified table"],
+      "success_criteria": [
+        "main achieves lower leave-one-out RMSE than the baseline under the identical split",
+        "coefficient signs are stable under small demand perturbation",
+        "every reported number traces to a saved artifact"
+      ],
+      "dependencies": [],
+      "proposed_relationships": ["demand increases with temperature", "promotion lifts demand (both labeled proposed until estimated)"],
+      "ambiguities": []
+    }
+  ],
+  "missing_material": [],
+  "human_decisions_needed": ["method_choice at G2.5", "result_verdict at G4"]
+}

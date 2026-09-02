@@ -136,6 +136,19 @@ Require the whole-paper polish to be current, `paper_scope=full_submission`, and
 
 Evaluate only in `submission` after G5.6. Require passing final consistency, completeness, and QA artifacts against the assembled master and rendered final document. Never infer that one auditor covers another.
 
+# Deterministic Enforcement
+
+Gate prose is backed by `../../scripts/gate_check.py` (standard library only). Prefer its evidence over a self-reported manifest; the manifest is never authoritative by itself.
+
+- State inspection: `python scripts/gate_check.py <workspace> status [--json]`. It computes the highest gate actually supported by on-disk artifacts. Exit code 2 means an integrity violation (manifest gate runs ahead of evidence, an `allowed` flag is true without evidence, or model code exists before G2.5).
+- Hard action guard — run before the corresponding write action and stop when it exits non-zero:
+  - model code generation → `gate_check.py <ws> guard --action code_generation --question Qx` (requires G2.5);
+  - result freeze → `guard --action freeze --question Qx` (requires G3);
+  - paper section writing → `guard --action paper_writing --question Qx` (requires G4; frozen numbers in submission);
+  - global assembly → `guard --action final_assembly` (every active question at G5).
+- A data-free/mechanism-only question may declare `"waivers": ["data_profile"]` in its manifest; the check is then reported as waived rather than silently skipped. No other gate evidence may be waived.
+- The guard does not replace the Skill checks; it blocks work that the gate contract does not yet authorize.
+
 # Routing
 
 Choose one primary next action:

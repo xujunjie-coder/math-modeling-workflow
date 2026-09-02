@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "question_id": "Q1",
+  "rigor_profile": "lean",
+  "current_gate": "G4",
+  "status": "lean_result_verdict_decided",
+  "artifacts": {
+    "method_card": "methods/Q1/qx_method_card.md",
+    "decision_ledger": "methods/Q1/qx_decisions.jsonl",
+    "risk_probe": "methods/Q1/probes/risk_probe_summary.json",
+    "latest_run": "results/Q1/experiments/round1/run_summary.json"
+  },
+  "allowed": {
+    "code_generation": true,
+    "freeze": false,
+    "paper_writing": false,
+    "final_assembly": false
+  },
+  "blockers": [],
+  "next_action": {
+    "owner": "human",
+    "skill": null,
+    "reason": "Lean trail ends at G4. To produce a paper, switch rigor_profile to submission and follow docs/lean-to-submission-checklist.zh-CN.md."
+  },
+  "updated_at": "2026-09-02T09:20:00+08:00"
+}

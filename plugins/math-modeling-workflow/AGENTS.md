@@ -14,6 +14,7 @@ This plugin coordinates an evidence-first mathematical-modeling workflow. The us
 - Prefer a main method, a usable baseline, and at most one trigger-based fallback. Do not add models merely for breadth.
 - Preserve upstream/downstream interfaces across subquestions: IDs, units, filters, labels, symbols, parameters, seeds, and versions.
 - A semantic change to frozen evidence requires affected work to be rerun and re-frozen before paper claims are updated.
+- Gate state is enforced from on-disk evidence by `scripts/gate_check.py`, not inferred from a self-reported manifest. Run its `guard` action before model-code generation, freezing, paper writing, and final assembly; a non-zero exit blocks the action. A manifest that runs ahead of evidence is an integrity violation.
 
 ## Rigor profiles
 

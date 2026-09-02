@@ -1,0 +1,13 @@
+{
+  "method_id": "M0",
+  "model": "global-mean predictor",
+  "predicted_value": 72.92916666666666,
+  "full_fit": {
+    "mae": 7.401736111111112,
+    "rmse": 9.301858199963178
+  },
+  "loocv": {
+    "mae": 7.72355072463768,
+    "rmse": 9.706286817352883
+  }
+}
