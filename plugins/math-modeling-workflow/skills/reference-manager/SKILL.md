@@ -35,7 +35,9 @@ The following should already exist or be provided:
 Use or request:
 
 - `paper/sections/*.md` or `paper/sections/*.tex` — paper drafts with citations.
-- `workspace/papers/related_paper_analysis.md` — literature analysis with paper metadata.
+- `workspace/literature/scholar_search_records.json` — verified Google Scholar literature search metadata.
+- `workspace/literature/literature_summary.md` — literature analysis with paper metadata.
+- `workspace/papers/related_paper_analysis.md` — local paper analysis (if available).
 - Paper files under `workspace/papers/` (PDF, etc.) for metadata extraction.
 - Any existing `.bib` file the user has prepared.
 - User notes about which references are most important.
@@ -49,7 +51,8 @@ Use or request:
 
 2. Match citations to source information.
    - For each citation, try to find its source:
-     - In `workspace/papers/related_paper_analysis.md` — if a paper was analyzed.
+     - In `workspace/literature/scholar_search_records.json` — authenticated Google Scholar query results.
+     - In `workspace/papers/related_paper_analysis.md` or `workspace/literature/literature_summary.md`.
      - In user-provided paper files under `workspace/papers/`.
      - In user-provided BibTeX or reference lists.
    - Mark citations that cannot be matched as "unverified".

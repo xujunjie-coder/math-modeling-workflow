@@ -23,6 +23,8 @@ DIRECTORIES = (
     "workspace/data_raw",
     "workspace/data_clean",
     "workspace/data",
+    "workspace/literature",
+    "workspace/papers",
     "methods",
     "code",
     "results",

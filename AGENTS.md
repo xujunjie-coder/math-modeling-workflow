@@ -54,6 +54,12 @@
      2. **LaTeX 轨**（`paper/latex/paper.tex` ➔ `final_paper_latex.pdf`）：基于 XeLaTeX + ctexart 原生编译完整学术级 PDF，公式、`booktabs` 三线表、矢量图与交叉引用达到顶级学术期刊出版标准；三线表强制引入 `tabularx` 宏包，长文本说明列统一设为自适应 `X` 列或使用 `\resizebox{\textwidth}{!}{...}` 弹性缩放，严防表格右侧冲出版心；
      3. 参赛队可根据赛委会当届规定自由选择提交高质量 Word 论文或 LaTeX 编译的超清 PDF 论文。
 
+7. **先文献调研后建模与 Google 学术临时知识区机制 (Literature-First Modeling)**：
+   - 详见规则：`.agents/rules/literature-research-protocol.md`
+   - AI 解析赛题后，必须在方法选型前主动基于 Google 学术（Google Scholar）检索赛题领域相关论文及权威机理方程；
+   - 筛选提炼核心数学模型、动力学方程与经验参数，规范归档至临时知识区 `workspace/literature/`（生成检索日志 `scholar_search_records.json`、候选模型库 `candidate_models.json` 及调研综述 `literature_summary.md`）；
+   - 后续方法选型必须消费该知识区，参考文献 100% 绑定真实检索文献，杜绝空对空建模与虚假引用。
+
 ---
 
 ## 三、用户启动响应机制

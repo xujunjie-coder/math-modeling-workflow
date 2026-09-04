@@ -22,7 +22,7 @@ If these are missing, return to the producer skill rather than guessing.
 
 - Problem parse and classification.
 - Data audit, including missingness, effective sample size, imbalance, cardinality, and distribution summaries.
-- Literature analysis when available.
+- Literature analysis and temporary knowledge base artifacts from `workspace/literature/` (`candidate_models.json`, `scholar_search_records.json`, `literature_summary.md`).
 - Contest deadline, implementation language, interpretability needs, and compute limits.
 - `planning/session_config.json`.
 - Existing `methods/Qx/qx_method_card.md` and decision ledger when revising.
@@ -34,10 +34,10 @@ If these are missing, return to the producer skill rather than guessing.
    - Ask about human-owned trade-offs, not algorithm names.
    - Reuse answers already present in the decision ledger.
 
-2. **Derive method requirements.**
+2. **Derive method requirements and ingest literature models.**
+   - Ingest candidate mathematical models from `workspace/literature/candidate_models.json`. Ground hypotheses and state equations in real mechanisms published in authoritative literature.
    - Start from required output, hard constraints, data characteristics, validation criteria, explanation burden, and experiment budget.
-   - Incorporate problem background research: leverage domain mechanisms, physical/chemical principles, industry priors, and reference literature gathered online to ground modeling assumptions.
-   - Enforce the simplicity-first principle (Occam's razor): if both a complex model and a simple model can solve the problem, strictly prioritize the simpler model (favoring interpretability, numerical stability, and robustness over gratuitous complexity).
+   - Enforce the simplicity-first principle (Occam's razor): among candidate formulations from literature or statistical toolkits, strictly prioritize the simpler model (favoring interpretability, numerical stability, and robustness over gratuitous complexity).
    - Identify the failure modes that would make a method unusable.
 
 3. **Create a role-based shortlist.**
