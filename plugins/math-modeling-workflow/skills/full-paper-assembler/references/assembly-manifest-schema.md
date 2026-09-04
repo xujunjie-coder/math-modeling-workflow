@@ -58,5 +58,6 @@
 - `questions` must match active submission manifests.
 - Each Qx maps to one unique `6.x` section.
 - Every retained claim/figure/table has a source and destination.
+- `renumbering` maps initial chapter-based figure/table labels (e.g., `图1-1`, `表1-1`) to final sequential labels (`图1`, `表1`), enabling in-text reference replacement after human review.
 - Duplicate disposition is explicit; absence from the final paper is not silently inferred.
 - Validation booleans are observed results, not placeholders copied into a final manifest.

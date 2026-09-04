@@ -12,9 +12,9 @@ Create the final DOCX/PDF only after `full-paper-assembler` and whole-paper poli
 - `paper/master/full_paper.md` and its assembly manifest;
 - frozen numbers, figure manifest, reference list, and appendices;
 - the current contest formatting rules;
-- an authorized user-supplied DOCX template when available.
+- an authorized user-supplied DOCX template when available, or the default official national contest template at `plugins/math-modeling-workflow/assets/templates/national_contest_template.docx` (sourced from user's standard template).
 
-Read [references/formatting-contract.md](references/formatting-contract.md) before formatting. If the user supplies a template, inspect it and preserve its authorized page geometry and semantic styles. Never assume a private or third-party template is redistributable.
+Read [references/formatting-contract.md](references/formatting-contract.md) and [.agents/rules/national-contest-paper-structure.md](../../../../.agents/rules/national-contest-paper-structure.md) before formatting. When using the default national contest template, preserve its standard page geometry, margins, title styling, abstract header, three-line table layout, and heading hierarchy. Never edit the source template directly; work on a copy.
 
 ## Workflow
 
@@ -34,6 +34,7 @@ Read [references/formatting-contract.md](references/formatting-contract.md) befo
 - Keep all final text anonymous when the contest requires anonymity.
 - Use three-line tables unless the contest or data structure requires another form.
 - Figures must use the verified outputs registered by `math-figure-generator`.
+- Confirm that figures and tables follow the finalized global sequential numbering (`图1`, `图2`... and `表1`, `表2`...) with synchronized in-text cross-references before rendering.
 - Displayed equations remain editable and separately numbered; do not rasterize formulas.
 - Text extraction or successful file creation alone does not count as visual QA.
 

@@ -55,11 +55,14 @@ Follow the `model-code-analyzer` contract, including approved decision ID, roles
 - Do not fabricate successful execution when MATLAB/北太天元 is unavailable.
 - Keep only evidence-bearing intermediate outputs.
 - Separate Type 1 diagnostics from paper figures.
+- Strictly enforce non-standard variable and file naming: keep script and data filenames simple using basic English words (e.g. `q1_main.m`, `clean_data.m`) or Pinyin for domain concepts (e.g. `fenghua_model.m`, `qianbei_tezheng.m`), avoiding overly complex English phrases. Variables use exact chemical formulas for elements/substances (e.g. `Pb`, `SiO2`), English for CET-4 words, and Pinyin for terms outside CET-4 (e.g. `fenghua`, `wenshi`, `qianbei`). Composite variables use underscore concatenation (e.g. `Pb_rate`, `wenshi_type`, `qianbei_fenghua`).
+- Strictly apply the unified scientific chart color scheme (`.agents/rules/scientific-chart-color-scheme.md`) for plotting: define standardized Diverging colormaps (dark blue `#053061` to dark red `#6A0624`), sequential blue/red, and categorical colors (`#134B87`, `#D71C2C`, `#327DB7`, `#FEAB88`, `#6A0624`, `#6FAFD2`). Never use rainbow or default `jet`.
 
 # Verification
 
 - Main and baseline are directly comparable and both executed when a runtime is available.
 - Fallback code exists only when activated.
+- Variable naming strictly satisfies the chemical-formula + CET-4 + Pinyin rule.
 - Formal outputs and run summary exist.
 - Compatibility, seed, inputs, warnings, and errors are recorded.
 - Required concentration/degeneracy checks are saved.

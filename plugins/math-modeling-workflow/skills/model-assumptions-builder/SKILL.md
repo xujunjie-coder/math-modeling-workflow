@@ -43,13 +43,16 @@ Read legacy candidate pools only during migration.
 # Rules
 
 - Do not invent generic assumptions such as “data are accurate” unless they affect a real dependency.
+- Format every assumption statement with the standard template: "假设……" (e.g. `假设1：假设……`).
+- Explicitly record modeling conventions when present, and note when no conventions exist to enable dynamic section title naming ("模型假设与约定" vs "模型假设").
 - Do not finalize necessary/simplifying or impact judgments for the human.
 - Do not leave many repeated sentinels in the final file; collect missing judgments through a choice card and stop finalization until answered.
 - Revisit an assumption only when its method, evidence, or downstream use materially changes.
 
 # Verification
 
-- Every assumption has a modeling need and source.
+- Every assumption has a modeling need, a source, and uses the "假设……" template.
+- Presence or absence of explicit conventions is recorded for paper title routing.
 - Human-owned labels trace to decisions.
 - Probe/robustness evidence addresses load-bearing assumptions.
 - Cross-Qx conflicts are resolved or explicit.

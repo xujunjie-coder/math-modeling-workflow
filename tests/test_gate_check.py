@@ -137,6 +137,10 @@ class PureLogicTest(unittest.TestCase):
         records = [decision("method_choice", "a", decided_by="ai")]
         self.assertNotIn("method_choice", gate_check.active_decisions(records))
 
+    def test_autonomous_agent_decided_choice_counts(self):
+        records = [decision("method_choice", "a", decided_by="autonomous_agent")]
+        self.assertIn("method_choice", gate_check.active_decisions(records))
+
 
 class QuestionGateTest(unittest.TestCase):
     def test_each_gate_unlocks_in_order_lean(self):

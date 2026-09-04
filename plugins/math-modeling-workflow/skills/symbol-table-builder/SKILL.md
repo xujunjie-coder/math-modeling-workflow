@@ -45,6 +45,7 @@ Read legacy candidate pools only when method cards are absent.
 # Rules
 
 - Define every symbol before first use.
+- Code variable mappings must adhere to the non-standard naming rules: chemical formulas for elements/compounds (e.g. `Pb`, `SiO2`), CET-4 English for common terms, and Pinyin for domain/out-of-scope concepts.
 - Record units and domains when applicable.
 - Use one notation for cross-question handoffs.
 - Do not invent variables to make a table look complete.

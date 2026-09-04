@@ -17,6 +17,7 @@ Ask the smallest useful question that only the human modeler can answer. Present
 # Configuration
 
 - Read `interaction_mode`; accept legacy `mode` for compatibility.
+- `autonomous` (default): automatically resolve decisions using optimal defaults (Occam's razor, simple model first, verified probe pass) with `decided_by: "autonomous_agent"` to eliminate human cognitive overhead during the competition.
 - `learning`: show 2–3 short questions and withhold the AI suggestion until the user answers.
 - `speed`: show one compressed question and optionally show the AI suggestion alongside.
 - `rigor_profile` does not change who owns the judgment.

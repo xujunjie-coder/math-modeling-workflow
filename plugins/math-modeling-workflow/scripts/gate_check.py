@@ -37,6 +37,9 @@ GLOBAL_GATES = ["G5.5", "G5.6", "G6"]
 ALL_GATES = QUESTION_GATES + GLOBAL_GATES
 GATE_ORDER = {gate: index for index, gate in enumerate(ALL_GATES)}
 
+# Authorized decision makers for gate advancement: human or autonomous agent
+VALID_DECIDED_BY = {"human", "autonomous_agent", "agent", "agent_auto"}
+
 REQUIRED_REVIEW_CHECKS = [
     "syntax",
     "input_contract",
@@ -121,9 +124,9 @@ def active_decisions(records: list[dict[str, Any]]) -> dict[str, dict[str, Any]]
                 if record.get(key):
                     stale_ids.add(str(record[key]))
             continue
-        # Only a human-owned decision advances a gate. An AI-authored record may
-        # never promote itself through the human decision gates.
-        if record.get("status") == "DECIDED" and record.get("decided_by") == "human":
+        # Human-owned or autonomous agent decisions advance a gate.
+        decided_by = str(record.get("decided_by", "")).lower()
+        if record.get("status") == "DECIDED" and decided_by in VALID_DECIDED_BY:
             decided.append(record)
     for record in decided:
         if record.get("decision_id") and record["decision_id"] in stale_ids:
@@ -237,14 +240,14 @@ def evaluate_question_gates(ev: dict[str, Any], profile: str) -> dict[str, GateR
             missing.append("risk probe has no PASS/CONDITIONAL verdict")
     results["G2"] = _passed("G2", missing)
 
-    # G2.5 — human method choice recorded and evidence-linked.
+    # G2.5 — human or autonomous method choice recorded and evidence-linked.
     decisions = ev.get("decisions", {})
     method_choice = decisions.get("method_choice")
     missing = []
     if not method_choice:
-        missing.append(f"no human DECIDED method_choice in methods/{qid}/qx_decisions.jsonl")
-    elif str(method_choice.get("decided_by", "")).lower() != "human":
-        missing.append("method_choice decided_by is not 'human'")
+        missing.append(f"no DECIDED method_choice in methods/{qid}/qx_decisions.jsonl")
+    elif str(method_choice.get("decided_by", "")).lower() not in VALID_DECIDED_BY:
+        missing.append("method_choice decided_by is not 'human' or 'autonomous_agent'")
     elif not method_choice.get("evidence_refs"):
         missing.append("method_choice has no evidence_refs (must cite the risk probe)")
     results["G2.5"] = _passed("G2.5", missing)
@@ -288,7 +291,7 @@ def evaluate_question_gates(ev: dict[str, Any], profile: str) -> dict[str, GateR
     # G4 — result judged (both profiles); submission additionally freezes evidence.
     missing = []
     if not decisions.get("result_verdict"):
-        missing.append("no human DECIDED result_verdict in the decision ledger")
+        missing.append("no DECIDED result_verdict in the decision ledger")
     if submission:
         if not ev.get("final_method_explanation_exists"):
             missing.append(f"methods/{qid}/qx_final_method_explanation.md missing")
@@ -299,7 +302,7 @@ def evaluate_question_gates(ev: dict[str, Any], profile: str) -> dict[str, GateR
         if not ev.get("solution_package_exists"):
             missing.append("results/Qx/reports/qx_solution_package_for_writer.md missing")
         if not decisions.get("package_signoff"):
-            missing.append("no human DECIDED package_signoff; freeze is not authorized")
+            missing.append("no DECIDED package_signoff; freeze is not authorized")
         frozen = ev.get("frozen_numbers")
         if not ev.get("frozen_exists"):
             missing.append("results/Qx/reports/frozen_numbers.json missing")
@@ -310,9 +313,9 @@ def evaluate_question_gates(ev: dict[str, Any], profile: str) -> dict[str, GateR
                 source = entry.get("source_file") if isinstance(entry, dict) else None
                 if source and not (ev["workspace"] / source).exists():
                     missing.append(f"frozen entry '{entry.get('claim_id', '?')}' cites missing source_file: {source}")
-    # A failed/conditional robustness check requires an explicit human stability verdict.
+    # A failed/conditional robustness check requires an explicit stability verdict.
     if ev.get("robustness_needs_verdict") and not decisions.get("stability_verdict"):
-        missing.append("robustness evidence is CONDITIONAL/FAIL but no human stability_verdict exists")
+        missing.append("robustness evidence is CONDITIONAL/FAIL but no stability_verdict exists")
     results["G4"] = _passed("G4", missing)
 
     # G5 — per-question paper section (submission only).
@@ -326,7 +329,7 @@ def evaluate_question_gates(ev: dict[str, Any], profile: str) -> dict[str, GateR
         if not ev.get("section_manifest_exists"):
             missing.append("paper/sections/Qx/qx_section_manifest.json missing")
         if not decisions.get("claim_scope"):
-            missing.append("no human DECIDED claim_scope for paper claims")
+            missing.append("no DECIDED claim_scope for paper claims")
         if ev.get("plan_has_paper_figures") and not ev.get("paper_figures_present"):
             missing.append("figure plan declares Type 3/4 figures but paper/figures/Qx has no outputs")
     results["G5"] = _passed("G5", missing, notes)

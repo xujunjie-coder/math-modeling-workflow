@@ -36,25 +36,28 @@ Do not derive canonical claims from legacy DOCX prose or exploratory output fold
 4. Read [references/full-paper-outline.md](references/full-paper-outline.md), choose one global outline, and map every retained block to exactly one destination.
 5. Build the assembly manifest using [references/assembly-manifest-schema.md](references/assembly-manifest-schema.md). Record provenance, duplicate disposition, downstream interfaces, and numbering maps.
 6. Draft `paper/master/full_paper.md`. Write the body first; write the abstract and final conclusions last from already placed claims.
-7. Create `paper/master/claim_map.json` and `paper/master/renumber_map.json` so all numerical claims, figures, tables, equations, and references remain traceable.
-8. Run `scripts/validate_full_paper.py` against the master draft and manifest. Repair assembly defects without changing canonical evidence.
+7. Create `paper/master/claim_map.json` and `paper/master/renumber_map.json` so all numerical claims, figures, tables, equations, and references remain traceable. Initial assembly keeps chapter-based figure/table numbering for human audit.
+8. Apply global sequential renumbering (图1, 2, 3... and 表1, 2, 3...) and synchronously update all in-text cross-references by executing the automated tool `scripts/renumber_figures_tables.py paper/master/full_paper.md --in-place --json-map paper/master/renumber_map.json`.
+9. Run `scripts/validate_full_paper.py` against the master draft and manifest. Repair assembly defects without changing canonical evidence.
 
 # Assembly Invariants
 
-- Exactly one title, abstract, keyword line, global problem restatement, global problem analysis, assumptions section, symbol section, reference list, and appendix sequence.
+- Exactly one title, abstract, keyword line, global problem restatement, global problem analysis, assumptions section, symbol section, reference list, and appendix sequence, strictly following the twelve-part structure in `.agents/rules/national-contest-paper-structure.md` (including explicit AI tool usage declaration and Appendix A supporting material file table). The reference list must contain only authentic, authoritative references adhering to GB/T 7714-2015, with 100% 1-to-1 matching to in-text citations.
 - Every active Qx appears once in the model/solution chapter and has goal, method, result, validation pointer, limitation, and question summary.
 - Shared preprocessing, shared assumptions, and shared symbols appear globally once; question-specific exceptions remain local and are labeled.
 - A downstream question reads upstream outputs with the same sample scope, units, symbols, thresholds, labels, and versions.
 - No `一、问题重述` or equivalent global heading may restart inside a `6.x` question section.
 - Every number resolves to a current freeze; every interpretive judgment resolves to a human decision ID.
 - Every figure/table reference resolves to an existing verified artifact. Captions cannot survive without their artifact.
-- Numbering is continuous across the whole paper rather than restarting per Qx.
+- Figure and table numbering follows the two-stage lifecycle: initially retained as chapter-based (`图1-1`, `表1-1`) in the assembled master draft for human audit; after human audit confirms the master draft without error, all figures and tables are sequentially renumbered globally (`图1, 图2...` and `表1, 表2...`) with all in-text cross-references updated synchronously.
 - Abstract and conclusion contain no claim absent from the assembled body.
+- When the original contest problem statement does not explicitly divide questions into subquestions, assemble sections under task-oriented headings without mechanical "subquestion" labels or structural subjects.
 
 # Prohibited Merge Patterns
 
 - Appending DOCX body XML or copying fixed paragraph ranges.
 - Concatenating complete per-question papers with their own front matter, references, or appendices.
+- Retaining internal engineering subproblem labels (e.g., "the first subquestion of question one") when the original contest problem did not declare explicit subquestions.
 - Compressing a question to headline results when its formulation or validation is needed for reproducibility.
 - Recomputing or silently reconciling conflicting numbers during writing.
 - Keeping diagnostic figures solely because they existed in a question draft.

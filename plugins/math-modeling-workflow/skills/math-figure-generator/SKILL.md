@@ -25,7 +25,7 @@ Load only what the requested chart needs:
 3. Generate with deterministic code. Prefer matplotlib for submission figures; seaborn may simplify statistical plots, NetworkX may support networks, and Plotly is primarily for exploration unless a verified static export is required.
 4. Use a shared project plotting style when several figures are produced; do not hand-draw final statistical charts cell-by-cell with a raster canvas when a plotting library can preserve scales, typography, and vector output.
 5. Save editable source code and paired outputs: vector PDF or SVG when compatible, plus a PNG fallback. Type 3/4 PNG output should normally be 600 dpi and must be at least 300 dpi.
-6. Apply the shared color, typography, sizing, and labeling conventions at the intended paper placement width.
+6. Apply the shared color, typography, sizing, and labeling conventions at the intended paper placement width. Strictly follow the unified scientific palette defined in `references/color-systems.md` and `.agents/rules/scientific-chart-color-scheme.md` (Diverging red-blue for correlation/clustering heatmaps `#053061` to `#6A0624`, sequential blue/red for densities, and standard categorical `#134B87`, `#D71C2C`, `#327DB7`, `#FEAB88` etc. for curves/bars).
 7. Render the individual figure and, when it is already embedded, the target paper page; inspect both visually.
 8. Check clipping, overlap, illegible text, misleading axes, legends, empty panels, colorbar semantics, and source/claim mismatch.
 9. Compare plotted counts, extrema, labels, and key annotations against the canonical source artifact.
@@ -36,7 +36,7 @@ Load only what the requested chart needs:
 - Type 1/2 exploration: `results/Qx/experiments/roundN/figures/`
 - Type 3/4 submission: `paper/figures/Qx/`
 
-Use stable descriptive filenames. Do not copy Type 1 diagnostics into the paper directory.
+Use stable descriptive filenames using simple English words or Pinyin (e.g., `fig1_trend.png`, `fig2_fenghua.png`, `Pb_scatter.png`), avoiding overly complex English phrases. Do not copy Type 1 diagnostics into the paper directory.
 
 # Figure Requirements
 

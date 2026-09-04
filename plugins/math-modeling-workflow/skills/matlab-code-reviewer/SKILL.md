@@ -14,7 +14,7 @@ description: Review, run, debug, and verify approved MATLAB or Beita Tianyuan mo
 1. Resolve approved main/baseline scope and any activated fallback.
 2. Inspect and run the code when a compatible runtime is available.
 3. Evaluate:
-   - `syntax`
+   - `syntax`: scripts parse/run cleanly without syntax faults, and variable naming strictly adheres to chemical formulas, CET-4 English, and Pinyin (exempting built-in API kwargs and standard math shorthand like `opt`, `loss`, `res`, `grad`).
    - `input_contract`
    - `method_alignment`
    - `reproducibility`
@@ -43,10 +43,12 @@ Required named checks use `PASS`, `FAIL`, or justified `NOT_APPLICABLE`. Runtime
 - Do not approve unavailable toolbox dependencies without an explicit target exception.
 - Do not change the mathematical model silently.
 - Do not require a duplicate Markdown review.
+- Flag variable names violating the chemical-formula + CET-4 English + Pinyin convention as review findings.
 
 # Verification
 
 - Approved main and baseline scope is enforced.
+- Variable naming compliance against non-standard rules is verified.
 - Compatibility constraints are checked.
 - Run summary and outputs agree.
 - Verdict follows required check statuses and runtime evidence.

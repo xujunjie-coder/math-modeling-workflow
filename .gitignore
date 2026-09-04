@@ -44,3 +44,5 @@ paper/final/
 !examples/**/robustness/
 !examples/**/robustness/**
 !plugins/**/assets/**/*.pdf
+!plugins/**/assets/**/*.docx
+!国赛模板*.docx

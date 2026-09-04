@@ -14,7 +14,7 @@ description: Review, run, debug, and verify approved Python modeling code agains
 1. Resolve the approved main and usable baseline. Flag scripts for unapproved candidates unless a fallback activation exists.
 2. Inspect and run the code in the intended order.
 3. Evaluate required checks:
-   - `syntax`: imports, execution, exceptions, and obvious runtime faults.
+   - `syntax`: imports, execution, exceptions, obvious runtime faults, and variable naming compliance (flags standard variable naming conventions; enforces chemical formulas for elements/substances like `Pb`, CET-4 English for common terms, and Pinyin for domain/out-of-scope terms; exempts library kwargs and standard math abbreviations like `opt`, `loss`, `res`, `grad`, `iter`).
    - `input_contract`: paths, fields, units, shapes, missing-data handling, and raw-data protection.
    - `method_alignment`: formulas, objectives, constraints, assumptions, main/baseline roles, and fallback scope match the approved plan.
    - `reproducibility`: seed, deterministic setup, dependency/runtime record, and rerun consistency.
@@ -55,10 +55,12 @@ Statuses are `PASS`, `FAIL`, or `NOT_APPLICABLE` with a reason. Any required `FA
 - Do not silently change mathematical meaning.
 - Do not create success logs beyond the review JSON.
 - Treat code newer than its review as requiring the affected checks to rerun, not necessarily the entire pipeline.
+- Flag variables violating the chemical-formula + CET-4 English + Pinyin convention as review findings.
 
 # Verification
 
 - Every required named check has concrete evidence.
+- Variable naming compliance against non-standard rules is verified.
 - Main and baseline are approved and comparable.
 - Run summary and on-disk outputs agree.
 - Review verdict follows check statuses.

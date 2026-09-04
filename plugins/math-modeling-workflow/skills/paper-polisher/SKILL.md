@@ -82,7 +82,8 @@ Use or request:
    - every active Qx is covered once and transitions preserve upstream/downstream contracts;
    - shared preprocessing, assumptions, symbols, references, and appendices are not duplicated;
    - abstract and final conclusion cover all questions and use claims already present in the body;
-   - figure, table, equation, and reference numbering follows the assembly renumber map.
+   - figure, table, equation, and reference numbering follows the assembly renumber map;
+   - in post-audit finalization, verify that figure/table labels have transitioned from chapter-based (`图1-1`, `表1-1`) to globally continuous (`图1`, `表1`) and all in-text references have been updated without residual chapter-based labels.
 
 # 12-Point Polish Checklist
 
@@ -148,18 +149,23 @@ Flag and downgrade or remove:
 - Figure references must be in order (Fig.1 before Fig.2 in text).
 - Every table reference must correspond to an actual table.
 - Captions must include the main takeaway, not just a description.
+- Every figure must be followed by meaningful in-text analytical discussion centered on the visual evidence, drawing clear findings and conclusions (e.g. "通过上述图片得出……", "由图X可以看出……"); flag visuals left unanalyzed.
 
 ## 9. Transition and Flow
 - Between sections: one bridging sentence connecting to the next section.
 - Between paragraphs: logical flow (therefore, however, in contrast, furthermore, specifically).
 - Avoid "As mentioned above" / "As discussed previously" — restate briefly instead.
 - Avoid "It is worth noting that..." / "It should be mentioned that..." — just state it.
+- Strip mechanical "subquestion" phrases (e.g. "For the first subquestion of question one") when the contest problem did not divide questions into subquestions; omit structural subjects and transition using concrete task objectives.
 
 ## 10. Word Choice
 - Prefer specific over vague: "RMSE improved by 35%" not "the error got better".
 - Prefer simple over ornate: "use" not "utilize", "show" not "elucidate", "about" not "approximately" (unless precision matters).
 - Remove filler: "It is important to note that", "Interestingly", "Remarkably".
 - Remove redundant pairs: "various different", "basic fundamentals", "advance planning".
+- Highlight specialized and domain terms using bold (`**term**`) so human authors can easily locate and rewrite them into conversational language.
+- Strip invented terse phrases or unnatural acronyms; replace with standard terms or full explanatory clauses.
+- Permit and encourage plain, conversational Chinese for intuition and explanation; avoid unreadable academic jargon.
 
 ## 11. Voice
 - Prefer active voice for clarity: "We applied TOPSIS to the indicator matrix" not "TOPSIS was applied to the indicator matrix".
@@ -179,7 +185,7 @@ Flag and downgrade or remove:
 |---------|-------------|
 | Abstract | Claim calibration, numerical precision, word count |
 | Problem Restatement | Clarity, no added requirements |
-| Assumptions | Necessity check, impact statements |
+| Assumptions | Check "假设……" template formatting, dynamic title ("模型假设" vs "模型假设与约定"), necessity check |
 | Symbols | Completeness, consistency, distinction of variable types |
 | Model Construction | Formula correctness, notation consistency, assumption traceability |
 | Model Solution | Procedural clarity, reproducibility |
@@ -209,6 +215,11 @@ When the source text is in Chinese and needs translation to English:
 - Do not remove limitations or uncertainty statements.
 - Keep changes traceable — show what was changed and why.
 - Do not turn a semantic assembly issue into a prose edit; route missing/duplicated/misplaced blocks back to `full-paper-assembler`.
+- Ensure technical terms are prominently bolded (`**term**`) for downstream human review and conversational rephrasing.
+- Eliminate invented terse phrases; allow plain conversational phrasing when explaining intuition.
+- Eliminate mechanical "subquestion" labels and headings when the problem statement did not divide questions into subquestions.
+- Verify that assumptions follow the "假设……" template and the section title dynamically reflects presence/absence of conventions ("模型假设与约定" vs "模型假设").
+- Verify that every embedded figure has in-depth textual discussion centered on visual findings and conclusions (e.g. "通过上述图片得出……").
 - If the underlying argument is broken, flag it rather than polishing over it.
 
 # Verification
@@ -216,11 +227,15 @@ When the source text is in Chinese and needs translation to English:
 Before handing off, verify:
 
 - Every modified sentence is grammatically correct.
+- Technical terms are highlighted in bold, no invented terse phrases exist, and intuitive explanations use plain prose.
+- Mechanical "subquestion" phrasing is absent when subquestion divisions were unstated; transitions omit unnecessary structural subjects.
+- Assumptions strictly use the "假设……" template and the section title dynamically matches convention presence.
+- Embedded figures are accompanied by in-depth in-text analytical discussions centered on the visual conclusions.
 - Every formula cross-checked against the final method explanation.
 - Every claim calibrated to match available evidence.
 - Overclaims are flagged or downgraded.
 - Notation is consistent across all sections.
-- Figure/table references are in order and correspond to existing files.
+- Figure/table references are in order and correspond to existing files, following the chapter-based scheme in drafts and globally sequential numbering (图1, 表1) in finalized master papers with all in-text references synchronized.
 - Contest formatting requirements are met.
 - A change summary is produced.
 

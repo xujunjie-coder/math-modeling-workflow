@@ -36,12 +36,14 @@ If these are missing, return to the producer skill rather than guessing.
 
 2. **Derive method requirements.**
    - Start from required output, hard constraints, data characteristics, validation criteria, explanation burden, and experiment budget.
+   - Incorporate problem background research: leverage domain mechanisms, physical/chemical principles, industry priors, and reference literature gathered online to ground modeling assumptions.
+   - Enforce the simplicity-first principle (Occam's razor): if both a complex model and a simple model can solve the problem, strictly prioritize the simpler model (favoring interpretability, numerical stability, and robustness over gratuitous complexity).
    - Identify the failure modes that would make a method unusable.
 
 3. **Create a role-based shortlist.**
-   - One `main_candidate`: best fit to the chosen trade-off.
+   - One `main_candidate`: best fit to the chosen trade-off; must strictly favor the simpler viable model when multiple candidates can solve the problem.
    - One `usable_baseline`: completes the real task and yields directly comparable outputs.
-   - At most one `conditional_fallback`: differs in a meaningful mathematical way and has an explicit activation trigger.
+   - At most one `conditional_fallback`: differs in a meaningful mathematical way and has an explicit activation trigger (e.g., activated only if the simpler main candidate fails to capture critical non-linear dynamics).
    - If a simple reference cannot complete the real task, label it `diagnostic_reference`; it does not satisfy the baseline requirement.
    - Do not add a method merely to reach a candidate count.
 
@@ -61,10 +63,9 @@ If these are missing, return to the producer skill rather than guessing.
    - `methods/Qx/probes/risk_probe_summary.json`
    - Update `planning/manifests/Qx.json` if present.
 
-7. **Ask for the method choice.**
-   - Present the probe evidence through a choice card.
-   - After the user answers, hand the exact answer to `modeler-decision-logger` for append-only capture in `methods/Qx/qx_decisions.jsonl`.
-   - If no answer is available, stop. Do not create a placeholder decision file.
+7. **Record method choice (Human or Autonomous).**
+   - In autonomous mode (default): automatically select the passing `main_candidate` adhering strictly to Occam's razor (simple model first), record the decision in `methods/Qx/qx_decisions.jsonl` with `decided_by: "autonomous_agent"` citing probe evidence and rationale, and proceed directly to code generation.
+   - In interactive mode with an active human prompt: present the probe evidence through a choice card and await human response.
 
 # Method Card Contract
 
@@ -114,20 +115,22 @@ A method fails screening when a load-bearing assumption fails, the output degene
 
 After G2 screening:
 
-- If the human choice is absent: return the evidence-backed choice card.
+- In autonomous mode (default): automatically record the method choice for the simpler main candidate, pass G2.5, and hand off directly to `model-code-analyzer`.
+- In interactive mode: if the human choice is absent, return the evidence-backed choice card.
 - If G2.5 is decided: hand the method card, probe summary, chosen IDs, and experiment budget to `model-code-analyzer`.
 - Instruct code generation to implement only the approved main method and usable baseline.
 - Keep the fallback dormant until its recorded trigger fires.
 
 # Rules
 
+- Support autonomous auto-selection: in autonomous mode, automatically select the simplest passing candidate as main_candidate, log it with decided_by: "autonomous_agent", and proceed without blocking.
+- Strictly enforce the simplicity-first principle: if a simple model and a complex model can both solve the problem, prioritize the simpler model as the main candidate.
+- Ground method selection and assumptions in online background research, physical/chemical principles, domain priors, and reference papers.
 - Do not use a fixed candidate count.
 - Do not use source-line count as validation quality.
 - Do not invent missing data fields, constraints, labels, or evaluation metrics.
 - Do not call a nonfunctional toy method a baseline.
 - Do not fully implement all shortlisted methods.
-- Do not select the method or write the human rationale.
-- Keep AI suggestions visibly separate from the human decision.
 
 # Compatibility
 

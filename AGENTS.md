@@ -1,0 +1,61 @@
+# 数学建模竞赛工作流全局系统指令 (Mathematical Modeling Workflow Policy)
+
+本工作区为**全国大学生数学建模竞赛全自动（Auto-Pilot）实战工作区**。
+任何接入本工作区的 AI 智能体（无论会话切换、模型切换或新任务开启），均必须强制遵循本文件及 `.agents/rules/` 下的所有工作流规约。
+
+---
+
+## 一、工作流技能与入口索引
+
+本仓库已内置完整的端到端建模技能库（位于 `plugins/math-modeling-workflow/skills/`），由以下核心流程驱动：
+1. **总编排与门禁调度**：`workflow-orchestrator`（门禁检查由 `plugins/math-modeling-workflow/scripts/gate_check.py` 执行）
+2. **题目解析与数据清洗**：`problem-parser`, `problem-classifier`, `data-auditor-cleaner`
+3. **模型选型与代码生成**：`method-selector`, `python-model-code-generator`, `matlab-model-code-generator`, `code-reviewer`
+4. **统一科研绘图**：`math-figure-generator`
+5. **论文写作与总装**：`paper-section-writer`, `full-paper-assembler`, `national-modeling-paper-formatter`
+6. **图表自动重排脚本**：`plugins/math-modeling-workflow/scripts/renumber_figures_tables.py`
+
+---
+
+## 二、六大核心执行铁律 (Invariants)
+
+1. **AI 全自动无人值守（Auto-Pilot 模式）**：
+   - 默认采取端到端自主推进，中间过程无需等待人类交互；
+   - 方法选型（G2.5）与结果冻结（G4）由 AI 自主评判并签署（`decided_by: "autonomous_agent"`），门禁系统一路绿灯通过 G1 至 G5.6；
+   - 人类仅在最终生成主论文后进行通读审核。
+
+2. **奥卡姆剃刀：简单模型优先（Simplicity First）**：
+   - 详见规则：`.agents/rules/model-selection-principles.md`
+   - 允许并提倡联网检索背景常数与专业机理；
+   - 复杂模型与简单模型都能解决时，坚决选用可解释性高、数值稳定的简单模型。
+
+3. **代码变量与文件命名简明规范**：
+   - 详见规则：`.agents/rules/code-variable-naming.md`
+   - 变量与文件命名严禁冗长生僻英文；
+   - 化学元素/物质强制采用化学式（如 `Pb`, `SiO2`）；
+   - 英语四级以内核心词允许英文（如 `data`, `rate`, `main.py`）；
+   - 领域术语强制使用全拼拼音（如 `fenghua`, `wenshi`, `qianbei`）。
+
+4. **参考文献 100% 真实且权威**：
+   - 详见规则：`.agents/rules/reference-citation-rules.md`
+   - 零伪造、零杜撰；优先引用经典权威教材（姜启源、司守奎、李航、周志华等）、奠基性经典算法论文、国家标准（GB/T）；
+   - 严格遵循 GB/T 7714-2015 格式，与正文方括号引用严格 1-to-1 匹配。
+
+5. **统一科研绘图配色方案**：
+   - 详见规则：`.agents/rules/scientific-chart-color-scheme.md`
+   - 统一采用科研级配色标准（极高值 `#6A0624`、高值 `#B80824`、偏高值 `#D71C2C`、中高值 `#FEAB88`、中等值 `#FDD2BC`、中性偏低 `#C7E0ED`、偏低值 `#6FAFD2`、低值 `#327DB7`、较低值 `#134B87`、极低值 `#053061`）；
+   - 热力图统一使用红蓝发散色，折线/柱状图使用标准 6 色板，基线使用中性灰虚线。
+
+6. **国赛标准模板十二大板块**：
+   - 详见规则：`.agents/rules/national-contest-paper-structure.md`
+   - 采用 `plugins/math-modeling-workflow/assets/templates/national_contest_template.docx` 排版；
+   - 必须包含五段式摘要、禁止抄原题的问题重述、三线表符号说明、独立数据预处理、深入三步法图文论述、官方AI使用声明、附录A支撑材料文件列表。
+
+---
+
+## 三、用户启动响应机制
+
+当用户输入包含**“我已经将赛题放入 problem_statement/，数据附件放入 data_raw/。请启动 Auto-Pilot 模式……”**时：
+1. 立即确认 `problem_statement/` 与 `data_raw/` 中的赛题和附件文件；
+2. 自动启动 Auto-Pilot 管道：从 G1（题目解析与清洗）自动推进至 G5.6（国赛格式化输出）；
+3. 产出最终提交论文 `paper/final/final_paper.docx` 与 `paper/final/final_paper.pdf`，并通知参赛队员进行最终审核。

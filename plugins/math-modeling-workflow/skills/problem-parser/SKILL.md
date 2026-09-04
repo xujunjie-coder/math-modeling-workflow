@@ -11,6 +11,7 @@ Produce a model-neutral problem contract. Do not start from favorite algorithms 
 
 - complete problem statement and attachments list;
 - contest rules and required deliverables;
+- background materials and domain reference knowledge (via web research or reference literature);
 - user clarifications;
 - existing parse when revising.
 
@@ -74,6 +75,7 @@ Produce a model-neutral problem contract. Do not start from favorite algorithms 
 - Parse before classifying.
 - Do not name or recommend methods.
 - Do not fabricate data, fields, equations, causal relationships, or evaluation criteria.
+- Consult background materials and online research to ground domain definitions and problem context without inventing unverifiable facts.
 - Preserve units, time ranges, populations, and output formats.
 - A proposed relationship must be labeled as proposed until human-confirmed or evidence-supported.
 - Ask only about ambiguities that change the downstream problem.

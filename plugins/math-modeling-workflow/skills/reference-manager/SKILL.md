@@ -176,6 +176,9 @@ Use or request:
 - Every entry in `paper/refs.bib` must have at minimum: author, title, year.
 - A citation without any verifiable source (file, metadata, or user confirmation) is flagged as potentially fabricated.
 - Contest papers should cite: the problem statement, key methodology references, data sources (if external), and comparison baselines.
+- Prioritize authoritative sources: classic textbooks (e.g. Jiang Qiyuan, Si Shoukui, Li Hang, Zhou Zhihua), foundational papers (e.g. Saaty AHP, Hwang & Yoon TOPSIS, Breiman RF), national/industry standards (GB/T), official statistical yearbooks, and peer-reviewed journal articles. Never cite unverified blogs, forums, or non-academic websites.
+- In-text citations and the bibliography must correspond 1-to-1: every bibliography entry must be explicitly cited in the body text (e.g. `[1]`, `[2]`), and every in-text marker must match an authoritative entry.
+- Follow GB/T 7714-2015 bibliographic entry standards for Chinese contest papers.
 - Do not fabricate DOIs, page numbers, volume numbers, or author names.
 - Do not add "impressive-looking" references that were not actually consulted.
 - References should primarily support the methodology; avoid padding the reference list.
@@ -183,10 +186,11 @@ Use or request:
 # Rules
 
 - Do not fabricate references, metadata, or DOIs.
+- Only cite authentic, verifiable, and authoritative sources.
 - Do not add references that were not used in the paper.
 - Every citation must be traceable to an actual source.
 - Flag unverifiable citations as blocking issues — do not silently remove them.
-- Generate BibTeX entries only for verified sources.
+- Generate BibTeX and GB/T 7714 entries only for verified sources.
 - Use consistent citation key format.
 - Mark unverified entries explicitly in the `.bib` file.
 - Contest problem statements and official attachments should be cited.

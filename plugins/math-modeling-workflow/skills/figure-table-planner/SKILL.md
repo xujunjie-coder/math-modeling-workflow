@@ -51,6 +51,7 @@ Make every visual evidence-bearing. Prefer fewer useful visuals over a decorativ
 - Prefer a heatmap for a meaningful matrix such as correlation, confusion, missingness, transition, or two-parameter sensitivity; do not convert an ordinary table into a heatmap merely to add color.
 - Prefer box/violin/strip plots for group distributions, scatter plus fit or uncertainty for relationships, line plus band for time or sensitivity, and a confusion matrix plus class-aware metric for classification.
 - When several figures use the same categories, methods, variables, or groups, require stable ordering and visual identity across them.
+- Assign chapter-based identifiers (e.g. `图X-Y`, `表X-Y`) during planning and drafting; global sequential renumbering (图1, 2, 3... and 表1, 2, 3...) occurs only after human review of the assembled master paper.
 - A main-vs-baseline figure needs compatible metrics and the same evaluation setup.
 - Do not create a multi-method comparison merely to imply breadth.
 
@@ -58,6 +59,7 @@ Make every visual evidence-bearing. Prefer fewer useful visuals over a decorativ
 
 - Type 1 never enters the paper.
 - Type 3 uses final validated sources and a human-confirmed core claim.
+- For every Type 3 paper figure, specify the concrete conclusion to be derived in text, ensuring downstream paper sections discuss findings centered on the visual (e.g. "通过上述图片得出……结论").
 - Do not use unresolved exploratory figures as paper evidence.
 - Do not fabricate data, captions, or claims.
 - Do not fill plans with placeholder sentinels; pause for one human choice instead.

@@ -31,6 +31,19 @@ codex plugin add math-modeling-workflow@personal
 
 安装或更新插件后，请在 Codex 中开启一个新任务，使新的 Skills 被完整加载。
 
+## 🏆 比赛实战极速启动（拿到题目和附件后）
+
+详见详细操作指引：[docs/get-started-competition.zh-CN.md](docs/get-started-competition.zh-CN.md)
+
+1. **第一步（放文件）**：
+   - 赛题文档（PDF/Word/txt）放到：`problem_statement/`
+   - 数据附件（Excel/CSV）放到：`data_raw/`
+2. **第二步（发指令）**：在对话框中发送：
+   > “我已经将赛题放入 `problem_statement/`，数据附件放入 `data_raw/`。请启动 Auto-Pilot 模式，端到端完成题目解析、数据清洗、各问题选型求解、统一科研配色绘图、论文撰写，并严格按照国赛标准模板生成最终提交论文。”
+3. **第三步（终审交卷）**：AI 全自动完成建模、代码、绘图与全篇论文排版后，参赛队员直接通读 `paper/final/final_paper.docx` 或 `paper/final/final_paper.pdf`，做最终把关并提交！
+
+---
+
 ## 最短使用方式
 
 在一个新的比赛项目目录中输入：

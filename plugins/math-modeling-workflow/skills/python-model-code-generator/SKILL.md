@@ -67,12 +67,14 @@ Follow the schema in `model-code-analyzer`. Include:
 - Do not emit placeholder metrics, figures, or successful statuses.
 - Prefer portable `.py` scripts over notebook-only workflows.
 - Keep intermediate files only when needed for explanation, review, robustness, or debugging.
-- Use Type 1 diagnostic figures internally; do not present them as paper figures.
+- Strictly enforce non-standard variable and file naming: keep script and data filenames simple using basic English words (e.g. `q1_main.py`, `clean_data.py`) or Pinyin for domain concepts (e.g. `fenghua_model.py`, `qianbei_tezheng.py`), avoiding overly complex English phrases. Variables use exact chemical formulas for elements/substances (e.g. `Pb`, `SiO2`), English for CET-4 words, and Pinyin for terms outside CET-4 (e.g. `fenghua`, `wenshi`, `qianbei`). Composite variables use underscore concatenation (e.g. `Pb_rate`, `wenshi_type`, `qianbei_fenghua`).
+- Strictly apply the unified scientific chart color scheme (`.agents/rules/scientific-chart-color-scheme.md` and `math-figure-generator/references/color-systems.md`) when generating plots: use Diverging colormap (`#053061` to `#6A0624`) for heatmaps/correlations, sequential blue/red for density/loss, and unified categorical palette (`#134B87`, `#D71C2C`, `#327DB7`, `#FEAB88`, `#6A0624`, `#6FAFD2`) for curves/bars. Baseline curves must use grey `#767676` dashed lines.
 
 # Verification
 
 - Main and baseline both ran and are directly comparable.
 - Fallback code is absent unless activated.
+- Variable naming strictly satisfies the chemical-formula + CET-4 + Pinyin rule.
 - Formal outputs and run summary exist.
 - Seed, inputs, versions, warnings, and errors are recorded.
 - Required concentration/degeneracy checks are saved.

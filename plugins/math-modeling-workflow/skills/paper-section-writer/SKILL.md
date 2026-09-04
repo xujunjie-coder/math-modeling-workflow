@@ -94,6 +94,13 @@ Transcribe these from the decision ledger with provenance. If absent, invoke a c
 - Do not fabricate citations or causal meaning.
 - Avoid procedural diary prose and ceremonial detail.
 - Keep formulas, symbols, units, captions, and filenames consistent.
+- Highlight domain, algorithmic, and statistical technical terms using bold (`**term**`) to facilitate human revision into conversational phrasing.
+- Do not invent unnatural, terse compressed phrases or acronyms; use full standard terminology or explanatory clauses.
+- Permit and encourage conversational, plain-language explanations where helpful for conceptual clarity and intuition.
+- When the contest problem does not explicitly declare subquestions, do not write mechanical phrases like "the first subquestion of question one" or label headings with internal subproblem IDs; omit structural subjects and transition naturally by concrete task objectives.
+- Model assumptions and conventions: every drafted assumption section must include explicit assumptions; title the section "模型假设与约定" if conventions exist, or dynamically adjust to "模型假设" if conventions are absent; format every assumption item using the standard template "假设……" (e.g., `假设1：假设……`).
+- Mandatory in-text figure discussion: every figure placed in the text must be immediately followed by in-depth discussion centered on the visual evidence, explicitly stating conclusions (e.g., "通过上述图片得出……", "由图X可以看出……").
+- Number figures and tables by chapter (e.g., `图X-Y`, `表X-Y`) in drafted sections; ensure in-text references use this scheme prior to final global renumbering.
 - Do not create a new decision artifact.
 - Do not concatenate semantic modules or per-question DOCX files; final multi-question assembly belongs to `full-paper-assembler`.
 
@@ -103,6 +110,11 @@ Transcribe these from the decision ledger with provenance. If absent, invoke a c
 - Claim map resolves all numbers and judgments.
 - Method, results, and figures match canonical artifacts.
 - Physical meaning and contribution are human-owned.
+- Technical terms are highlighted in bold, no invented terse phrases appear, and conceptual explanations are plain and intuitive.
+- No mechanical "subquestion" phrases appear when the original prompt lacked explicit subquestion divisions; structural subjects are omitted or task-oriented.
+- Assumptions strictly use the "假设……" template and section heading dynamically reflects convention presence.
+- Embedded figures are accompanied by in-depth in-text analytical discussions centered on the visual conclusions.
+- Figures and tables strictly use chapter-based numbering (`图X-Y`, `表X-Y`) consistent with in-text references.
 - Limitations and uncertainty are visible.
 - No Type 1 figure appears.
 - Full-submission modules contain no duplicate global front matter and have a complete section manifest.
