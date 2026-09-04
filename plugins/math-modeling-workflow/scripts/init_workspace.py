@@ -33,6 +33,8 @@ DIRECTORIES = (
     "paper/master",
     "paper/final",
     "paper/audits",
+    "paper/latex",
+    "paper/latex/figures",
     "deliverables",
 )
 

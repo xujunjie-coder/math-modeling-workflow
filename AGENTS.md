@@ -46,10 +46,13 @@
    - 统一采用科研级配色标准（极高值 `#6A0624`、高值 `#B80824`、偏高值 `#D71C2C`、中高值 `#FEAB88`、中等值 `#FDD2BC`、中性偏低 `#C7E0ED`、偏低值 `#6FAFD2`、低值 `#327DB7`、较低值 `#134B87`、极低值 `#053061`）；
    - 热力图统一使用红蓝发散色，折线/柱状图使用标准 6 色板，基线使用中性灰虚线。
 
-6. **国赛标准模板十二大板块**：
+6. **国赛标准模板十二大板块与 Word/LaTeX 双轨排版**：
    - 详见规则：`.agents/rules/national-contest-paper-structure.md`
-   - 采用 `plugins/math-modeling-workflow/assets/templates/national_contest_template.docx` 排版；
    - 必须包含五段式摘要、禁止抄原题的问题重述、三线表符号说明、独立数据预处理、深入三步法图文论述、官方AI使用声明、附录A支撑材料文件列表。
+   - **强制执行 Word 与 LaTeX 双轨渲染与符号纯净化**：
+     1. **Word 轨**（`final_paper.docx`）：强制清洗剔除任何原始 `$` LaTeX 代码残留，所有数学符号（如 $\chi^2$、$\pm$、$\le$）与化学式角标（如 $\text{SiO}_2$、$\text{K}_2\text{O}$）必须规范转为 Unicode 与上下标格式，杜绝纯文本占位符与乱码；
+     2. **LaTeX 轨**（`paper/latex/paper.tex` ➔ `final_paper_latex.pdf`）：基于 XeLaTeX + ctexart 原生编译完整学术级 PDF，公式、`booktabs` 三线表、矢量图与交叉引用达到顶级学术期刊出版标准；
+     3. 参赛队可根据赛委会当届规定自由选择提交高质量 Word 论文或 LaTeX 编译的超清 PDF 论文。
 
 ---
 
@@ -58,4 +61,9 @@
 当用户输入包含**“我已经将赛题放入 problem_statement/，数据附件放入 data_raw/。请启动 Auto-Pilot 模式……”**时：
 1. 立即确认 `problem_statement/` 与 `data_raw/` 中的赛题和附件文件；
 2. 自动启动 Auto-Pilot 管道：从 G1（题目解析与清洗）自动推进至 G5.6（国赛格式化输出）；
-3. 产出最终提交论文 `paper/final/final_paper.docx` 与 `paper/final/final_paper.pdf`，并通知参赛队员进行最终审核。
+3. 产出最终交付成果包：
+   - **Word 提交版**：`paper/final/final_paper.docx`（已完成化学分子式角标化与符号美化，零原始代码残留）
+   - **LaTeX 编译超清 PDF**：`paper/final/final_paper_latex.pdf`（或 `<赛题名称>_LaTeX论文.pdf`）
+   - **LaTeX 完整工程源码**：`paper/latex/paper.tex` 与插图库 `paper/latex/figures/`
+   并通知参赛队员进行最终通读审核。
+
