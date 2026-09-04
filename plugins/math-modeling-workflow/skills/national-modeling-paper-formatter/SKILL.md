@@ -32,11 +32,11 @@ Read [references/formatting-contract.md](references/formatting-contract.md) and 
 - Do not edit a user-supplied template in place; work on a copy.
 - Remove instructional annotations and sample content from a supplied template.
 - Keep all final text anonymous when the contest requires anonymity.
-- Use three-line tables unless the contest or data structure requires another form.
+- Use three-line tables unless the contest or data structure requires another form. For LaTeX generation, always use `tabularx` with `X` columns for multi-word text columns (or `\resizebox{\textwidth}{!}{...}`) so tables never overflow the page margins horizontally.
 - Figures must use the verified outputs registered by `math-figure-generator`.
 - Confirm that figures and tables follow the finalized global sequential numbering (`图1`, `图2`... and `表1`, `表2`...) with synchronized in-text cross-references before rendering.
 - Displayed equations remain editable and separately numbered; do not rasterize formulas.
-- Text extraction or successful file creation alone does not count as visual QA.
+- Text extraction or successful file creation alone does not count as visual QA. Visual QA must inspect rendered pages to confirm no table columns are clipped or overflowing the right margin.
 
 ## Output
 

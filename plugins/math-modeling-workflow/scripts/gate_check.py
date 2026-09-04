@@ -105,6 +105,9 @@ def _find_classification(class_doc: dict[str, Any], qid: str) -> dict[str, Any] 
     return None
 
 
+_find_subclassification = _find_classification
+
+
 def active_decisions(records: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
     """Collapse an append-only JSONL ledger to the latest live decision per type.
 

@@ -16,6 +16,7 @@ Use the current contest rules or a user-supplied authorized template when they a
 - Use numbered captions and keep every in-text reference synchronized.
 - Center figures and inspect them at final placement size.
 - Prefer three-line tables; avoid clipped fixed row heights and unnecessary full grids.
+- Ensure all tables fit strictly within the page body width (`\textwidth`). In LaTeX, employ `tabularx` with auto-wrapping `X` columns for descriptive text columns or use `\resizebox{\textwidth}{!}{...}` for wide matrices/tables to prevent any horizontal overflow beyond the right margin.
 
 ## Equations
 

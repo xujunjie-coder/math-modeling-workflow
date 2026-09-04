@@ -51,7 +51,7 @@
    - 必须包含五段式摘要、禁止抄原题的问题重述、三线表符号说明、独立数据预处理、深入三步法图文论述、官方AI使用声明、附录A支撑材料文件列表。
    - **强制执行 Word 与 LaTeX 双轨渲染与符号纯净化**：
      1. **Word 轨**（`final_paper.docx`）：强制清洗剔除任何原始 `$` LaTeX 代码残留，所有数学符号（如 $\chi^2$、$\pm$、$\le$）与化学式角标（如 $\text{SiO}_2$、$\text{K}_2\text{O}$）必须规范转为 Unicode 与上下标格式，杜绝纯文本占位符与乱码；
-     2. **LaTeX 轨**（`paper/latex/paper.tex` ➔ `final_paper_latex.pdf`）：基于 XeLaTeX + ctexart 原生编译完整学术级 PDF，公式、`booktabs` 三线表、矢量图与交叉引用达到顶级学术期刊出版标准；
+     2. **LaTeX 轨**（`paper/latex/paper.tex` ➔ `final_paper_latex.pdf`）：基于 XeLaTeX + ctexart 原生编译完整学术级 PDF，公式、`booktabs` 三线表、矢量图与交叉引用达到顶级学术期刊出版标准；三线表强制引入 `tabularx` 宏包，长文本说明列统一设为自适应 `X` 列或使用 `\resizebox{\textwidth}{!}{...}` 弹性缩放，严防表格右侧冲出版心；
      3. 参赛队可根据赛委会当届规定自由选择提交高质量 Word 论文或 LaTeX 编译的超清 PDF 论文。
 
 ---

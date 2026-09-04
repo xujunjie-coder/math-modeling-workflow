@@ -105,5 +105,10 @@ AI 在生成论文正文与最终组装时，必须严格执行该标准章节�
 2. **LaTeX 版本 (`paper/latex/paper.tex` ➔ `final_paper_latex.pdf`)**：
    - **原生编译引擎**：基于 XeLaTeX + ctexart 原生编译，自适应 Windows 系统中文字体；
    - **学术级数学排版**：包含 AMS-LaTeX 原生公式环境、分段函数、矩阵运算及 `booktabs` 专业三线表；
+   - **表格宽度与防止溢出规约（关键）**：
+     - 导言区必须引入 `\usepackage{tabularx}`、`\usepackage{booktabs}` 与 `\usepackage{graphicx}`；
+     - **严禁使用单行不换行的固定列 `l/c/r` 排版长文本列**（如说明、含义、长变量名等），避免表格右侧冲出页边距或被页面截断；
+     - 凡包含长文本说明的三线表（如符号说明表、附录支撑材料清单表），必须使用 `\begin{tabularx}{\textwidth}{...}`，并将文本说明列设为自适应 `X` 列（或 `p{宽度}`），使长文本在版心内自动换行并对齐右边缘；
+     - 超宽综合对比数据表必须使用 `\resizebox{\textwidth}{!}{...}` 进行弹性包裹缩放，确保 100% 严丝合缝贴合版心宽度 `\textwidth`；
    - **完全自包含**：所有插图本地引用 `paper/latex/figures/`，源码可直接打包迁移至 Overleaf 或任意 TeX 发行版。
 
