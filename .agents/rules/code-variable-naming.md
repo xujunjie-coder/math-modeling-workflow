@@ -65,7 +65,7 @@
 
 ## 第三方库形参及数学算法术语豁免白名单
 
-为了保证代码运行稳定与自动化审查顺畅，以下两类场景享有豁免权，代码审查 Agent **严禁误报拦截**：
+为了保证代码运行稳定与自动化审查顺畅，以下三类场景享有豁免权，代码审查 Agent **严禁误报拦截**：
 
 1. **第三方库与内置函数关键字参数（API Kwargs）**：
    - 依赖库的固有参数名保持原样，完全豁免拼音限制，例如：
@@ -76,6 +76,12 @@
 2. **标准数学与通用算法简写**：
    - 算法与数学中的公认核心简写允许使用英文简写：
      - `opt` (优化/最优), `loss` (损失), `res` (残差/结果), `grad` (梯度), `iter` (迭代), `dim` (维度), `dist` (距离), `pred` (预测), `prob` (概率), `step` (步长), `idx` (索引), `val` (数值)。
+3. **数学模型、动力学模型与算法名称（强制使用标准通用英文命名）**：
+   - 凡是代表具体数学模型、物理/动力学模型、统计学模型、机器学习与优化算法的变量名、函数名、类名及文件名，**统一直接采用公认的通用标准英文命名**；
+   - **严禁强行将国际通用算法与模型名称转译为生硬拼音**（例如：严禁将 Logistic 拼成 `luoji`、严禁将 Arrhenius 拼成 `alunniwusi`、严禁将 Random Forest 拼成 `suijisenlin`、严禁将 Bayes 拼成 `beiyesi`、严禁将 ANOVA 拼成 `fangchafenxi`）；
+   - **完全合规且提倡的英文命名示例**：
+     - 模型函数与变量：`logistic_model`, `logistic_two_param`, `arrhenius_fit`, `deact_kinetics`, `linear_reg`, `ridge_model`, `random_forest`, `rf_importance`, `rsm_model`, `bayes_opt`, `arima_fit`, `kmeans`, `pca` 等；
+     - 模型相关文件：`logistic_fit.py`, `arrhenius_analysis.py`, `rsm_optimization.py`, `rf_feature_importance.py` 等。
 
 ## 文件命名特殊约束规范（简单词汇或拼音优先）
 

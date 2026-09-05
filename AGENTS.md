@@ -34,7 +34,8 @@
    - 变量与文件命名严禁冗长生僻英文；
    - 化学元素/物质强制采用化学式（如 `Pb`, `SiO2`）；
    - 英语四级以内核心词允许英文（如 `data`, `rate`, `main.py`）；
-   - 领域术语强制使用全拼拼音（如 `fenghua`, `wenshi`, `qianbei`）。
+   - 所使用的数学模型/动力学模型/机器学习算法统一使用公认标准英文命名（如 `logistic`, `arrhenius`, `random_forest`, `rsm`, `ridge`, `bayes`，禁止生硬转拼音）；
+   - 题目特有业务领域专有名词强制使用全拼拼音（如 `fenghua`, `wenshi`, `qianbei`）。
 
 4. **参考文献 100% 真实且权威**：
    - 详见规则：`.agents/rules/reference-citation-rules.md`
