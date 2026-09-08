@@ -31,11 +31,10 @@ Read [references/formatting-contract.md](references/formatting-contract.md) and 
 - Do not invent content to fill template slots.
 - Do not edit a user-supplied template in place; work on a copy.
 - Remove instructional annotations and sample content from a supplied template.
-- Keep all final text anonymous when the contest requires anonymity.
-- Use three-line tables unless the contest or data structure requires another form. For LaTeX generation, always use `tabularx` with `X` columns for multi-word text columns (or `\resizebox{\textwidth}{!}{...}`) so tables never overflow the page margins horizontally.
-- Figures must use the verified outputs registered by `math-figure-generator`.
-- Confirm that figures and tables follow the finalized global sequential numbering (`图1`, `图2`... and `表1`, `表2`...) with synchronized in-text cross-references before rendering.
-- Displayed equations remain editable and separately numbered; do not rasterize formulas.
+- Page Geometry & Margins: A4 portrait, Top margin 72 pt (2.54 cm), Bottom margin 72 pt (2.54 cm), Left margin 76.5 pt (2.7 cm), Right margin 76.5 pt (2.7 cm).
+- Typography & Headings: Main title 黑体 16 pt bold centered; Abstract header 黑体 14 pt bold centered; Keywords line 小四 12 pt bold (黑体 label + 宋体 content); Level 1 headings 黑体 14 pt bold centered; Level 2 headings 黑体 12 pt bold flush left; Level 3 headings 黑体 12 pt bold flush left (non-italic); Body text 宋体/Times New Roman 小四 12 pt, 1.25 line spacing, 2-character indent.
+- Three-line Tables & Cell Indent Zeroing: Standard three-line borders (top 1.5 pt, bottom 1.5 pt, header divider 0.75 pt). Table cell paragraphs MUST clear first-line indentation (`first_line_indent = Pt(0)` and XML `w:firstLineChars="0"` / `w:firstLine="0"`) to prevent inheriting Normal 2-character indentation; table cells use single line spacing, 10.5 pt (五号) or 9 pt (小五号). In LaTeX, always use `tabularx` with `X` columns for multi-word text columns (or `\resizebox{\textwidth}{!}{...}`) so tables never overflow the page margins horizontally.
+- Displayed equations remain editable Word OMML / LaTeX math and separately numbered (centered equation with right-aligned number `(1)`, `(2)`); do not rasterize formulas. Mathematical variables italicized, constants/functions/chemistry upright; all text and math strictly black (`#000000`).
 - Text extraction or successful file creation alone does not count as visual QA. Visual QA must inspect rendered pages to confirm no table columns are clipped or overflowing the right margin.
 
 ## Output

@@ -66,6 +66,7 @@ Make every visual evidence-bearing. Prefer fewer useful visuals over a decorativ
 - Every visual must have a source and purpose.
 - Do not impose an arbitrary figure quota. Require an explicit no-figure decision when a result-bearing claim is left to prose or tables.
 - A planned Type 3/4 figure must request editable source plus vector output when compatible and a high-resolution raster fallback.
+- Downstream generation of planned paper visuals must automatically invoke `scipilot-figure` (or `math-figure-generator`), enforcing the 8-step scientific workflow, multi-panel layout, Visual QA checklist, and `setup_style.py` palette injection.
 
 # Verification
 

@@ -20,7 +20,7 @@ Legacy method pools and `code/model-code-analyzer.md` may be read during migrati
    - one usable baseline;
    - fallback only when an activation decision or evidenced trigger exists.
 3. Generate clear runnable `.py` files under `code/Qx/`.
-4. Use project-root-safe paths, fixed seeds, explicit inputs, and minimal justified dependencies.
+4. Use project-root-safe paths, fixed seeds, explicit inputs, and minimal justified dependencies. When generating plotting routines for figures, automatically import and invoke `set_sci_style()` and standard palettes (`SCI_PALETTE`, `cm_diverging`) from `plugins/math-modeling-workflow/skills/scipilot-figure/scripts/setup_style.py`.
 5. Save:
    - tables to `results/Qx/experiments/roundN/tables/`;
    - metrics to `.../metrics/`;

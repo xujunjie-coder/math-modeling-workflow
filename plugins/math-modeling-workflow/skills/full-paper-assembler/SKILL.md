@@ -1,81 +1,113 @@
 ---
 name: full-paper-assembler
-description: Assemble multiple approved mathematical-modeling question packages and semantic paper sections into one submission paper with a single global outline. Use after all active Qx sections are ready and before whole-paper polishing or DOCX/PDF formatting; do not use to concatenate Word files.
+description: Assemble multiple approved mathematical-modeling question packages and semantic paper sections into a complete, national-first-prize standard contest paper following the 12-section architecture, hard-core 5-paragraph abstract formula, zero-overwrite delivery invariant, and cross-question mechanistic linkage.
 ---
 
-# Purpose
+# 核心使命 (Mission)
 
-Create one evidence-traceable master paper from all active questions. Treat per-question papers and DOCX files as source evidence only, never as blocks to append.
+本技能负责将各子问题的学术章节统一总装为**全国大学生数学建模竞赛（CUMCM）国家一等奖/特等奖（高教社杯候选）标准的完整提交论文**。
+彻底杜绝碎片拼接、格式错位、摘要空洞与机理断层，确保全篇呈现**高度连贯的学术逻辑体系、严密的科研图表叙事与兼具 Word/LaTeX 的超清双轨工业交付标准**。
 
-# Preconditions
+---
 
-- `rigor_profile` is `submission`.
-- Every active Qx reached G5 and has a current solution package, freeze, decision ledger, semantic paper section, and verified figures/tables.
-- Global problem parse, assumptions, symbol table, and contest profile exist.
-- Human claim-scope and contribution decisions are recorded.
+## 核心工程交付铁律：绝不覆盖原文件与强制前置版本号（V1, V2...）(Zero-Overwrite & Mandatory Version-Prefix Invariant)
 
-Stop and route to the missing producer when a prerequisite is absent. Do not draft around missing evidence.
+> [!CAUTION]
+> **严禁覆盖原文件与版本前缀防呆红线**：
+> 1. **绝不采用覆盖原文件的形式更新**：任何文件更新，一律禁止同名覆盖原文件，必须保留历史迭代的所有版本；
+> 2. **强制在每个文件名前加上版本号前缀**：所有交付物文件名最前端必须显式冠以递增版本号前缀（如 `V1_...`, `V2_...`, `V11_...`）；
+>    - 格式：`V{N}_{论文主标题}_Word论文_{YYYYMMDD_HHMMSS}.docx`
+>    - 格式：`V{N}_{论文主标题}_LaTeX论文_{YYYYMMDD_HHMMSS}.pdf`
+>    - 根目录与交付区双轨同步保存：`V{N}_{论文主标题}_Word论文.docx`、`deliverables/V{N}_{论文主标题}_Word论文.docx`；
+> 3. **规避 Windows 互斥句柄锁（WinError 32）**：即使历史版本已被用户在 PDF/Word 阅读器中打开锁定，前置版本号也保证新版本能 100% 成功生成，毫无覆写崩溃风险；
+> 4. **全流程独立容错**：导出脚本中对每一个目标路径使用独立的 `try-except` 包裹，并在终端输出确切生成的本地绝对路径 `file:///...`。
 
-# Sources
 
-Use, in order:
+---
 
-1. problem parse and question dependency structure;
-2. `qx_solution_package_for_writer.md` and `frozen_numbers.json`;
-3. `qx_section_manifest.json` and semantic question sections;
-4. human decision ledgers;
-5. verified figures/tables and final method/robustness reports for clarification.
+# 全文总装四大硬核标准 (Assembly Core Standards)
 
-Do not derive canonical claims from legacy DOCX prose or exploratory output folders.
+### 1. 评委采分制胜：五段式硬核量化摘要公式 (Abstract Formula)
+摘要决定 50% 以上的基础成绩。必须严格执行“五段式完形填空”结构，总字数控制在 800~1200 字，禁止空洞寒暄：
+- **第 1 段（背景目的与总体方法链，3~4 行）**：
+  *“……是清洁能源与化工制造中的核心问题。本文针对……等工艺控制变量与反应温度的协同优化，紧扣……多相催化热力学与反应动力学机理，综合运用……（列出核心算法组合），构建了端到端的高精度、高解释性分析与多工况决策体系。”*
+- **第 2 段（问题一：现象辨识与本征动力学）**：
+  *“针对问题一，建立具备热力学饱和上限的两参数 Logistic 转化率模型（平均拟合优度 $R^2 = 0.9902$）与双路径竞争 Arrhenius 选择性模型（$R^2 = 0.9332$），提取半转化温度 $T_{50}$ 与活化能差 $\Delta E \in [17.7, 78.1]\text{ kJ/mol}$，揭示……选择性倒 U 型转折机理；建立固定时间失活动力学指数衰减模型（$R^2 = 0.9856$），求得失活速率常数 $k_d = 0.0068\text{ min}^{-1}$，半衰期达 $101.4\text{ min}$；线性趋势回归证实失活不失选择性（$P = 0.6427$），微观归因为 HAP 表面羟醛缩合碱性位点被积碳毒化。”*
+- **第 3 段（问题二：统计混杂破除与微观机理贯通）**：
+  *“针对问题二，解构非平衡实验中的伪相关陷阱。建立连续温度二次中心化 Type-III 协方差分析（ANCOVA）模型，彻底破除因采样偏差诱发的辛普森悖论；揭示温速交互（偏 $\eta^2 = 0.285$）主导空时与扩散/反应控制区间转移，金属-载体比交互（偏 $\eta^2 = 0.211$）调控脱氢与缩合摩尔产出通量平衡；**首创以微观半转化温度 $T_{50}$ 为因变量开展统计推断**，双样本 $t$ 检验（$t = -3.28, P = 0.0041$）严格证明装料方式 I 纳米近邻协同使起活温度显著提前达 $31.2^\circ\text{C}$，打通微观动力学到宏观统计的全篇闭环。”*
+- **第 4 段（问题三：机理恒等式闭环与实测硬锚定双工况决策）**：
+  *“针对问题三，构建离散催化剂与连续温度的混合最优化模型（MINLP）。目标函数严格由物理恒等式 $Y \equiv X \cdot S / 100$ 闭环，100% 继承问题一动力学模型，彻底消除高阶多项式外推诱发的‘虚假极大值’陷阱；设计‘1℃ 粗扫—Brent 拟牛顿高精逼近—工业 0.1℃ 网格对齐’三级寻优算法与 300 次残差 Bootstrap 检验；研制四层工业决策矩阵：全温区主结论推荐组合 A3 在 400℃ 实测收率达 44.7281%（兼驳 450℃ 外推陷阱）；严格低于 350℃ 理论极限为 A2 在 349.9℃（理论 25.4099%），并列输出留取 25℃ 绝对安全裕度的保守实测最优解 A2 在 325℃（实测 17.2643%）与边界含入解 A2 在 350℃（实测 26.5408%）；给出操作容差操作平台与微观机理解析。”*
+- **第 5 段（问题四：D-最优实验设计、纯误差解耦与自适应决策闭环）**：
+  *“针对问题四，在 5 次严格预算下确立‘纯误差校准、极值曲率标定、正交高产探索与工业安全裕度’四重科学使命。建立消除远端低温杠杆畸变的局部规格化坐标 $z = (T - 400)/25$ 与二次近似响应面；推导 Fisher 信息矩阵并依据 D-最优准则实施中心复合设计，对数 D 准则增益达 +1.4018，广义方差椭球体积压缩至 49.6%；解析定位理论极值顶点 $T^* = 422.16^\circ\text{C}$，理论极限收率预期达 47.51%；Exp-1 中心复测赋能纯误差独立剥离（$df_{\text{pure}} = 1$），实现模型失拟与随机测量噪声的彻底解耦；构建四节点序贯自适应决策树闭环；全篇模型机理严密、统计扎实，为工业固定床反应器放大提供了科学指引。”*
+- **关键词**：乙醇偶合；C4烯烃；Logistic响应模型；Type-III协方差分析；实测硬锚定；D-最优实验设计
 
-# Workflow
+---
 
-1. Resolve `paper_scope`. This skill handles `full_submission`; route `single_problem` to ordinary section writing/template formatting.
-2. Build `paper/master/cross_question_matrix.md` with each Qx goal, inputs, upstream dependencies, core outputs, downstream consumers, validation evidence, claims, figures, and tables.
-3. Read [references/deduplication-and-mapping.md](references/deduplication-and-mapping.md) and classify every source block as global-shared, question-specific, validation, evaluation, reference, appendix, or excluded diagnostic.
-4. Read [references/full-paper-outline.md](references/full-paper-outline.md), choose one global outline, and map every retained block to exactly one destination.
-5. Build the assembly manifest using [references/assembly-manifest-schema.md](references/assembly-manifest-schema.md). Record provenance, duplicate disposition, downstream interfaces, and numbering maps.
-6. Draft `paper/master/full_paper.md`. Write the body first; write the abstract and final conclusions last from already placed claims.
-7. Create `paper/master/claim_map.json` and `paper/master/renumber_map.json` so all numerical claims, figures, tables, equations, and references remain traceable. Initial assembly keeps chapter-based figure/table numbering for human audit.
-8. Apply global sequential renumbering (图1, 2, 3... and 表1, 2, 3...) and synchronously update all in-text cross-references by executing the automated tool `scripts/renumber_figures_tables.py paper/master/full_paper.md --in-place --json-map paper/master/renumber_map.json`.
-9. Run `scripts/validate_full_paper.py` against the master draft and manifest. Repair assembly defects without changing canonical evidence.
+### 2. 全篇跨问题机理穿透 (Cross-Question Mechanistic Thread)
+顶级论文严禁 4 个问题各自为战。总装时必须保证**微观机理参数与逻辑悬念在全篇贯穿流转**：
+- **第一层穿透（微观到统计）**：问题一提取出的动力学参数（$T_{50}$、$\Delta E$、失活半衰期 $t_{1/2}$），必须作为因变量反哺问题二的统计假设检验；
+- **第二层穿透（统计到最优化）**：问题二揭示的最佳配比与装料方式 I，直接成为问题三目标函数与约束空间设立的坚实依据；
+- **第三层穿透（最优化到实验设计）**：问题三寻优暴露出的“400℃ 孤岛单次采样无纯误差估计”与“350~400℃ 跨越 50℃ 数据盲区”，直接作为问题四开展 5 次增补实验的最强驱动力，实现天然破案式闭环！
 
-# Assembly Invariants
+---
 
-- Exactly one title, abstract, keyword line, global problem restatement, global problem analysis, assumptions section, symbol section, reference list, and appendix sequence, strictly following the twelve-part structure in `.agents/rules/national-contest-paper-structure.md` (including explicit AI tool usage declaration and Appendix A supporting material file table). The reference list must contain only authentic, authoritative references adhering to GB/T 7714-2015, with 100% 1-to-1 matching to in-text citations.
-- Every active Qx appears once in the model/solution chapter and has goal, method, result, validation pointer, limitation, and question summary.
-- Shared preprocessing, shared assumptions, and shared symbols appear globally once; question-specific exceptions remain local and are labeled.
-- A downstream question reads upstream outputs with the same sample scope, units, symbols, thresholds, labels, and versions.
-- No `一、问题重述` or equivalent global heading may restart inside a `6.x` question section.
-- Every number resolves to a current freeze; every interpretive judgment resolves to a human decision ID.
-- Every figure/table reference resolves to an existing verified artifact. Captions cannot survive without their artifact.
-- Figure and table numbering follows the two-stage lifecycle: initially retained as chapter-based (`图1-1`, `表1-1`) in the assembled master draft for human audit; after human audit confirms the master draft without error, all figures and tables are sequentially renumbered globally (`图1, 图2...` and `表1, 表2...`) with all in-text cross-references updated synchronously.
-- Abstract and conclusion contain no claim absent from the assembled body.
-- When the original contest problem statement does not explicitly divide questions into subquestions, assemble sections under task-oriented headings without mechanical "subquestion" labels or structural subjects.
+### 3. Word 与 LaTeX 双轨超清排版标准 (Dual-Track Publishing Standard)
+总装生成的成果包必须支持双轨自由选择：
+1. **LaTeX 轨（顶级学术出版物标准）**：
+   - 源码路径：`paper/latex/paper.tex`；
+   - 基于 XeLaTeX + ctexart 原生编译，生成矢量公式与高清复合图版；
+   - 表格必须采用 `booktabs` 专业三线表（`\toprule`, `\midrule`, `\bottomrule`），并引入 `\resizebox{\textwidth}{!}{...}` 或 `tabularx` 自适应列，严禁冲出版心；
+2. **Word 轨（国赛正式提交标准）**：
+   - 源码生成脚本：`code/build_complete_word.py`；
+   - 彻底清洗剔除任何原始 `$` LaTeX 代码残留，数学符号（如 $\chi^2$、$\pm$、$\le$）与化学式角标（如 $\text{SiO}_2$、$\text{K}_2\text{O}$）规范转为 Unicode 与专业上下标；
+   - 表格严格采用黑白三线表，五号（10.5 pt）或小五号（9 pt）字体，单倍行距，单元格段落显式清零首行缩进（`first_line_indent = 0`，清除 XML `firstLineChars`），防范继承全局缩进导致的表格断行与列宽爆出；
+   - 页面边距与字体体系：A4 纵向，上/下 72 pt（2.54 cm），左/右 76.5 pt（2.7 cm）；论文主标题黑体三号 16 pt 居中，摘要标题黑体四号 14 pt 居中，关键词行小四 12 pt 整行加粗，一级标题黑体四号 14 pt 居中，二级/三级标题黑体小四 12 pt 顶格左对齐。
 
-# Prohibited Merge Patterns
+---
 
-- Appending DOCX body XML or copying fixed paragraph ranges.
-- Concatenating complete per-question papers with their own front matter, references, or appendices.
-- Retaining internal engineering subproblem labels (e.g., "the first subquestion of question one") when the original contest problem did not declare explicit subquestions.
-- Compressing a question to headline results when its formulation or validation is needed for reproducibility.
-- Recomputing or silently reconciling conflicting numbers during writing.
-- Keeping diagnostic figures solely because they existed in a question draft.
+### 4. 国赛标准十二大核心板块架构 (12-Section Architecture)
+```
+一、问题重述 (禁止机械抄原题，必须完成背景抽象)
+二、问题分析 (按四问递进展开，绘制系统分析逻辑框图)
+三、模型假设与约定 (4~6 条紧扣物理实在性的合理假设)
+四、符号说明 (精炼字典，6~15行以内三线表，一族一行，无临时回归/算法参数，公式后就地解释)
+五、数据预处理与特征工程 (异常值识别、重复值实核、连续变量中心化)
+六、问题一模型的建立与求解 (本征动力学、竞争选择性与时间失活稳态)
+七、问题二模型的建立与求解 (Type-III ANCOVA、双因子交互与起活提前)
+八、问题三模型的建立与求解 (物理恒等式闭环、双工况寻优与实测硬锚定)
+九、问题四模型的建立与求解 (局部 D-最优设计、纯误差解耦与自适应决策树)
+十、模型的评价、改进与推广 (优点、局限性与工业推广前景)
+十一、AI 工具使用声明 (合规诚信声明、使用环节与自主原创性)
+十二、参考文献 (GB/T 7714-2015 格式，100% 真实权威教材与标准，零虚构)
+十三、附录 (附录 A 支撑材料清单、附录 B 补充图表、附录 C 核心求解代码)
+```
 
-# Outputs
+---
 
-- `paper/master/cross_question_matrix.md`
-- `paper/master/assembly_manifest.json`
-- `paper/master/claim_map.json`
-- `paper/master/renumber_map.json`
-- `paper/master/full_paper.md`
+## 全书总装质量审查：五大硬伤拦截门禁 (Assembly Quality Gate: Top 5 Traps)
 
-The master Markdown is the only content input to whole-paper polishing and final document formatting. Per-question DOCX files remain intermediate artifacts.
+在总装合并各章节并生成交付物前，总装智能体必须对照实战复盘的五大核心硬伤逐项核实。若存在任何一项违规，必须退回对应章节或调用重构脚本进行深度修补：
 
-# Verification and Handoff
+| 拦截维度 | 典型违规表现（严厉拦截） | 特等奖达标合格标准（必须具备） |
+| :--- | :--- | :--- |
+| **1. 交互效应** | 只报 $F$ 与 $P$ 值，正文仅说“交互显著”无量化 | **必须给出具体交叉极差数据**（如“250℃ 流速极差 15.72% vs 400℃ 极差 37.90%，敏感度放大 2.41 倍”）并配齐专用非平行交互折线图版 |
+| **2. 辛普森悖论** | 宣称存在辛普森悖论，却只字不提样本量分布 | **必须研制二维交叉样本量与均值透视表（表 3-B）**，明确写出低温区占比（如 55.2%），并列散点与分层趋势线 |
+| **3. 机理论证** | 纯靠文学大白话比喻，无文献无实验数据印证 | **必须绑定权威机理文献**（如 Bell 2016 反应网络、Fogler 反应工程基础）并与实验实测副产物（乙醛、丁醇等）演化数据闭环交叉核实 |
+| **4. 公式表文对齐** | 模型写了复杂饱和项，表里却没列或未标剔除；双响应未分清 | **严密区分饱和模型与简约模型**，三线表注明剔除项，双响应分栏或分表清晰，公式、表格与正文字符变量 1-to-1 绝对对齐 |
+| **5. 高级方法深度** | 算法推导跳步，准对照检验无具体点对点残差 | **写出完整矩阵代数算子**（如 Freedman-Lane 残差投影算子），准对照验证给出实测值、预测值与绝对残差（残差严控在 $\pm 2.5\%$ 内） |
 
-- Structural validator passes.
-- All active Qx and dependency interfaces are covered.
-- Duplicate disposition and provenance are recorded.
-- No missing/orphan figure, table, equation, or claim exists.
-- Route next to `paper-polisher` in whole-paper mode, then to `national-modeling-paper-formatter` with `paper_scope=full_submission`.
+---
+
+## 强制自动调用 `paper-rigor-gatekeeper` 闭环质检 (Mandatory Automated Invocation)
+
+总装智能体在产出 `paper/master/full_paper.md` 后、执行任何 Word/LaTeX 渲染前，**必须强制自动调用**：
+```bash
+python plugins/math-modeling-workflow/scripts/audit_paper_rigor.py --file paper/master/full_paper.md
+python plugins/math-modeling-workflow/scripts/audit_paper_narrative.py --file paper/master/full_paper.md
+```
+只有当两项自动化质检均返回 Exit Code 0（`ALL RIGOR AUDIT GATES PASSED!` 与 `AUDIT PASSED: Paper narrative adheres to First-Prize standards!`）时，才允许自动触发后序的双轨编译脚本：
+- `python code/compile_latex.py`
+- `python code/build_complete_word.py`
+
+若任一质检报告抛出 `[FAIL]`，工作流将直接阻断并提示精修，绝不允许带病编译与提交。
+

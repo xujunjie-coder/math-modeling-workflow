@@ -124,6 +124,8 @@ Evaluate globally after every active submission Qx passed G5. Require:
 - `paper/master/assembly_manifest.json` covering every active Qx with unique `6.x` destinations;
 - `paper/master/claim_map.json` and `renumber_map.json`;
 - one current `paper/master/full_paper.md` produced by `full-paper-assembler`;
+- passing automated `paper-rigor-gatekeeper` audit (`audit_paper_rigor.py`) verifying text-formula consistency, DoE parameters, statistical threshold sourcing, and academic restraint;
+- passing automated narrative audit (`audit_paper_narrative.py`);
 - passing structural assembly validation.
 
 Per-question DOCX files or concatenated question papers do not satisfy this gate.
@@ -149,27 +151,34 @@ Gate prose is backed by `../../scripts/gate_check.py` (standard library only). P
 - A data-free/mechanism-only question may declare `"waivers": ["data_profile"]` in its manifest; the check is then reported as waived rather than silently skipped. No other gate evidence may be waived.
 - The guard does not replace the Skill checks; it blocks work that the gate contract does not yet authorize.
 
-# Routing
+# Core Backbone Routing (五阶段主干路由)
 
-Choose one primary next action:
+为防止 31 个精细化辅助技能造成认知过载与碎片化，编排器强制将工作流收敛为**五大主干战役阶段**，在每个阶段精准调度对应的核心主力技能：
 
-- missing framing → parser/classifier or human framing card;
-- missing data profile → `data-auditor-cleaner`;
-- missing method card/probe → `method-selector`;
-- missing human method choice → `decision-prompt-builder`;
-- approved method without implementation plan → `model-code-analyzer`;
-- code/review incomplete → language generator or reviewer;
-- meaningful experiment awaiting judgment → result choice card;
-- final results without robustness → `robustness-checker`;
-- submission package incomplete → final explainer, result report, or package builder;
-- frozen submission evidence without a current visual-decision record → `figure-table-planner`;
-- planned Type 3/4 figures missing or not render-verified → `math-figure-generator`;
-- all active Qx at G5 but no global master → `full-paper-assembler`;
-- assembled master awaiting whole-paper polish → `paper-polisher` in whole-paper mode;
-- polished master awaiting DOCX/PDF → `national-modeling-paper-formatter` with `paper_scope=full_submission`;
-- rendered final paper awaiting audit → the earliest missing final auditor.
+1. **阶段一（审题、文献与数据实核）**：
+   - 核心调用：`problem-parser` + `data-auditor-cleaner`；
+   - 必须产出：赛题抽象画像、临时文献知识库 `workspace/literature/`、数据清洗分布图与缺失值实核。
+2. **阶段二（方法选型与机理代码实现）**：
+   - 核心调用：`method-selector` + `python-model-code-generator`；
+   - 必须产出：严守奥卡姆剃刀与简单机理模型（拒绝无物理机理的高次黑箱）、可复现代码、`frozen_numbers.json` 计算凭证。
+3. **阶段三（统一科研级图版视觉质检）**：
+   - 核心调用：`scipilot-figure`；
+   - 必须产出：执行“先思考后绘图”8 步闭环、红蓝科研级发散色板、多面板复合高清插图 `paper/latex/figures/`。
+4. **阶段四（逐题破案式深度论文撰写与即时去 AI 味消杀）**：
+   - 核心调用：`paper-section-writer` + `paper-polisher`（每题撰写完成后立即执行第 13 项去 AI 味专项审查，坚决清洗免责套娃、空洞总结、模糊建议词与“说明可能”两头占）；
+   - 必须产出：**强制遵循 `.agents/rules/reference-template-logic.md`**，单题严格按照“通俗引桥 $\rightarrow$ 机理方程 $\rightarrow$ 四类三线表 $\rightarrow$ 深度反应工程机理归因 $\rightarrow$ 决策矩阵/DoE 设计”四步闭环展开，每题 2500~3500 字，四题总字数逾万字。
+5. **阶段五（全篇穿透总装、G5.5 去 AI 味双轨硬核质检与排版）**：
+   - 核心调用：`full-paper-assembler` + `paper-rigor-gatekeeper`（由 `gate_check.py` 在 Gate G5.5 自动联动执行 `audit_paper_narrative.py` 与 `audit_paper_rigor.py`，违禁 AI 套话一票否决）+ `renumber_figures_tables.py` + `compile_latex.py` / `build_complete_word.py`；
+   - 必须产出：五段式量化摘要、图表全局连续重编号、100% 满分通过叙事与去 AI 味质检、**20~30 页超清学术 PDF（当前实测标杆为 24~28 页）与 Word 提交版**，强制前置版本号与时间戳（绝不覆盖历史文件）。
 
-Do not invoke several judgment-bearing skills speculatively.
+# Pacing & Page Budget Standards (慢工出细活与篇幅预算)
+
+- **慢工出细活铁律**：严禁急于求成跳步或快餐式秒出论文。核心价值在于公式完整推导、中间步骤展开、全样本三线表呈现（包含全部 21 组参数，严禁写“其余略”）与微观机理深度归因；
+- **20~30 页国赛黄金学术篇幅**：
+  - 前置部分（独立成页且严格恰好 1 页的五段式摘要、重述/分析/假设/符号/清洗）：约 4~5 页（摘要严禁跨页溢出，800~1000字，后紧跟强制分页符，正文一、问题重述从第 2 页顶格开始）；
+  - 核心建模（Q1~Q4 逐题破案展开）：约 12~18 页（每题 3~4.5 页）；
+  - 后置部分（评价/AI声明/真实文献/附录代码）：约 4~7 页；
+  - 全篇总厚度稳定锁定在 **20~30 页** 黄金区间，由质检脚本全面保驾护航。
 
 # Change Impact
 

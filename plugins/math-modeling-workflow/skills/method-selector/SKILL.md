@@ -40,12 +40,16 @@ If these are missing, return to the producer skill rather than guessing.
    - Enforce the simplicity-first principle (Occam's razor): among candidate formulations from literature or statistical toolkits, strictly prioritize the simpler model (favoring interpretability, numerical stability, and robustness over gratuitous complexity).
    - Identify the failure modes that would make a method unusable.
 
-3. **Create a role-based shortlist.**
+3. **Create a role-based shortlist and generate model justification defense.**
    - One `main_candidate`: best fit to the chosen trade-off; must strictly favor the simpler viable model when multiple candidates can solve the problem.
    - One `usable_baseline`: completes the real task and yields directly comparable outputs.
    - At most one `conditional_fallback`: differs in a meaningful mathematical way and has an explicit activation trigger (e.g., activated only if the simpler main candidate fails to capture critical non-linear dynamics).
    - If a simple reference cannot complete the real task, label it `diagnostic_reference`; it does not satisfy the baseline requirement.
    - Do not add a method merely to reach a candidate count.
+   - **Mandatory Justification Defense (为论文提供选型辩护材料)**:
+     - 必须明确选型支撑路径（供后续 `paper-section-writer` 直接引用）：
+       - **路径 A（第一性原理推导）**：从物理守恒、微元速率或几何边界推导出闭式方程并赋予参数明确物理含义；
+       - **路径 B（多模型打擂台对比消歧表）**：列出典型备选方案（如高阶多项式、纯黑盒机器学习），指出其致命缺陷（如多项式外推产生虚假极值或越界，黑盒模型过拟合且无 $P$ 值与机理解释），并生成对比三线表。
 
 4. **Define method-specific risk checks.**
    - Use the contract in `references/risk-probe-contract.md`.

@@ -54,7 +54,7 @@ Use or request:
    - Mathematical modeling contest papers follow a standard structure: Abstract → Problem Restatement → Problem Analysis → Assumptions → Symbols → Model Construction (per Q) → Model Solution → Results Analysis → Robustness → Strengths & Limitations → Conclusion.
    - Each section has different polishing priorities (see section-specific rules below).
 
-2. Run the 12-point polish checklist (see below).
+2. Run the 13-point polish checklist (see below).
 
 3. Calibrate claims against evidence.
    - For each numerical or comparative claim, verify it is supported by the final result analysis or robustness report.
@@ -85,7 +85,7 @@ Use or request:
    - figure, table, equation, and reference numbering follows the assembly renumber map;
    - in post-audit finalization, verify that figure/table labels have transitioned from chapter-based (`图1-1`, `表1-1`) to globally continuous (`图1`, `表1`) and all in-text references have been updated without residual chapter-based labels.
 
-# 12-Point Polish Checklist
+# 13-Point Polish Checklist
 
 ## 1. Sentence Length
 - Split sentences longer than 30 words.
@@ -178,6 +178,53 @@ Flag and downgrade or remove:
 - Section numbering is consistent.
 - Reference format is consistent.
 - Appendix materials are properly labeled.
+
+## 13. 去除 AI 味与决策果断性审查 (De-AI & Decisive Writing Standards)
+
+坚决排查并清洗以下大模型常见的四大“AI味”恶习与推脱性用语：
+
+1. **坚决拆解“AI 免责套娃模板”**：
+   - **典型违规**：“需要注意的是，这个方案只是针对局部重点区域的补点…… 不能代替全空间的全面估计；先验预测只是用来指导实验设计，最终工艺还是要看新增实验的实测结果”。
+   - **病因**：“只是… 不能… 只是… 最终还是要”三重套娃免责甩锅，缺乏学术定力，把先验模型的科学价值稀释为毫无信息增量的废话。
+   - **清洗改写**：明确界定数学先验的探索边界与加点指导使命，展现方法自信：“本设计精准聚焦高产温区（350~425℃）的局部曲率高精度标定，排除了无工业效益的低温惰性区；所求理论极值指导在 375℃ 与 425℃ 靶向加点，实测数据作为闭环校正输入，彻底规避全空间盲目试错的高昂成本。”
+
+2. **坚决删除“AI 假大空总结段模板”**：
+   - **典型违规**：“总的来说，这个设计用局部二次响应面…… 同时给出了序贯自适应的决策规则”。
+   - **病因**：“总的来说/综上所述/总体而言”开场 + 机械复述已知方法 + 三连对仗修辞 + 零新增信息。
+   - **清洗改写**：坚决删除无增量废话总结；若必须作结，必须给出定量指标、容差范围与可操作动作：“该局部二次响应面将高收率温区的先验不确定性降低了 62.4%，配套的自适应决策树以 $\pm 1.86\%$ 为临界偏差阈值，实现了异常工况的主动回退与参数迁移。”
+
+3. **坚决消除“模糊建议词”，树立决策权威**：
+   - **典型违规**：“可以考虑用这个组合替换原来的工艺”、“不妨考虑采用……”、“或可酌情参考……”。
+   - **病因**：AI 不敢下结论，把决策方案写成客气商量，丧失指导性。
+   - **清洗改写**：决策规则一律使用确定性、强动作性的判定动词：“判定采纳该组合全面替代基准工艺”、“确立该工况为优选推荐工况并执行工艺切换”。
+
+4. **坚决纠正“说明可能”两头占，明确因果判定与处置预案**：
+   - **典型违规**：“否则说明可能有批次效应或者气路结垢”、“说明可能存在……”。
+   - **病因**：既想下结论又想留余地，推脱责任。
+   - **清洗改写**：明确因果判定与应对预案：“判定存在装置批次效应或气路结垢，触发异常预案：将基线自动切换为 $Y_{\text{Exp-1}}$ 实测值进行差值校核。”
+
+5. **坚决肃清“顶刊学术假大空大词与过度文学化修辞”（防 AI 判定拦截）**：
+   - **典型违规**：“具有极高的鲁棒性与泛化能力”、“本文创新性地构建了……”、“具有极其广阔的工业应用前景”、“荒原探险与金矿开采”、“油门与刹车的拔河博弈”。
+   - **病因**：AI 默认模拟资深学者或顶刊审稿人，大词堆叠，充满文学化虚饰，极易被数模评委一眼识别为“AI 润色/代写”而重扣分数。
+   - **清洗改写**：严格降级为人设定位——**“72小时竞赛中独立攻坚的大三工科主力队员”**。用冷静客观的工科实验语言代替空洞修辞，通篇依靠【数据证据 + 物理实在】说话。
+
+6. **坚决排查并清洗“私下日常口头语”（实验员私下碎碎念）**：
+   - **典型违规**：“差不多一半”、“用来看看”、“看 Exp-1 的实测值”、“补点看看”、“把别的因素也算进来”。
+   - **病因**：去 AI 味时矫枉过正，滑入了菜市场/微信聊天式的随意口语，有失学术严肃性。
+   - **清洗改写**：升级为“大三工科规范实验报告用词”：
+     * “差不多一半” $\rightarrow$ “缩减近半（49.6%）”；
+     * “用来看看” $\rightarrow$ “用于检验”；
+     * “看 Exp-1 的实测值” $\rightarrow$ “依据 Exp-1 的实测输出”；
+     * “补点看看” $\rightarrow$ “序贯追加验证点”；
+     * “算进来” $\rightarrow$ “引入混杂偏差”。
+
+7. **强制核验“为什么选这个模型”的论证完备性**：
+   - 逐题检查正文开头是否具备清晰的选型辩护：
+     - **路径 A（机理推导）**：是否从微元速率或物理守恒推导出闭式解？
+     - **路径 B（多模型打擂台对比消歧表）**：是否列出候选模型并指明淘汰多项式（外推越界/虚假极值）或淘汰黑盒机器学习（非平衡小样本过拟合/无 $P$ 值与机理解释）的明确理由？
+   - 若直接“天降公式/黑盒模型”，必须拦截并补充选型辩护段落。
+
+
 
 # Section-Specific Polish Priorities
 
@@ -303,3 +350,32 @@ Issue: `x_i` was used for scores in Q1 but for raw indicator values in Q2. Chang
 Original (38 words): "After applying the entropy method to compute objective indicator weights and then using the TOPSIS method to compute the relative closeness of each city to the ideal solution, we obtained the final ranking as shown in Table 1."
 
 Polished (two sentences, 15 + 14 words): "Entropy weighting produced objective indicator weights from data dispersion. TOPSIS then computed each city's relative closeness to the ideal solution, yielding the final ranking (Table 1)."
+
+## Example 4: Data-Formula-Text Tri-Consistency & Anti-Cliché Fix (Rigorous Audit Case)
+
+Original: "基于 A3 组合在 350℃ (18.03%)、400℃ (44.73%) 与 450℃ (28.17%) 的实测锚定数据求解局部二次多项式参数，得到 $b_1 = 6.2713, b_2 = -3.5380$。理论极值顶点为 $T^* = 422.2^\circ\text{C}$，具备坚如磐石的工业示范意义！"
+
+Issue:
+1. Formula-Text Inconsistency: If 450℃ is 28.17%, $b_1 = (28.17 - 18.03)/4 \approx 2.54$. Coefficients $b_1=6.2713, b_2=-3.5380$ were derived from actual 43.12% (86.41% × 49.90%).
+2. Tension with Empirical Truth: Extrapolating 3 points to claim $422.2^\circ\text{C}$ is a definitive optimum overstates mathematical polynomial fitting.
+3. Cliché / Hype words: "坚如磐石", "工业示范".
+
+Polished: "基于 A3 组合在 350℃ ($18.03\%$)、400℃ ($44.73\%$) 与 450℃ ($43.12\%$) 的实测锚定数据求解局部二次多项式参数，得到 $b_1 = 6.2713, b_2 = -3.5380$。计算表明理论极值顶点位于先验区间 $[400.0, 425.0]^\circ\text{C}$（推演值约 $422.2^\circ\text{C}$），为在 375℃ 与 425℃ 安排加点探测真实曲率提供了高置信度的先验指导，最终工业极值坚决以增补实测数据为准。"
+
+---
+
+# Mandatory Companion Gate: `paper-rigor-gatekeeper`
+
+Before passing polished sections to `quality-assurance-auditor`, the automated rigor script MUST be executed:
+```bash
+python plugins/math-modeling-workflow/scripts/audit_paper_rigor.py --file paper/master/full_paper.md
+```
+Any violation of:
+1. Inequality Direction ($A < B < C$ vs true values)
+2. Text-Formula-Data Tri-Consistency
+3. DoE Table Parameter Inversion (e.g. flow rates swapped)
+4. Decision Threshold Sourcing (pure error df, 95% CI, Pareto boundary)
+5. Model Extrapolation vs Empirical Truth tension
+6. Academic Restraint & Anti-Hype Blacklist
+will IMMEDIATELY block progression to final assembly.
+

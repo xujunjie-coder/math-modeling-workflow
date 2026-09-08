@@ -371,6 +371,21 @@ def evaluate_global_gates(ev: dict[str, Any], profile: str, all_questions_at_g5:
             missing.append(f"assembly_manifest.json is invalid JSON: {exc}")
     if not all_questions_at_g5:
         missing.append("not every active question has reached G5")
+    # Automated paper-rigor-gatekeeper pre-flight check on full_paper.md
+    rigor_script = Path(__file__).resolve().parent / "audit_paper_rigor.py"
+    master_paper = ev["workspace"] / "paper/master/full_paper.md"
+    if rigor_script.exists() and master_paper.exists():
+        import subprocess
+        res = subprocess.run([sys.executable, str(rigor_script), "--file", str(master_paper)], capture_output=True, text=True, encoding="utf-8")
+        if res.returncode != 0:
+            missing.append("paper-rigor-gatekeeper audit failed: text-formula, DoE matrix, or threshold inconsistencies detected")
+    # Automated narrative & de-AI anti-cliché audit check on full_paper.md
+    narrative_script = Path(__file__).resolve().parent / "audit_paper_narrative.py"
+    if narrative_script.exists() and master_paper.exists():
+        import subprocess
+        res_narrative = subprocess.run([sys.executable, str(narrative_script), "--file", str(master_paper)], capture_output=True, text=True, encoding="utf-8")
+        if res_narrative.returncode != 0:
+            missing.append("narrative & de-AI audit failed: AI clichés, evasion wording, or weak interface sentences detected")
     results["G5.5"] = _passed("G5.5", missing)
 
     missing = []
