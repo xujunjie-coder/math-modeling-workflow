@@ -2,6 +2,17 @@
 
 All notable changes are documented here. Versions follow Semantic Versioning.
 
+## 0.2.1 - 2026-09-08
+
+### Added
+- Register the `paper-rigor-gatekeeper` and `scipilot-figure` Skills in the explicit stage-routing registry so the repository validator and orchestrator remain synchronized with the shipped 32 Skills.
+
+### Changed
+- Align workflow documentation and quick-start materials with the 32-Skill package.
+
+### Fixed
+- Resolve the CI failure where `validate_repo.py` reported `paper-rigor-gatekeeper` and `scipilot-figure` as unregistered Skills.
+
 ## 0.2.0 - 2026-09-02
 
 ### Added

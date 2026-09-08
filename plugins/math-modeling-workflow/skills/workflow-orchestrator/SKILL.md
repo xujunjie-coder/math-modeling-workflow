@@ -153,7 +153,7 @@ Gate prose is backed by `../../scripts/gate_check.py` (standard library only). P
 
 # Core Backbone Routing (五阶段主干路由)
 
-为防止 31 个精细化辅助技能造成认知过载与碎片化，编排器强制将工作流收敛为**五大主干战役阶段**，在每个阶段精准调度对应的核心主力技能：
+为防止 32 个精细化辅助技能造成认知过载与碎片化，编排器强制将工作流收敛为**五大主干战役阶段**，在每个阶段精准调度对应的核心主力技能：
 
 1. **阶段一（审题、文献与数据实核）**：
    - 核心调用：`problem-parser` + `data-auditor-cleaner`；

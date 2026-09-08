@@ -64,12 +64,14 @@ STAGE_ROUTES: dict[str, list[str]] = {
         "final-method-explainer",
         "figure-table-planner",
         "math-figure-generator",
+        "scipilot-figure",
         "solution-package-builder",
     ],
     "paper": [
         "paper-section-writer",
         "full-paper-assembler",
         "paper-polisher",
+        "paper-rigor-gatekeeper",
         "national-modeling-paper-formatter",
     ],
     "audit": [
