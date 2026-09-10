@@ -161,19 +161,20 @@ Gate prose is backed by `../../scripts/gate_check.py` (standard library only). P
 2. **阶段二（方法选型与机理代码实现）**：
    - 核心调用：`method-selector` + `python-model-code-generator`；
    - 必须产出：严守奥卡姆剃刀与简单机理模型（拒绝无物理机理的高次黑箱）、可复现代码、`frozen_numbers.json` 计算凭证。
-3. **阶段三（统一科研级图版视觉质检）**：
-   - 核心调用：`scipilot-figure`；
-   - 必须产出：执行“先思考后绘图”8 步闭环、红蓝科研级发散色板、多面板复合高清插图 `paper/latex/figures/`。
+3. **阶段三（统一科研级图版规划与视觉质检）**：
+   - 核心调用：`scipilot-figure` + `figure-table-planner`；
+   - 必须产出：坚守“表图 2:1 黄金平衡律”（表图比 1.5:1 ~ 2.2:1，全书规划 8~10 幅多面板复合科研图版 vs 15~20 张三线表，每 2~3 页必有彩色视觉锚点，消除评委阅读疲劳）；执行“先思考后绘图”8 步闭环、红蓝科研级发散色板、多面板复合高清插图 `paper/latex/figures/`；长表格采用双栏并排压缩法为增图预留版面。
 4. **阶段四（逐题破案式深度论文撰写与即时去 AI 味消杀）**：
    - 核心调用：`paper-section-writer` + `paper-polisher`（每题撰写完成后立即执行第 13 项去 AI 味专项审查，坚决清洗免责套娃、空洞总结、模糊建议词与“说明可能”两头占）；
    - 必须产出：**强制遵循 `.agents/rules/reference-template-logic.md`**，单题严格按照“通俗引桥 $\rightarrow$ 机理方程 $\rightarrow$ 四类三线表 $\rightarrow$ 深度反应工程机理归因 $\rightarrow$ 决策矩阵/DoE 设计”四步闭环展开，每题 2500~3500 字，四题总字数逾万字。
 5. **阶段五（全篇穿透总装、G5.5 去 AI 味双轨硬核质检与排版）**：
-   - 核心调用：`full-paper-assembler` + `paper-rigor-gatekeeper`（由 `gate_check.py` 在 Gate G5.5 自动联动执行 `audit_paper_narrative.py` 与 `audit_paper_rigor.py`，违禁 AI 套话一票否决）+ `renumber_figures_tables.py` + `compile_latex.py` / `build_complete_word.py`；
+   - 核心调用：`full-paper-assembler` + `paper-rigor-gatekeeper`（由 `gate_check.py` 在 Gate G5.5 自动联动执行 `audit_paper_narrative.py` 与 `audit_paper_rigor.py`，违禁 AI 套话与表图失衡一票否决）+ `renumber_figures_tables.py` + `compile_latex.py` / `build_complete_word.py`；
    - 必须产出：五段式量化摘要、图表全局连续重编号、100% 满分通过叙事与去 AI 味质检、**20~30 页超清学术 PDF（当前实测标杆为 24~28 页）与 Word 提交版**，强制前置版本号与时间戳（绝不覆盖历史文件）。
 
 # Pacing & Page Budget Standards (慢工出细活与篇幅预算)
 
 - **慢工出细活铁律**：严禁急于求成跳步或快餐式秒出论文。核心价值在于公式完整推导、中间步骤展开、全样本三线表呈现（包含全部 21 组参数，严禁写“其余略”）与微观机理深度归因；
+- **表图 2:1 黄金平衡律与视觉节奏**：全篇图表比例严格控制在 1.5:1 ~ 2.2:1（8~10 幅多面板插图 vs 15~20 张三线表），绝不出现“表多图少（>2.8:1）”导致的审美疲劳；超过 20 行的长表强制双栏并排压缩，保证扩图后总页数严格锁死在 30 页以内；
 - **20~30 页国赛黄金学术篇幅**：
   - 前置部分（独立成页且严格恰好 1 页的五段式摘要、重述/分析/假设/符号/清洗）：约 4~5 页（摘要严禁跨页溢出，800~1000字，后紧跟强制分页符，正文一、问题重述从第 2 页顶格开始）；
   - 核心建模（Q1~Q4 逐题破案展开）：约 12~18 页（每题 3~4.5 页）；

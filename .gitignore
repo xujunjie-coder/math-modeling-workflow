@@ -36,6 +36,8 @@ paper/
 planning/
 workspace/
 scratch/
+scratch_*
+scripts_*.py
 支撑材料/
 .math-modeling-workflow.json
 *.docx

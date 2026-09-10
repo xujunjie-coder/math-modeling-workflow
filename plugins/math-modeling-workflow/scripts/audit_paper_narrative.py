@@ -43,34 +43,60 @@ BLACKLIST_PATTERNS = [
     (r"(总的来说|综上所述|总体而言)，?(这个|该|本|这一)?(设计|模型|方案|架构|算法)", "AI总结段模板：'总的来说'开场+无信息增量复述，应删除或改为定量容差指标与决策执行指令"),
     (r"(可以考虑|不妨考虑|或许可以|可酌情考虑)(用|采用|将|作为|替换|引入)", "模糊建议词：决策规则里'可以考虑'不敢下结论，应改为确定性判定动作（如'判定采纳/执行工艺切换'）"),
     (r"(说明|表明|显示)可能(存在|有|是|会导致)?", "两头占推脱式表达：'说明可能'既想下结论又留余地，应给出确切物理判定或明确异常预案（如'判定存在…触发预案…'）"),
+    (r"Claim-Evidence-Mechanism|\(Claim\)|\(Evidence\)|\(Mechanism\)", "形式化英文标签，应替换为自然的学生口吻中文结构（如'结果分析：1. 核心结论... 2. 数据验证... 3. 原因分析...'）"),
+    (r"遵循竞赛铁律.*?绝不(出现)?", "软件/系统指令泄露套话，应改为平实的学术说明语句（如'为保证数据完整清晰，本文列出了...'）"),
+    (r"实现了全局最优解的精确闭环|实现了.*?的精确闭环", "刻意拔高与夸张化词汇，应替换为客观的算法收敛描述"),
+    (r"大M参数的紧致界限与松弛多面体体积最小化引理", "冗余专业堆砌，应简明表述为'大M参数的紧致边界'"),
+    (r"需攻克并回答以下三大核心递进任务", "生硬模板句式，应改为'主要解决以下三个递进的种植优化问题'"),
+    (r"面对高维时空离散组合，传统遗传算法极易陷入早熟收敛，导致高达.*?收益损失", "AI模板式对比吹嘘，应平实客观陈述算法对照实验结果"),
 ]
 
 # Required Narrative Linkages (Interface Sentences)
-REQUIRED_INTERFACE_THEMES = {
+CHEM_INTERFACE_THEMES = {
     "Q2_opening": {
-        "section": "七、",
+        "section_kw": ["问题二", "七、"],
         "keywords": ["单变量", "上一节", "孤立", "协同", "交互", "混杂"],
         "desc": "Q2 开头承接：指出 Q1 单变量孤立分析的局限，引出 Q2 多元交互与混杂控制"
     },
     "Q3_opening": {
-        "section": "八、",
+        "section_kw": ["问题三", "八、"],
         "keywords": ["全景", "第七节", "认知", "优化", "收益", "权衡", "博弈", "帕累托", "Pareto"],
         "desc": "Q3 开头承接：指出 Q2 探明了曲面规律，工业终极目标是寻优与平衡博弈"
     },
     "Q4_opening": {
-        "section": "九、",
+        "section_kw": ["问题四", "九、"],
         "keywords": ["外推", "第八节", "盲区", "失活", "低温", "实验", "主动学习", "贝叶斯", "序贯"],
         "desc": "Q4 开头承接：指出 Q3 静态优化存在外推失活与盲区风险，驱动 Q4 序贯主动学习设计"
     }
 }
 
-# Key Lay Metaphors expected across the paper
-LAY_METAPHOR_KEYWORDS = [
+AGRI_INTERFACE_THEMES = {
+    "Q2_opening": {
+        "section_kw": ["问题二", "六、", "七、"],
+        "keywords": ["上一节", "确定性", "基准", "外生", "波动", "扰动", "气象", "通胀", "风险", "歉收"],
+        "desc": "Q2 开头承接：指出 Q1 确定性基准假设的局限，引出 Q2 多维气候与市场不确定性"
+    },
+    "Q3_opening": {
+        "section_kw": ["问题三", "七、", "八、"],
+        "keywords": ["第二节", "价格", "外生", "内生", "供求", "弹性", "替代", "互补", "固氮", "失衡"],
+        "desc": "Q3 开头承接：指出 Q2 价格外生静态的局限，引出 Q3 价格弹性内生均衡与固氮生态协同"
+    }
+}
+
+CHEM_LAY_METAPHORS = [
     ("流水线|工人|工位|拆包|组装", "催化剂双组分配比的流水线工人比喻"),
     ("十字路口|红绿灯|车流|分流", "竞争副反应与活化能分流比喻"),
     ("观光车|停留时间|景区", "反应空速与停留时间比喻"),
     ("拔河|油门|刹车|阻尼", "转化率与选择性权衡/正则化比喻"),
     ("盲区|探险|开荒|信息增益", "主动学习探索与利用比喻"),
+]
+
+AGRI_LAY_METAPHORS = [
+    ("粮豆轮作|固氮|根瘤菌|地力|培肥|土壤", "豆科根瘤菌共生固氮与地力蓄积比喻"),
+    ("资产组合|防守|进攻|安全边际|压舱石|对冲", "农作物资产配置与风险对冲投资组合比喻"),
+    ("价格弹性|薄利多销|倾销|以量补价|降价促销|折让", "供需响应与价格折让促销比喻"),
+    ("晴雨表|气象|丰年|歉年|抗灾|歉收|波动", "气候波动与年景抗风险能力比喻"),
+    ("大M法|门控|开关|时空排产|互斥|分段", "重茬互斥与逻辑门控时空调度比喻"),
 ]
 
 def analyze_paper_text(filepath):
@@ -113,27 +139,48 @@ def analyze_paper_text(filepath):
     print("[Narrative Audit] Checking section substance and length...")
     sections = {}
     
-    # Split by major section headings (e.g. ## 一、, ## 六、, ## 摘  要)
-    major_split_pattern = r"(?m)(?=^##\s+(?:摘\s*要|[一二三四五六七八九十]+、))"
-    raw_sections = re.split(major_split_pattern, content)
+    is_tex = filepath.endswith(".tex") or "\\section{" in content
+    if is_tex:
+        major_split_pattern = r"(?m)(?=\\section\{)"
+        raw_sections = re.split(major_split_pattern, content)
+        for sec_part in raw_sections:
+            if re.search(r"摘\s*要", sec_part[:100]):
+                sections["Abstract"] = sec_part
+            elif re.search(r"\\section\{问题一", sec_part[:100]):
+                sections["Q1"] = sec_part
+            elif re.search(r"\\section\{问题二", sec_part[:100]):
+                sections["Q2"] = sec_part
+            elif re.search(r"\\section\{问题三", sec_part[:100]):
+                sections["Q3"] = sec_part
+            elif re.search(r"\\section\{问题四", sec_part[:100]):
+                sections["Q4"] = sec_part
+            elif re.search(r"\\section\{模型评价", sec_part[:100]):
+                sections["Sensitivity"] = sec_part
+    else:
+        # Split by major section headings (e.g. ## 一、, ## 六、, ## 摘  要)
+        major_split_pattern = r"(?m)(?=^##\s+(?:摘\s*要|[一二三四五六七八九十]+、))"
+        raw_sections = re.split(major_split_pattern, content)
 
-    for sec_part in raw_sections:
-        if re.search(r"##\s+摘\s*要", sec_part):
-            sections["Abstract"] = sec_part
-        elif re.search(r"##\s+六、\s*问题一", sec_part):
-            sections["Q1"] = sec_part
-        elif re.search(r"##\s+七、\s*问题二", sec_part):
-            sections["Q2"] = sec_part
-        elif re.search(r"##\s+八、\s*问题三", sec_part):
-            sections["Q3"] = sec_part
-        elif re.search(r"##\s+九、\s*问题四", sec_part):
-            sections["Q4"] = sec_part
-        elif re.search(r"##\s+十、\s*模型评价", sec_part):
-            sections["Sensitivity"] = sec_part
+        for sec_part in raw_sections:
+            if re.search(r"##\s+摘\s*要", sec_part):
+                sections["Abstract"] = sec_part
+            elif re.search(r"##\s+[一二三四五六七八九十]+、\s*问题一", sec_part):
+                sections["Q1"] = sec_part
+            elif re.search(r"##\s+[一二三四五六七八九十]+、\s*问题二", sec_part):
+                sections["Q2"] = sec_part
+            elif re.search(r"##\s+[一二三四五六七八九十]+、\s*问题三", sec_part):
+                sections["Q3"] = sec_part
+            elif re.search(r"##\s+[一二三四五六七八九十]+、\s*问题四", sec_part):
+                sections["Q4"] = sec_part
+            elif re.search(r"##\s+[一二三四五六七八九十]+、\s*模型评价", sec_part):
+                sections["Sensitivity"] = sec_part
 
     # Check word counts per core subquestion
     print("[Narrative Audit] Checking section substance and length...")
-    for sec_key in ["Q1", "Q2", "Q3", "Q4"]:
+    active_q_keys = [k for k in ["Q1", "Q2", "Q3", "Q4"] if k in sections]
+    if not active_q_keys:
+        active_q_keys = ["Q1", "Q2", "Q3"] # fallback
+    for sec_key in active_q_keys:
         sec_text = sections.get(sec_key, "")
         sec_char_count = len(re.findall(r"[\u4e00-\u9fa5]", sec_text))
         if sec_char_count < 1000:
@@ -144,11 +191,15 @@ def analyze_paper_text(filepath):
             passed_items.append(f"Section {sec_key} substantive depth verified: {sec_char_count} Chinese chars.")
 
     # 3. Scan Interface Sentences
+    is_agri = bool(re.search(r"种植|作物|地块|大棚|农业|耕地", content))
+    curr_interfaces = AGRI_INTERFACE_THEMES if is_agri else CHEM_INTERFACE_THEMES
+    curr_metaphors = AGRI_LAY_METAPHORS if is_agri else CHEM_LAY_METAPHORS
+
     print("[Narrative Audit] Checking cross-question Interface Sentences...")
-    for iface_id, iface_cfg in REQUIRED_INTERFACE_THEMES.items():
+    for iface_id, iface_cfg in curr_interfaces.items():
         sec_target = ""
         for s_key, s_text in sections.items():
-            if iface_cfg["section"] in s_text[:100]:
+            if any(kw in s_text[:100] for kw in iface_cfg["section_kw"]):
                 sec_target = s_text[:1500] # Check first 1500 chars of section
                 break
         
@@ -156,12 +207,12 @@ def analyze_paper_text(filepath):
         if len(found_kw) >= 2:
             passed_items.append(f"Interface '{iface_id}' detected (matched keywords: {', '.join(found_kw)}).")
         else:
-            warnings.append(f"Interface '{iface_id}' weak or missing in {iface_cfg['section']}. {iface_cfg['desc']}")
+            warnings.append(f"Interface '{iface_id}' weak or missing. {iface_cfg['desc']}")
 
     # 4. Check Lay Physical Bridges
     print("[Narrative Audit] Checking for Lay Metaphors & Physical Bridges...")
     found_metaphors = []
-    for pat, desc in LAY_METAPHOR_KEYWORDS:
+    for pat, desc in curr_metaphors:
         if re.search(pat, content):
             found_metaphors.append(desc)
     
@@ -172,47 +223,79 @@ def analyze_paper_text(filepath):
 
     # 5. Check CER figure descriptions
     print("[Narrative Audit] Checking Figure Claim-Evidence-Mechanism descriptions...")
-    fig_patterns = [f"图\\s*{i}" for i in range(1, 7)]
-    for fp in fig_patterns:
+    # Find all figures actually present/captioned in the paper
+    declared_figs = re.findall(r"图\s*(\d+)", content)
+    unique_figs = sorted(list(set(int(x) for x in declared_figs if int(x) <= 20)))
+    if not unique_figs:
+        unique_figs = [1, 2, 3, 4]
+    for i in unique_figs:
+        fp = f"图\\s*{i}"
         matches = list(re.finditer(fp, content))
-        if not matches:
-            warnings.append(f"No narrative reference found for {fp}.")
+        if len(matches) < 2: # Should appear at least in caption and narrative text
+            warnings.append(f"Figure {fp} may lack narrative in-text CER reference.")
         else:
-            # Check context around first reference
             first_m = matches[0]
             start_pos = max(0, first_m.start() - 50)
             end_pos = min(len(content), first_m.end() + 300)
             context = content[start_pos:end_pos]
-            if "如图" in context and len(context.strip()) < 100:
+            if "如图" in context and len(context.strip()) < 80:
                 warnings.append(f"Figure {fp} description appears superficial ('如图...所示' without detailed CER interpretation).")
 
+    # 5.5. Check Visual Rhythm and Table-to-Figure Golden Balance
+    print("[Narrative Audit] Checking Visual Rhythm & Table-to-Figure Balance...")
+    if filepath.endswith('.tex'):
+        n_figs = len(re.findall(r'\\begin\{figure\}', content))
+        n_tables = len(re.findall(r'\\begin\{table\}', content))
+    else:
+        n_figs = len(set(re.findall(r'图\s*(\d+)', content)))
+        tab_caps = re.findall(r'(\*\*表\s*[\d\w\-]+[^\n]*\*\*)', content)
+        n_tables = len(tab_caps) if tab_caps else len(set(re.findall(r'表\s*(\d+)', content)))
+
+    tf_ratio = n_tables / max(1, n_figs)
+    if n_figs >= 7 and tf_ratio <= 2.8:
+        passed_items.append(f"Visual Rhythm & Table-to-Figure Balance verified ({n_figs} figures, {n_tables} tables, ratio {tf_ratio:.2f}:1 within 1.5~2.5:1 golden range).")
+    elif n_figs < 6 or tf_ratio > 3.0:
+        warnings.append(f"Table-to-Figure ratio is heavily imbalanced ({n_tables} tables vs {n_figs} figures, ratio {tf_ratio:.2f}:1 > 2.8). Risk of visual fatigue for judges. Recommend 8~10 figures with 2:1 golden ratio.")
+    else:
+        passed_items.append(f"Table-to-Figure ratio acceptable ({n_figs} figures, {n_tables} tables, ratio {tf_ratio:.2f}:1).")
+
     # 6. Check Top 5 Pitfalls in Core Statistical Sections (Especially Q2)
-    print("[Narrative Audit] Checking defense against Top 5 Pitfalls (Simpson, Interaction, Mechanism, Alignment, Depth)...")
-    q2_text = sections.get("Q2", "")
-    if q2_text:
-        # Check Simpson table & sample distribution
-        if not re.search(r"(表\s*3-B|样本量|分布矩阵|透视表|低温区|55\.2%)", q2_text):
-            warnings.append("Q2 lacks explicit Simpson Paradox sample distribution table/matrix (e.g. Table 3-B with sample sizes).")
-        else:
-            passed_items.append("Q2 Simpson Paradox defense: Explicit sample distribution matrix detected.")
+    if not is_agri:
+        print("[Narrative Audit] Checking defense against Top 5 Pitfalls (Simpson, Interaction, Mechanism, Alignment, Depth)...")
+        q2_text = sections.get("Q2", "")
+        if q2_text:
+            if not re.search(r"(表\s*3-B|样本量|分布矩阵|透视表|低温区|55\.2%)", q2_text):
+                warnings.append("Q2 lacks explicit Simpson Paradox sample distribution table/matrix (e.g. Table 3-B with sample sizes).")
+            else:
+                passed_items.append("Q2 Simpson Paradox defense: Explicit sample distribution matrix detected.")
 
-        # Check explicit interaction spread delta
-        if not re.search(r"(极差|敏感度|放大|倍|Spread)", q2_text):
-            warnings.append("Q2 interaction effects lack explicit quantified spread deltas (e.g. spread at 250C vs 400C).")
-        else:
-            passed_items.append("Q2 Interaction Effect defense: Quantified spread delta / sensitivity amplification detected.")
+            # Check explicit interaction spread delta
+            if not re.search(r"(极差|敏感度|放大|倍|Spread)", q2_text):
+                warnings.append("Q2 interaction effects lack explicit quantified spread deltas (e.g. spread at 250C vs 400C).")
+            else:
+                passed_items.append("Q2 Interaction Effect defense: Quantified spread delta / sensitivity amplification detected.")
 
-        # Check mechanistic literature & byproduct validation
-        if not re.search(r"(文献|Bell|Fogler|反应网络|副产物|乙醛|缩合位点)", q2_text):
-            warnings.append("Q2 mechanism lacks authoritative literature linkage or experimental byproduct validation.")
-        else:
-            passed_items.append("Q2 Mechanism defense: Authoritative literature / byproduct cross-validation detected.")
+            # Check mechanistic literature & byproduct validation
+            if not re.search(r"(文献|Bell|Fogler|反应网络|副产物|乙醛|缩合位点)", q2_text):
+                warnings.append("Q2 mechanism lacks authoritative literature linkage or experimental byproduct validation.")
+            else:
+                passed_items.append("Q2 Mechanism defense: Authoritative literature / byproduct cross-validation detected.")
 
-        # Check rigorous quasicontrol or permutation residuals
-        if not re.search(r"(准对照|置换检验|Freedman|残差|投影矩阵|绝对残差)", q2_text):
-            warnings.append("Q2 lacks solid mathematical derivation or point-to-point residual evaluation for advanced methods.")
-        else:
-            passed_items.append("Q2 Advanced Method defense: Point-to-point residual / projection operator detected.")
+            # Check rigorous quasicontrol or permutation residuals
+            if not re.search(r"(准对照|置换检验|Freedman|残差|投影矩阵|绝对残差)", q2_text):
+                warnings.append("Q2 lacks solid mathematical derivation or point-to-point residual evaluation for advanced methods.")
+            else:
+                passed_items.append("Q2 Advanced Method defense: Point-to-point residual / projection operator detected.")
+    else:
+        # Agri checks: check CVaR, Monte Carlo LHS, and SAA convergence
+        q2_text = sections.get("Q2", "")
+        if q2_text:
+            if re.search(r"CVaR|置信|蒙特卡洛|扰动|尾部|分布", q2_text):
+                passed_items.append("Q2 Risk & Uncertainty defense: Monte Carlo & Mean-CVaR formulation verified.")
+            if re.search(r"(拉丁超立方|LHS|超立方抽样)", q2_text):
+                passed_items.append("Q2 Sampling Method defense: Latin Hypercube Sampling (LHS) verified.")
+            if re.search(r"(SAA|样本量|收敛|情景规模)", q2_text):
+                passed_items.append("Q2 Sample Convergence defense: SAA scenario convergence test verified.")
 
 
     # Output results

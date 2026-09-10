@@ -1,78 +1,103 @@
 ---
 name: figure-table-planner
-description: Decide whether verified mathematical-modeling claims need tables, static plots, diagrams, or no visual, then plan the smallest traceable set of diagnostic, comparison, paper, and appendix artifacts.
+description: Plan, budget, and balance academic figures and tables for mathematical modeling contest papers. Enforces the 2:1 Table-to-Figure Golden Balance, 8-10 essential scientific panels, visual rhythm (visual anchor every 2-3 pages), double-column table compression, and Claim-Evidence-Mechanism deep interpretation.
 ---
 
-# Purpose
+# figure-table-planner: 数模论文图表规划与视觉节奏平衡引擎
 
-Make every visual evidence-bearing. Prefer fewer useful visuals over a decorative inventory.
+## 核心使命 (Mission)
 
-# Inputs
+本技能负责解决数学建模竞赛论文中极易出现的**“表太多图太少（Table-Heavy, Figure-Poor）”**致命视觉失衡问题。
+很多参赛队或初级生成流程倾向于罗列大量数据表格（如 20 多张表），而仅配 4~5 幅孤立小图（表图比高达 4:1 以上），导致评委在 3~5 分钟快速翻阅时产生极大的阅读疲劳与枯燥感。
 
-- method card and decision ledger;
-- run summaries and final result analysis;
-- robustness evidence;
-- solution package and frozen numbers in submission mode;
-- existing figures/tables.
+`figure-table-planner` 确立**“表图 2:1 黄金平衡律”与“每 2~3 页必有高颜值视觉锚点”**的科研排版规范，指导全篇系统规划 **8~10 幅高密度科研级多面板复合图版** 与 **15~20 张规范学术三线表**，并通过**长表格双栏并排压缩法**解决“增图导致页数超标”的矛盾，严格锁死在 **20~30 页国赛黄金篇幅预算** 内。
 
-# Figure Types
+---
 
-- Type 1 diagnostic: internal debugging; never in the paper.
-- Type 2 comparison: main vs usable baseline or a genuinely tested alternative; optional in paper.
-- Type 3 paper: directly supports a main claim; required only when the claim benefits materially from a visual.
-- Type 4 appendix: supplementary evidence referenced from the main text.
+## 一、表图 2:1 黄金平衡律与视觉节奏规约 (The Golden Balance & Visual Rhythm)
 
-# Workflow
+### 1. 表图黄金比例红线 (The 1.5:1 ~ 2.2:1 Golden Ratio)
+- **国赛标准黄金篇幅（20~30 页）推荐配置**：
+  - **插图数量**：**8 ~ 10 幅高质量科研级多面板复合图版**（绝不使用孤立单调散图，优先采用 1×2 横向双面板或 2×2 四面板复合版式）；
+  - **表格数量**：**15 ~ 20 张学术精修三线表**（包含符号表、数据台账、模型对比表、压力测试表等）；
+  - **表图比 (Table-to-Figure Ratio)**：严格控制在 **1.5:1 至 2.2:1** 之间（理想标杆为 **2:1**）。
+- **严重失衡拦截红线**：
+  - 若全篇插图 $< 7$ 幅，或表图比 $> 2.8:1$，视为“枯燥表格堆砌”，必须通过规划增补科研复合图版进行视觉救赎。
 
-1. List verified claims that need visual or exact tabular support.
-2. Run the visual-decision gate for every result-bearing claim:
-   - exact small values or parameters -> table;
-   - trend, distribution, uncertainty, sensitivity, spatial/temporal pattern, matrix, or many-item comparison -> plot;
-   - mechanism, dependency, or workflow -> diagram;
-   - prose-only when a visual would not improve interpretation.
-3. Reuse an existing artifact when it already communicates the claim at final placement size.
-4. For each proposed visual record:
-   - ID and Qx;
-   - type;
-   - source artifact and frozen claim IDs when applicable;
-   - one core claim;
-   - chart/table form;
-   - target section;
-   - output formats and final placement size;
-   - status and render needs.
-5. Ask the human to confirm judgment-bearing Type 3 claims through one compact choice card when they are not already in the decision ledger.
-6. Save `methods/Qx/qx_figure_table_plan.md` when submission work or downstream generation needs durable routing. In lean exploration, a compact in-conversation plan is sufficient.
+### 2. 每 2~3 页必有高颜值视觉锚点 (Visual Rhythm / Pacing Rule)
+- 评委翻阅论文的心流节奏是动态的。连续 4 页以上纯文字或纯密集数字表格，必然引发视觉疲劳和审美钝化；
+- **排版节奏铁律**：从正文第 2 页至第 27 页，**平均每隔 2~3 页必须出现一幅高信息密度的彩色科研图版或精美三线对比表**，形成视觉张弛交替的“呼吸感”。
 
-# Planning Heuristics
+---
 
-- Use tables for exact values, parameters, and small comparisons.
-- Use plots for trends, distributions, sensitivity, or many-item comparisons.
-- Use diagrams for mechanisms, dependencies, and workflows.
-- Prefer a heatmap for a meaningful matrix such as correlation, confusion, missingness, transition, or two-parameter sensitivity; do not convert an ordinary table into a heatmap merely to add color.
-- Prefer box/violin/strip plots for group distributions, scatter plus fit or uncertainty for relationships, line plus band for time or sensitivity, and a confusion matrix plus class-aware metric for classification.
-- When several figures use the same categories, methods, variables, or groups, require stable ordering and visual identity across them.
-- Assign chapter-based identifiers (e.g. `图X-Y`, `表X-Y`) during planning and drafting; global sequential renumbering (图1, 2, 3... and 表1, 2, 3...) occurs only after human review of the assembled master paper.
-- A main-vs-baseline figure needs compatible metrics and the same evaluation setup.
-- Do not create a multi-method comparison merely to imply breadth.
+## 二、国赛标准必配的八至十大科研复合图版体系 (The 8-10 Essential Visual Panels)
 
-# Rules
+全书必须在规划阶段明确以下 8~10 幅标志性科研图版，并在各章节精准锚定：
 
-- Type 1 never enters the paper.
-- Type 3 uses final validated sources and a human-confirmed core claim.
-- For every Type 3 paper figure, specify the concrete conclusion to be derived in text, ensuring downstream paper sections discuss findings centered on the visual (e.g. "通过上述图片得出……结论").
-- Do not use unresolved exploratory figures as paper evidence.
-- Do not fabricate data, captions, or claims.
-- Do not fill plans with placeholder sentinels; pause for one human choice instead.
-- Every visual must have a source and purpose.
-- Do not impose an arbitrary figure quota. Require an explicit no-figure decision when a result-bearing claim is left to prose or tables.
-- A planned Type 3/4 figure must request editable source plus vector output when compatible and a high-resolution raster fallback.
-- Downstream generation of planned paper visuals must automatically invoke `scipilot-figure` (or `math-figure-generator`), enforcing the 8-step scientific workflow, multi-panel layout, Visual QA checklist, and `setup_style.py` palette injection.
+| 图号与建议位置 | 图版命名与核心内容 | 面板架构推荐 | 核心数理与评委采分功能 |
+| :--- | :--- | :---: | :--- |
+| **图 1**（§2.1 研究思路） | **全流程系统方法学与多阶段时空优化架构图** | 横向泳道 / 分层逻辑框图 | 展示“数据实核 $\rightarrow$ 基准排产 $\rightarrow$ 风险度量 $\rightarrow$ 内生弹性”全流程闭环，评委一眼看懂研究全貌。 |
+| **图 2**（§4 数据画像） | **资源时空底册拓扑分布与基准生产现状画像** | 1×2 双面板（地块分布环形图 + 作物现状面积柱图） | 展现多维异质资源结构（如 54 地块、1213 亩分布），奠定优化边界。 |
+| **图 3**（§5 问题一） | **确定性基准不同情形净利润对比与播种面积演变** | 1×2 双面板（年度利润折线对比 + 作物播种面积堆叠柱图） | 直观印证不同市场情景（如滞销 vs 促销）的收益跃升与产能释放。 |
+| **图 4**（§5 问题一） | **代表性地块时空排产矩阵热力图与作物大类演变** | 1×2 双面板（多地块×多年份热力矩阵 + 面积演变） | 用最硬核的视觉呈现，向评委直观证实“空间零重茬”与“三年豆类轮作”的 100% 严格履约。 |
+| **图 5**（§6 问题二） | **多情景扰动下净利润分布箱线图与鲁棒均值-CVaR帕累托前沿** | 1×2 双面板（50组情景箱线图 + 收益-风险有效前沿曲线） | 阐明极端气候与市场波动下的尾部风险防守机制，证实 CVaR 保底底线。 |
+| **图 6**（§7 问题三） | **农作物逆需求价格响应曲线与三大策略五维综合性能雷达图** | 1×2 双面板（多品种弹性降价函数 + 五维性能雷达） | 展现微观价格反向调节机理，雷达图直观对比多方案综合得分。 |
+| **图 7**（§7 问题三） | **核心方案种植结构时空演变对比与“收益-风险-多样性”3D气泡图** | 1×2 双面板（结构演变堆叠图 + 3D/2.5D 决策气泡图） | 证明内生弹性模型自发引导结构均衡，达成高收益、低风险、高多样性的帕累托最优。 |
+| **图 8**（§8 灵敏度） | **关键机理与风险偏好双参数连续灵敏度响应曲面/曲线** | 1×2 双面板（机理参数 $\eta$ 响应 + 风险系数 $\lambda$ 边际效用） | 严密论证参数基准点处于边际替代率最高的最优“甜点区”（Sweet Spot）。 |
+| **图 9**（§8 综合分析） | **SAA样本收敛、算法残差衰减、历史回测拟合与贡献结构全景图** | 2×2 四面板复合图版（收敛性 + 残差衰减 + 历史吻合度 + 空间贡献度） | 全方位展现数值渐进收敛性、算法稳定性与现实工业/农业逻辑的深度契合。 |
 
-# Verification
+---
 
-- Each planned visual supports a verified claim.
-- Types, sources, sections, and statuses are explicit.
-- Type 3 claims trace to human decisions and frozen evidence.
-- Every result-bearing claim passed the visual-decision gate.
-- Matrix, distribution, sensitivity, classification, and many-item claims were not defaulted to tables without a reason.
-- No unnecessary or decorative visual remains.
+## 三、长表格双栏并排压缩法 (Double-Column Table Compression Law)
+
+> [!IMPORTANT]
+> **解决“增图导致页数超标”的核心排版技术**：
+> 扩充 4~5 幅高质量复合大图必然占用 3~4 页垂直版面。如果直接保留原本 40~50 行的纵向单列表格，整篇论文极易膨胀至 33~34 页，击穿 30 页国赛黄金上限！
+> 
+> **执行法则**：
+> 凡数据行数超过 20 行的长列表格（如 41 种作物产销台账、54 个地块详细台账），**严禁单列通栏跨页排版**！必须重构为**“左右双栏并排”学术三线表**：
+> 1. **LaTeX 语法规范**：
+>    采用并排分栏结构，中间以 `|` 或适度空白隔离，配合 `\resizebox{\textwidth}{!}{...}` 弹性缩放：
+>    ```latex
+>    \begin{table}[H]
+>    \centering
+>    \scriptsize
+>    \caption{全村 54 个地块物理面积与类型全景对照表}
+>    \resizebox{\textwidth}{!}{
+>    \begin{tabular}{c c c | c c c}
+>    \toprule
+>    \textbf{地块编号} & \textbf{地块类别} & \textbf{面积 (亩)} & \textbf{地块编号} & \textbf{地块类别} & \textbf{面积 (亩)} \\
+>    \midrule
+>    A1 & 平旱地 & 80.0 & B8 & 梯田 & 44.0 \\
+>    ... & ... & ... & ... & ... & ... \\
+>    \bottomrule
+>    \end{tabular}
+>    }
+>    \end{table}
+>    ```
+> 2. **版面收益**：单表垂直高度直接压缩 50%（从 1.5 页缩至 0.6 页），单张表即可为正文节约 1 整页垂直空间，完美吸收新增图版的版面预算！
+
+---
+
+## 四、图文深度三步自解释法 (Claim-Evidence-Mechanism Deep Narrative)
+
+在正文引用和解析任何图版时，严禁使用“如图 X 所示，效果很好”等空洞套话，必须完整践行三步闭环：
+1. **核心结论 (Claim)**：直接用客观肯定的陈述句亮明该图证明的核心学术命题（如“Q3 综合策略在期望收益、抗极端风险与生态多样性三个维度上取得了最佳的帕累托平衡”）；
+2. **数据验证 (Evidence)**：具体指出子面板标号 (a)/(b) 中的精确拐点、坐标极值与数值变化（如“如图 6(a) 所示，随着供给量增加，叶菜类价格下降较快（$\beta \approx 0.35$），而主粮价格变动较为平缓（$\beta \approx 0.15$）；图 6(b) 雷达图显示综合得分达 94 分”）；
+3. **原因分析 (Mechanism)**：从第一性原理、微观农艺/物理/经济学深层机制解释数据背后的本质成因（如“这得益于价格弹性反向调节与生物固氮跨期减免的协同作用，促使模型自发避开单一高价作物的踩踏风险”）。
+
+---
+
+## 五、工作流与质检准则 (Workflow & Verification)
+
+1. **G2 规划阶段**：
+   - 盘点本题需证明的关键论点，初定图表清单；
+   - 核查计划图表总数，预先计算预计表图比（确保在 1.5:1 ~ 2.2:1 之间）；
+   - 锁定 8~10 大必配科研图版。
+2. **G3~G4 执行阶段**：
+   - 调用 `scipilot-figure` 自动执行“先思考后绘图”8 步闭环，统一红蓝 SCI 色板与 300 DPI 导出；
+   - 逐图撰写三步自解释正文段落。
+3. **G5 总装审计阶段**：
+   - 运行 `audit_paper_narrative.py`，自动核验全书图版总数 $\ge 8$、表图比 $\le 2.5:1$、每幅图在正文中至少被引用 2 次且具备深入 CER 分析；
+   - 检查长表格是否已完成双栏并排压缩；
+   - 验证编译后的 LaTeX PDF 总页数严格控制在 **20~30 页** 内。
