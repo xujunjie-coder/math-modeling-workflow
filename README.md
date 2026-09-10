@@ -73,6 +73,18 @@ python plugins/math-modeling-workflow/scripts/init_workspace.py <项目目录>
 
 它只会创建通用目录与初始配置，不会覆盖已有文件。物理目录与各 Skill 规范路径（canonical）一致；教学文档里的 `problem_1/subproblem_x` 叫法、脚手架目录与 canonical 路径的一一对应见 [docs/directory-mapping.zh-CN.md](docs/directory-mapping.zh-CN.md)。从 lean 探索档升级到 submission 参赛档的补件清单见 [docs/lean-to-submission-checklist.zh-CN.md](docs/lean-to-submission-checklist.zh-CN.md)。
 
+### 不运行初始化程序，直接复制工作区
+
+仓库中的 [`plugins/math-modeling-workflow/assets/workspace-template`](plugins/math-modeling-workflow/assets/workspace-template) 已保存完整的初始化目录骨架、初始配置和启动指令。克隆本仓库后，可以直接在文件资源管理器中复制该目录并重命名为本次比赛项目；复制出的目录已经包含 `.math-modeling-workflow.json` 初始化标记，无需再次让 AI 或脚本执行初始化。
+
+也可以在 Windows PowerShell 中使用 `robocopy`，其中 `/E` 会保留全部空目录：
+
+```powershell
+robocopy .\plugins\math-modeling-workflow\assets\workspace-template C:\path\to\新项目 /E
+```
+
+随后只需把赛题放入 `problem_statement/`、附件放入 `data_raw/`，再发送模板目录中的 `一键启动指令.txt`。
+
 不使用 Codex 时（Claude Code、Cursor 或任意网页对话），Skill 是纯 Markdown、脚本只依赖标准库，可按 [docs/agent-agnostic-loading.zh-CN.md](docs/agent-agnostic-loading.zh-CN.md) 手动加载，由人承担路由、用脚本做硬校验。
 
 ## Skill 调用链
