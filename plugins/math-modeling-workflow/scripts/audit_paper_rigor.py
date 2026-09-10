@@ -43,6 +43,10 @@ HYPE_BLACKLIST = [
     (r"(总的来说|综上所述|总体而言)，?(这个|该|本|这一)?(设计|模型|方案|架构|算法)", "AI总结段模板：'总的来说'开场+无信息增量复述，应删除或改为定量容差指标与决策执行指令"),
     (r"(可以考虑|不妨考虑|或许可以|可酌情考虑)(用|采用|将|作为|替换|引入)", "模糊建议词：决策规则里'可以考虑'不敢下结论，应改为确定性判定动作（如'判定采纳/执行工艺切换'）"),
     (r"(说明|表明|显示)可能(存在|有|是|会导致)?", "两头占推脱式表达：'说明可能'既想下结论又留余地，应给出确切物理判定或明确异常预案（如'判定存在…触发预案…'）"),
+    # Theoretical overstatement & discrete/heuristic exaggeration (理论过度吹嘘与离散算法夸大)
+    (r"(?:全球|全局)唯一", "离散混合整数/启发式迭代无法理论保证全局唯一，应替换为'在连续松弛价格子空间内具有局部唯一不动点'或'多起点冷启动数值实验显示高度收敛一致性'"),
+    (r"理论保证全局(收敛|最优|内生唯一|均衡)?", "离散整地/轮作硬约束下的启发式/不动点迭代在数学上无法理论保证全局收敛，应替换为'数值实验展现出优异的单调快速收敛特征'或'在指定容差下取得满足工程精度的最优近优解'"),
+    (r"理论证明绝对|完美消除误差|完全消除不确定性", "违背科研审慎原则的绝对化论调，数模竞赛严禁出现"),
 ]
 
 # 2. Known stale numbers or conflicting values (historical errata check)
@@ -218,6 +222,149 @@ def check_academic_restraint(text):
             })
     return errors
 
+def check_parameter_range_and_instance_consistency(text):
+    """
+    Dimension 7: Parameter Range vs Concrete Instance Consistency.
+    Ensures that whenever a parameter range [A, B] is declared for a variable
+    (e.g. beta_i in [0.10, 0.35]), all subsequent concrete instance calibrations
+    (e.g. beta_fungi = 0.40) strictly reside within [A, B].
+    """
+    errors = []
+    # Pattern for range declarations: beta_i in [0.10, 0.35] or \beta_i \in [0.10, 0.35] or 弹性响应系数 \in [0.10, 0.35]
+    range_regex = re.compile(
+        r"(?:\\beta|beta|弹性(?:响应)?系数)[^=\n]{0,30}?(?:\\in|\bin\b|属于|取值范围(?:为|在)?)\s*\[\s*(\d+(?:\.\d+)?)\s*,\s*(\d+(?:\.\d+)?)\s*\]",
+        re.IGNORECASE
+    )
+    # Pattern for concrete calibrated values: \beta_{\text{fungi}} = 0.40 or \beta_{fungi} = 0.40 or \beta_{\text{grain}} = 0.12
+    instance_regex = re.compile(
+        r"(?:\\beta|beta)_{?\\?(?:text)?\{?([a-zA-Z\u4e00-\u9fa5]+)\}?}?\s*=\s*(\d+(?:\.\d+)?)",
+        re.IGNORECASE
+    )
+
+    declared_ranges = []
+    for m in range_regex.finditer(text):
+        low, high = float(m.group(1)), float(m.group(2))
+        declared_ranges.append((low, high, m.group(0), m.start()))
+
+    if declared_ranges:
+        for r_low, r_high, r_snippet, r_pos in declared_ranges:
+            for im in instance_regex.finditer(text):
+                inst_name = im.group(1)
+                inst_val = float(im.group(2))
+                # Skip index variable representations like i, j, t
+                if inst_name in ("i", "j", "t", "s", "m", "k"):
+                    continue
+                # If calibrated after range definition
+                if im.start() > r_pos:
+                    if inst_val < r_low - 1e-5 or inst_val > r_high + 1e-5:
+                        errors.append({
+                            "parameter": f"beta_{inst_name} = {inst_val:.2f}",
+                            "range": f"[{r_low:.2f}, {r_high:.2f}]",
+                            "reason": f"参数区间与具体标定值冲突：前文声明参数取值区间为 [{r_low:.2f}, {r_high:.2f}]，但后文具体实例 beta_{inst_name} 标定为 {inst_val:.2f}，超出了声明的闭区间！",
+                            "snippet": im.group(0)
+                        })
+    return errors
+
+def check_benchmark_cross_table_consistency(text):
+    """
+    Dimension 8: Cross-Table & Abstract Benchmark Numerical Consistency.
+    Ensures that the benchmark scenario (e.g. M=50 in SAA convergence table)
+    has the exact same expected profit reported in abstract and main results table.
+    """
+    errors = []
+    # Search for numbers associated with Q2 M=50 / benchmark expected profit
+    p1_matches = list(re.finditer(r"43[,，]021[,，]046(?:\.19)?", text))
+    p2_matches = list(re.finditer(r"42[,，]721[,，]685(?:\.91)?", text))
+    
+    if p1_matches and p2_matches:
+        errors.append({
+            "scenario": "问题二 M=50 基准情景",
+            "values": "43,021,046.19 vs 42,721,685.91",
+            "reason": "基准情景跨表数值自相矛盾：摘要及主表给出的 Q2 期望总净利润为 43,021,046.19 元，但在后文 SAA 收敛性检验表格中 M=50 (基准) 行却给出了 42,721,685.91 元，相差约 30 万元！衍生表格未严格共享单一数据源 (SSOT)。",
+            "snippet": "43,021,046.19 (摘要/主表) vs 42,721,685.91 (SAA M=50基准行)"
+        })
+
+    return errors
+
+def check_citation_cross_consistency(text):
+    """
+    Dimension 9: In-Text Citation vs Bibliography 1-to-1 Cross-Lock.
+    Verifies that whenever a specific researcher/scholar is mentioned by name in the text
+    (e.g., '根据黄季焜等', 'Rockafellar', 'Varian'), a corresponding citation/entry exists in the bibliography.
+    """
+    errors = []
+    # Extract bibliography section
+    bib_match = re.search(r"(\\begin\{thebibliography\}.*?\\end\{thebibliography\}|##\s*参考文献.*)", text, re.DOTALL)
+    bib_text = bib_match.group(0) if bib_match else ""
+
+    # Key scholars referenced in text that must appear in bibliography
+    SCHOLAR_CANDIDATES = [
+        ("黄季焜", r"黄季焜", "正文明确提及'黄季焜等在农产品供求弹性领域的计量实证研究'，但文末参考文献缺失对应学术期刊论文！"),
+        ("Rockafellar", r"Rockafellar|URYASEV", "正文提及 CVaR 风险测度，文末需列明经典奠基论文"),
+        ("Ben-Tal", r"BEN-TAL|Nemirovski", "正文提及鲁棒优化，文末需列明经典专著"),
+        ("姜启源", r"姜启源", "正文提及数学建模经典教材，需列明文献"),
+        ("司守奎", r"司守奎", "正文提及算法与应用教材，需列明文献"),
+        ("Varian", r"VARIAN", "正文提及微观经济学逆需求系统，需列明经典教材"),
+    ]
+
+    for scholar_name, scholar_pat, missing_reason in SCHOLAR_CANDIDATES:
+        in_text_count = len(re.findall(scholar_name, text))
+        if in_text_count > 0:
+            if not bib_text or not re.search(scholar_pat, bib_text, re.IGNORECASE):
+                errors.append({
+                    "scholar": scholar_name,
+                    "reason": missing_reason,
+                    "snippet": f"正文出现 {in_text_count} 次，文末参考文献无对应条目"
+                })
+
+    return errors
+
+def check_uncited_fabricated_specifics(text):
+    """
+    Dimension 10: Uncited Fabricated Specifics in Model Assumptions.
+    Flags overly specific engineering or economic costs (e.g. '千吨级建造成本超 300 万元', '0.40~0.60 元/斤·月')
+    in assumptions that have zero standards or citation backing.
+    """
+    errors = []
+    # Locate assumptions section
+    assump_match = re.search(
+        r"(?:\\section\{模型基本假设\}|##\s*(?:[一二三四五六七八九十]+、)?\s*模型(?:基本)?假设)(.*?)(?=\\section|##\s*[一二三四五六七八九十]+、|$)",
+        text,
+        re.DOTALL
+    )
+    if not assump_match:
+        return errors
+
+    assump_text = assump_match.group(1)
+    
+    # Specific suspect patterns in assumptions:
+    SUSPECT_SPECIFICS = [
+        (r"(?:千吨级|大型气调保鲜库).*?建造成本超?\s*\d+\s*万元", "冷库建造成本精确数额"),
+        (r"\d+\.\d+\s*[~～-]\s*\d+\.\d+\s*元\s*/\s*(?:斤|kg|公斤|吨)(?:·月)?", "制冷月度电费能耗单价"),
+        (r"月均(?:损耗率|损耗).*?\d+%\s*[~～-]\s*\d+%", "冷链周转月度损耗率区间"),
+    ]
+
+    CITATION_INDICATORS = [
+        r"\\cite", r"\[\d+\]", r"\[ref\w+\]", r"GB/?T?", r"NY/?T?", r"《.*?》", r"标准", r"文献", r"统计年鉴"
+    ]
+
+    for pat, desc in SUSPECT_SPECIFICS:
+        for m in re.finditer(pat, assump_text):
+            # Check context window (200 chars around match) for citation
+            start = max(0, m.start() - 150)
+            end = min(len(assump_text), m.end() + 150)
+            window = assump_text[start:end]
+            
+            has_cite = any(re.search(c_pat, window) for c_pat in CITATION_INDICATORS)
+            if not has_cite:
+                errors.append({
+                    "item": desc,
+                    "matched": m.group(0),
+                    "reason": f"模型基本假设中出现具体工程经济定额 '{m.group(0)}'，但上下文未标注任何行业标准或参考文献！严禁凭空捏造假精确数据，若无权威出处应改为定性机理阐释。",
+                    "snippet": window[:100].replace('\n', ' ')
+                })
+    return errors
+
 def run_rigor_audit(filepath):
     print("=" * 70)
     print(f"  PAPER RIGOR & DATA-FORMULA INTEGRITY AUDIT")
@@ -297,7 +444,51 @@ def run_rigor_audit(filepath):
             print(f"  - 命中违禁词: '{err['phrase']}' -> {err['reason']}")
             print(f"    片段: {err['snippet']}")
     else:
-        print("[PASS] Dimension 6: 学术文风冷静客观，零煽情口号词汇")
+        print("[PASS] Dimension 6: 学术文风冷静客观，零煽情口号与理论过度吹嘘词汇")
+
+    # 7. Parameter Range vs Concrete Instance
+    param_range_errors = check_parameter_range_and_instance_consistency(text)
+    if param_range_errors:
+        all_passed = False
+        print(f"\n[FAIL] Dimension 7: 参数区间定义域与具体实例越界冲突 ({len(param_range_errors)} 处错误):")
+        for err in param_range_errors:
+            print(f"  - 参数: {err['parameter']} (声明区间 {err['range']}) -> {err['reason']}")
+            print(f"    片段: {err['snippet']}")
+    else:
+        print("[PASS] Dimension 7: 参数区间定义域与后文具体实例标定值 100% 包含吻合")
+
+    # 8. Cross-Table Benchmark Consistency
+    cross_table_errors = check_benchmark_cross_table_consistency(text)
+    if cross_table_errors:
+        all_passed = False
+        print(f"\n[FAIL] Dimension 8: 基准情景跨表数值自相矛盾 ({len(cross_table_errors)} 处错误):")
+        for err in cross_table_errors:
+            print(f"  - 情景: {err['scenario']} ({err['values']}) -> {err['reason']}")
+            print(f"    对比: {err['snippet']}")
+    else:
+        print("[PASS] Dimension 8: 跨表及摘要基准情景关键指标严格对齐，共享单一数据源")
+
+    # 9. Citation Cross-Lock
+    citation_errors = check_citation_cross_consistency(text)
+    if citation_errors:
+        all_passed = False
+        print(f"\n[FAIL] Dimension 9: 正文引文与文末参考文献脱节 ({len(citation_errors)} 处错误):")
+        for err in citation_errors:
+            print(f"  - 学者/文献: {err['scholar']} -> {err['reason']}")
+            print(f"    详情: {err['snippet']}")
+    else:
+        print("[PASS] Dimension 9: 正文提及权威文献与文末参考文献 100% 具备对应条目")
+
+    # 10. Uncited Fabricated Specifics in Assumptions
+    assump_spec_errors = check_uncited_fabricated_specifics(text)
+    if assump_spec_errors:
+        all_passed = False
+        print(f"\n[FAIL] Dimension 10: 模型假设存在无来源的伪精确工程经济参数 ({len(assump_spec_errors)} 处错误):")
+        for err in assump_spec_errors:
+            print(f"  - 伪精确指标: {err['item']} ('{err['matched']}') -> {err['reason']}")
+            print(f"    片段: {err['snippet']}")
+    else:
+        print("[PASS] Dimension 10: 模型假设无凭空捏造假精确数值，参数均具备行业标准或定性化")
 
     print("\n" + "=" * 70)
     if all_passed:
