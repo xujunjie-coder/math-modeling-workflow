@@ -1,10 +1,27 @@
 # Math Modeling Workflow
+> A Codex plugin connecting mathematical modeling tasks, reproducible experiments, and paper evidence.
 
-An installable Codex plugin for evidence-driven mathematical-modeling contests. The `workflow-orchestrator` skill reads per-question manifests, evaluates gates, and routes one authorized next action across problem framing, data audit, method decisions, reproducible experiments, robustness, publication figures, paper assembly, formatting, and final audits.
+**Markdown Skills · Python validation helpers · JSON / JSONL · Apache-2.0**
 
-This repository contains reusable workflow logic, skills, templates, and a synthetic example only. It does not contain real contest inputs, private team information, or submission artifacts.
+[中文介绍](README.md) · [Guide](使用教程.md) · [Contributing](CONTRIBUTING.md)
 
-## Install
+## What it does
+
+The plugin routes problem parsing, data auditing, method selection, Python or MATLAB code work, robustness checks, figures, paper writing, and final audits through specialized Skills.
+
+The engineering focus is traceability: per-question manifests record progress, decision logs capture choices, and validation scripts inspect the evidence behind gates and numerical claims.
+
+## Explore the implementation
+
+- [Skills](plugins/math-modeling-workflow/skills/): task contracts and execution rules.
+- [Gate checker](plugins/math-modeling-workflow/scripts/gate_check.py): evidence-based progress checks.
+- [Frozen-number checker](plugins/math-modeling-workflow/scripts/check_frozen_numbers.py): paper-to-result consistency.
+- [Workspace template](plugins/math-modeling-workflow/assets/workspace-template/): initial directories and configuration.
+- [Tests](tests/) and [CI](.github/workflows/validate.yml): repository validation entry points.
+
+## Getting started
+
+Register this repository as a local Marketplace:
 
 ```powershell
 git clone https://github.com/xujunjie-coder/math-modeling-workflow.git
@@ -12,34 +29,23 @@ codex plugin marketplace add C:\path\to\math-modeling-workflow
 codex plugin add math-modeling-workflow@personal
 ```
 
-Start a new Codex task after installing or updating the plugin, then use:
-
-```text
-Use $workflow-orchestrator to initialize this mathematical-modeling project in lean mode with Python and seed 2026.
-```
-
-See the [Chinese README](README.md) for the complete routing chain, visualization policy, and development commands.
-
-## Deterministic gate enforcement
-
-Gate prose is backed by a standard-library enforcer that judges progress from on-disk evidence, never from the self-reported manifest alone:
+Open a new task after installation. Initialize a separate contest workspace:
 
 ```powershell
-# Inspect the highest gate actually supported by artifacts (exit 2 = integrity violation)
-python plugins/math-modeling-workflow/scripts/gate_check.py <workspace> status
-# Hard pre-action guard: code_generation needs G2.5, freeze needs G3,
-# paper_writing needs G4, final_assembly needs every active question at G5.
-python plugins/math-modeling-workflow/scripts/gate_check.py <workspace> guard --action code_generation --question Q1
+python plugins/math-modeling-workflow/scripts/init_workspace.py C:\path\to\contest-project
 ```
 
-A data-free/mechanism-only question may declare `"waivers": ["data_profile"]` in its manifest; the waiver is reported, never silently applied.
+Place the problem statement in `problem_statement/` and original attachments in `data_raw/`. Ask `$workflow-orchestrator` to inspect evidence and route the next action. See the [Chinese README](README.md) for mode details and documentation links.
 
-`check_frozen_numbers.py` mechanically diffs the numbers in a paper against frozen/metrics JSON (section/figure/equation numbers, years, code, URLs and math are skipped): an UNFROZEN claim number exits non-zero, rounding near-matches are warnings, and a sidecar `.frozenignore` holds explicit exceptions.
+## Validation
 
-## Using it without Codex
+```powershell
+python plugins/math-modeling-workflow/scripts/validate_repo.py .
+python -m unittest discover -s tests -v
+```
 
-Skills are plain Markdown and the scripts need only the Python standard library, so the workflow also runs in Claude Code, Cursor, or an ordinary chat session: a human performs the routing (loading each `SKILL.md` at the right gate) while `gate_check.py` / `check_frozen_numbers.py` provide hard local enforcement. See `docs/agent-agnostic-loading.zh-CN.md`, `docs/directory-mapping.zh-CN.md`, and `docs/lean-to-submission-checklist.zh-CN.md`.
+These are validation entry points, not a claim that the current revision has passed every check. Auto-Pilot instructions and decision-recording gates coexist in this repository; reconcile their configuration before relying on automated execution. Human review remains necessary for model validity, references, and final papers.
 
 ## License
 
-Original code, skills, and documentation are licensed under Apache-2.0. Contest statements, datasets, papers, official templates, and third-party materials require their own redistribution rights.
+Original code, Skills, and documentation use [Apache-2.0](LICENSE). Contest data, papers, templates, and other third-party materials require separate authorization. Additional modeling and rendering dependencies require their own version and license review.
