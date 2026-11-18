@@ -1,157 +1,112 @@
+![MODELING WORKFLOW](.github/assets/portfolio-banner.svg)
+
 # Math Modeling Workflow
+> 面向数学建模竞赛的 Codex 工作流插件，把问题分析、可复现实验与论文证据连接起来。
 
-一套可安装到 Codex 的数学建模竞赛工作流插件。它以 `workflow-orchestrator` 为统一入口，按门控状态调用题目解析、数据审查、方法选择、代码生成与复核、稳健性分析、正式图表、论文写作、全文装配和最终审计 Skills。
+**Markdown Skills · Python 标准库校验器 · JSON / JSONL · Apache-2.0**
 
-本仓库只包含通用规则、Skills、初始化模板和合成示例，不包含任何真实比赛题目、队伍信息、私有数据或最终论文。
+[快速开始](#快速开始) · [工程设计](#工程设计) · [使用教程](使用教程.md) · [English](README_EN.md)
 
-## 主要能力
+## 项目概览
 
-- `lean` 与 `submission` 两种严谨度配置；
-- 每个子问题一份机器可读 manifest；
-- 人工方法选择、结果边界和冻结决定可追溯；
-- Python 与 MATLAB/北太天元双路线；
-- 正式热力图、敏感性图、分布图、预测图和结构图规划与渲染检查；
-- 冻结数字驱动的论文写作；
-- 多问题全文装配、国赛排版、逐页检查和三层终审。
+插件以 `workflow-orchestrator` 为入口，组织题目解析、数据审查、方法选择、代码生成与复核、稳健性检查、图表规划、论文写作和最终审计。
 
-## 安装
+它将工作要求写为 Skills，将进度与关键决定写为机器可读文件，再通过 Python 脚本检查证据是否满足门控条件。仓库提供通用规则、初始化模板与合成示例；实际比赛数据和论文需要在独立项目中准备。
 
-克隆仓库：
+## 核心能力
+
+| 能力 | 工程实现 |
+| --- | --- |
+| 流程编排 | 按子问题 manifest 和门控状态路由下一项工作 |
+| 可复现实验 | 代码计划、运行摘要、基线对比与稳健性检查 |
+| 证据追溯 | 决策记录、冻结数值与论文主张来源检查 |
+| 双语言路线 | Python 与 MATLAB / 北太天元相关 Skills |
+| 论文交付 | 逐题写作、全文装配、格式化与审计指引 |
+| 工程验证 | 仓库校验脚本、单元测试与 GitHub Actions |
+
+## 工程设计
+
+```mermaid
+flowchart LR
+  Input[题目与附件] --> Frame[解析与数据审查]
+  Frame --> Model[方法与代码]
+  Model --> Evidence[实验与稳健性证据]
+  Evidence --> Paper[图表与论文]
+  Paper --> Audit[一致性与完整性审计]
+  Gate[门控校验脚本] -.检查证据.-> Model
+  Gate -.检查证据.-> Paper
+```
+
+实现阅读重点：
+
+- [Skills](plugins/math-modeling-workflow/skills/)：各项工作的输入、输出和执行约束。
+- [gate_check.py](plugins/math-modeling-workflow/scripts/gate_check.py)：以文件证据检查阶段门控。
+- [check_frozen_numbers.py](plugins/math-modeling-workflow/scripts/check_frozen_numbers.py)：核对论文数字与已冻结证据。
+- [初始化模板](plugins/math-modeling-workflow/assets/workspace-template/)：项目目录与初始状态。
+- [tests](tests/) 与 [CI](.github/workflows/validate.yml)：验证入口。
+
+## 快速开始
+
+### 注册插件
 
 ```powershell
 git clone https://github.com/xujunjie-coder/math-modeling-workflow.git
-```
-
-把克隆后的仓库注册为本地 Marketplace：
-
-```powershell
 codex plugin marketplace add C:\path\to\math-modeling-workflow
 codex plugin add math-modeling-workflow@personal
 ```
 
-安装或更新插件后，请在 Codex 中开启一个新任务，使新的 Skills 被完整加载。
+安装后在新的 Codex 任务中使用 Skills。插件声明见 [plugin.json](plugins/math-modeling-workflow/.codex-plugin/plugin.json)，Marketplace 定义见 [marketplace.json](.agents/plugins/marketplace.json)。
 
-## 🏆 比赛实战极速启动（拿到题目和附件后）
+### 初始化独立工作区
 
-> 📖 **完整图文教程**：请直接查阅根目录 [使用教程.md](使用教程.md) 或 [docs/get-started-competition.zh-CN.md](docs/get-started-competition.zh-CN.md)。
+```powershell
+python plugins/math-modeling-workflow/scripts/init_workspace.py C:\path\to\contest-project
+```
 
+也可直接复制[工作区模板](plugins/math-modeling-workflow/assets/workspace-template/)，保留隐藏配置与空目录。之后把赛题放入 `problem_statement/`，原始附件放入 `data_raw/`。
 
-1. **第一步（放文件）**：
-   - 赛题文档（PDF/Word/txt）放到：`problem_statement/`
-   - 数据附件（Excel/CSV）放到：`data_raw/`
-2. **第二步（发指令）**：在对话框中发送：
-   > “我已经将赛题放入 `problem_statement/`，数据附件放入 `data_raw/`。请启动 Auto-Pilot 模式，端到端完成题目解析、数据清洗、各问题选型求解、统一科研配色绘图、论文撰写，并严格按照国赛标准模板生成最终提交论文。”
-3. **第三步（终审交卷）**：AI 全自动完成建模、代码、绘图与全篇论文排版后，直接产出 **Word 与 LaTeX 超清双轨论文**（`paper/final/final_paper_latex.pdf` 与 `paper/final/final_paper.docx`），彻底杜绝公式符号与角标瑕疵，参赛队员做最终把关并提交！
-
-
----
-
-## 最短使用方式
-
-在一个新的比赛项目目录中输入：
+在新项目中发出：
 
 ```text
-请使用 $workflow-orchestrator 初始化当前数学建模项目。
-严谨度先使用 lean，代码语言使用 Python，随机种子使用 2026。
+请使用 $workflow-orchestrator 检查当前工作区，
+严谨度使用 lean，代码语言使用 Python，随机种子使用 2026。
+请根据实际证据报告下一项可执行工作。
 ```
 
-之后通常只需要输入：
+完整上手流程见[使用教程](使用教程.md)与[比赛入门](docs/get-started-competition.zh-CN.md)。
 
-```text
-请使用 $workflow-orchestrator 检查全部活动问题的门控状态，并执行下一项允许的工作。
-```
+## 工作模式与边界
 
-编排器一次只路由一个主要动作，不会在人工判断尚未完成时擅自生成下游结论。
+`lean` 用于探索，`submission` 面向提交材料；升级要求见[检查清单](docs/lean-to-submission-checklist.zh-CN.md)。具体决策与确认机制取决于工作区规则、Skill 版本和门控执行器，应以实际配置和检查结果为准。
 
-## 初始化目录
+仓库同时包含 Auto-Pilot 指令与需要记录决策的门控机制。使用前应核对二者的配置与适用范围；不能把一段自动化提示词视为已经通过全部门控，也不能将生成论文视为已完成学术审核。
 
-也可以直接运行插件附带的初始化工具：
-
-```powershell
-python plugins/math-modeling-workflow/scripts/init_workspace.py <项目目录>
-```
-
-它只会创建通用目录与初始配置，不会覆盖已有文件。物理目录与各 Skill 规范路径（canonical）一致；教学文档里的 `problem_1/subproblem_x` 叫法、脚手架目录与 canonical 路径的一一对应见 [docs/directory-mapping.zh-CN.md](docs/directory-mapping.zh-CN.md)。从 lean 探索档升级到 submission 参赛档的补件清单见 [docs/lean-to-submission-checklist.zh-CN.md](docs/lean-to-submission-checklist.zh-CN.md)。
-
-### 不运行初始化程序，直接复制工作区
-
-仓库中的 [`plugins/math-modeling-workflow/assets/workspace-template`](plugins/math-modeling-workflow/assets/workspace-template) 已保存完整的初始化目录骨架、初始配置和启动指令。克隆本仓库后，可以直接在文件资源管理器中复制该目录并重命名为本次比赛项目；复制出的目录已经包含 `.math-modeling-workflow.json` 初始化标记，无需再次让 AI 或脚本执行初始化。
-
-也可以在 Windows PowerShell 中使用 `robocopy`，其中 `/E` 会保留全部空目录：
-
-```powershell
-robocopy .\plugins\math-modeling-workflow\assets\workspace-template C:\path\to\新项目 /E
-```
-
-随后只需把赛题放入 `problem_statement/`、附件放入 `data_raw/`，再发送模板目录中的 `一键启动指令.txt`。
-
-不使用 Codex 时（Claude Code、Cursor 或任意网页对话），Skill 是纯 Markdown、脚本只依赖标准库，可按 [docs/agent-agnostic-loading.zh-CN.md](docs/agent-agnostic-loading.zh-CN.md) 手动加载，由人承担路由、用脚本做硬校验。
-
-## Skill 调用链
-
-```text
-workflow-orchestrator
-  → problem-parser → problem-classifier → data-auditor-cleaner
-  → symbol-table-builder → model-assumptions-builder
-  → related-paper-analyzer（可选）→ method-selector
-  → decision-prompt-builder → modeler-decision-logger
-  → model-code-analyzer
-  → python/matlab-model-code-generator
-  → code-reviewer → python/matlab-code-reviewer
-  → result-report-generator → robustness-checker
-  → final-method-explainer → figure-table-planner
-  → math-figure-generator → solution-package-builder
-  → paper-section-writer
-  → full-paper-assembler → paper-polisher
-  → national-modeling-paper-formatter
-  → consistency-auditor → completeness-auditor
-  → quality-assurance-auditor
-```
-
-完整门控和路由说明见 [工作流文档](plugins/math-modeling-workflow/assets/workflow/competition-workflow.zh-CN.md) 与 [Skill 路由表](docs/skill-routing.md)。
-
-## 图表原则
-
-- 精确的少量数值优先用三线表；
-- 分布、趋势、不确定性、多对象比较优先用统计图；
-- 相关矩阵、混淆矩阵、缺失矩阵和双参数敏感性优先评估热力图；
-- 正式数据图由确定性代码从保存的 CSV/JSON 生成，同时保存 PDF/SVG 和至少 300 dpi PNG；
-- ImageGen 等生成式图片工具只用于不承载数值证据的概念插图。
-
-## 排版模板说明
-
-仓库不再分发个人保留或许可状态不明确的 DOCX 模板。`national-modeling-paper-formatter` 会优先使用用户自行提供、且有权使用的当届官方模板；没有模板时使用公开记录的 A4、字体、标题、三线表、图题和公式规则生成文档。
-
-## 门控硬检查
-
-门控不仅是 Skill 里的规则，还附带标准库实现的强制执行器，用磁盘证据而不是自报清单来判断进度：
-
-```powershell
-# 查看每个活动问题实际由证据支撑到哪一道门（exit 2 = 清单超前/越权等完整性违规）
-python plugins/math-modeling-workflow/scripts/gate_check.py <项目目录> status
-
-# 动作前硬阻断：未过 G2.5 不允许写模型代码，未过 G3 不允许冻结，以此类推
-python plugins/math-modeling-workflow/scripts/gate_check.py <项目目录> guard --action code_generation --question Q1
-```
-
-`--action` 支持 `code_generation`（需 G2.5）、`freeze`（需 G3）、`paper_writing`（需 G4）和 `final_assembly`（所有活动问题达 G5）。纯机理/无数据题可在该问题 manifest 中声明 `"waivers": ["data_profile"]`，检查会显式标注豁免而不是静默跳过。
-
-论文数字与冻结证据的机械一致性由另一个标准库脚本负责，它会排除章节/图表/公式编号、年份、代码、链接与公式，只核对结果论断数字：
-
-```powershell
-python plugins/math-modeling-workflow/scripts/check_frozen_numbers.py paper/master/full_paper.md `
-  --source results --source paper/master/claim_map.json
-```
-
-精确匹配（千分位、尾零、科学计数法归一）后仍找不到来源的数字判为 UNFROZEN 并以非零码退出；四舍五入近似值给 NEAR 警告；确属编号或设定值的例外写进 sidecar `.frozenignore`（支持字面量与 `regex:`）。
-
-## 开发与验证
+## 校验与开发
 
 ```powershell
 python plugins/math-modeling-workflow/scripts/validate_repo.py .
 python -m unittest discover -s tests -v
+python plugins/math-modeling-workflow/scripts/gate_check.py C:\path\to\contest-project status
 ```
 
-## 许可证
+在项目工作区检查论文数字：
 
-代码、Skills 和原创文档采用 [Apache License 2.0](LICENSE)。比赛题目、数据、论文、官方模板和第三方材料不因本许可证自动获得再分发授权。
+```powershell
+python C:\path\to\math-modeling-workflow\plugins\math-modeling-workflow\scripts\check_frozen_numbers.py paper/master/full_paper.md --source results --source paper/master/claim_map.json
+```
+
+这些命令是验证入口，当前 README 不声明本次已执行全量测试。脚本校验也不能代替模型合理性、参考文献真实性和论文内容审核。
+
+## 进一步阅读
+
+- [工作流说明](plugins/math-modeling-workflow/assets/workflow/competition-workflow.zh-CN.md)
+- [Skill 路由表](docs/skill-routing.md)
+- [目录映射](docs/directory-mapping.zh-CN.md)
+- [其他 Agent 的加载方式](docs/agent-agnostic-loading.zh-CN.md)
+- [贡献指南](CONTRIBUTING.md) · [更新记录](CHANGELOG.md) · [安全说明](SECURITY.md)
+
+## 许可证与第三方材料
+
+代码、Skills 和原创文档采用 [Apache License 2.0](LICENSE)。比赛题目、数据、论文、模板及其他第三方材料需要单独确认授权；仓库中的 DOCX 文件不应仅凭根目录许可证推定可再分发。
+
+内置校验脚本主要使用 Python 标准库；建模、绘图、文档排版等任务所需的额外依赖应另行核实版本与许可证。
