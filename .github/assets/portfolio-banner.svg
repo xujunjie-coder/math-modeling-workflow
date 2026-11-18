@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="320" viewBox="0 0 1280 320" role="img" aria-labelledby="title desc">
+<title id="title">MODELING WORKFLOW</title><desc id="desc">From problem statements to traceable evidence. Skills / Python / Evidence Gates</desc>
+<defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#0b1325"/><stop offset="1" stop-color="#152c46"/></linearGradient><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#86a8c7" stroke-opacity=".08"/></pattern></defs>
+<rect width="1280" height="320" rx="20" fill="url(#bg)"/><rect width="1280" height="320" rx="20" fill="url(#grid)"/>
+<path d="M1040 50L1130 105V215L1040 270L950 215V105Z" fill="none" stroke="#5eead4" stroke-opacity=".4" stroke-width="2"/><path d="M1040 90L1095 125V195L1040 230L985 195V125Z" fill="#5eead4" fill-opacity=".08" stroke="#5eead4" stroke-opacity=".7"/><circle cx="1040" cy="160" r="16" fill="#5eead4"/><path d="M1040 50V90M1130 105L1095 125M1130 215L1095 195M1040 270V230M950 215L985 195M950 105L985 125" stroke="#5eead4" stroke-opacity=".4"/>
+<rect x="64" y="49" width="34" height="4" rx="2" fill="#5eead4"/><text x="64" y="84" fill="#85a1bb" font-family="Segoe UI,Arial,sans-serif" font-size="14" letter-spacing="3">XUJUNJIE / PROJECT COLLECTION</text>
+<text x="61" y="152" fill="#f8fafc" font-family="Segoe UI,Arial,sans-serif" font-size="50" font-weight="700" letter-spacing="1">MODELING WORKFLOW</text>
+<text x="64" y="198" fill="#bdd0df" font-family="Segoe UI,Arial,sans-serif" font-size="22">From problem statements to traceable evidence.</text>
+<text x="64" y="265" fill="#5eead4" font-family="Segoe UI,Arial,sans-serif" font-size="16" letter-spacing="1">Skills / Python / Evidence Gates</text></svg>
